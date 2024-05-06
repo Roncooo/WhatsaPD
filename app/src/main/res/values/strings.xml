@@ -2,8 +2,10 @@
     <string name="app_name">WhatsaPD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="email_bellesso">beatrice.bellesso@studenti.unipd.it</string>
+    <string name="email_brocco">greta.brocco@studenti.unipd.it</string>
+    <string name="email_roncolato">francesco.roncolato@studenti.unipd.it</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
