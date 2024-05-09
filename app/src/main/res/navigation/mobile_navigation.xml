@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="it.unipd.dei.esp.whatsapd.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_favourites"
+        android:name="it.unipd.dei.esp.whatsapd.ui.gallery.FavouritesFragment"
+        android:label="@string/menu_favourites"
+        tools:layout="@layout/fragment_favourites" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="it.unipd.dei.esp.whatsapd.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_near_me"
+        android:name="it.unipd.dei.esp.whatsapd.ui.slideshow.NearMeFragment"
+        android:label="@string/menu_near_me"
+        tools:layout="@layout/fragment_near_me" />
 </navigation>
