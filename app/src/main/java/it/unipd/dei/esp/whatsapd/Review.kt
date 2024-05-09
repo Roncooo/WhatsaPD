@@ -19,9 +19,12 @@ onDelete CASCADE means that when a Poi is deleted, all its Reviews will be delet
         onDelete = ForeignKey.CASCADE
     )]
 )
+
 class Review(
-    @PrimaryKey @ColumnInfo(name = "id") val id: Long,
+    // autoGenerate manges the autoincrementing id so we don't have to
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "date") val date: Date,
-    @ColumnInfo(name = "poi") val poi: String
+    @ColumnInfo(name = "poi") val poi: String,
+    @ColumnInfo(name = "rating") val rating: Byte
 )
