@@ -5,4 +5,8 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fragment_poi_title">40dp</dimen>
+    <dimen name="fragment_poi_description">15dp</dimen>
+    <dimen name="reviews_header">30dp</dimen>
+    <dimen name="new_review_text">20dp</dimen>
 </resources>
