@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,19 +27,22 @@
                 android:id="@+id/poi_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/torre_dell_orologio" />
-
 
             <TextView
                 android:id="@+id/poi_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@tools:sample/lorem/random"
                 android:textSize="@dimen/fragment_poi_description"
-                tools:ignore="HardcodedText"/>
+                tools:ignore="HardcodedText" />
 
-            <include layout="@layout/reviews_layout"/>
+            <include layout="@layout/reviews_layout" />
 
         </LinearLayout>
     </ScrollView>
