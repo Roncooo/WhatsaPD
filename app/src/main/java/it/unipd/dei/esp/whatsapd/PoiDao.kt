@@ -4,12 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PoiDao {
     @Query("SELECT * FROM POI_TABLE ORDER BY NAME ASC")
     fun getAllPoisAlphabetized(): Flow<List<Poi>>
+
+    @Query("SELECT * FROM POI_TABLE")
+    fun getAllPois(): Flow<List<Poi>>
 
     // 1 means true
     @Query("SELECT * FROM POI_TABLE WHERE FAVOURITE=1 ORDER BY NAME ASC")
@@ -23,6 +27,9 @@ interface PoiDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(poi: Poi)
+
+    @Update
+    suspend fun updateFavourite(poi: Poi)
 
     @Query("DELETE FROM POI_TABLE")
     suspend fun deleteAll()
