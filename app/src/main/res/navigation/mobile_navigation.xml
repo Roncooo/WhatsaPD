@@ -21,5 +21,5 @@
         android:id="@+id/nav_near_me"
         android:name="it.unipd.dei.esp.whatsapd.ui.slideshow.NearMeFragment"
         android:label="@string/menu_near_me"
-        tools:layout="@layout/fragment_near_me" />
+        tools:layout="@layout/fragment_near_me"/>
 </navigation>
