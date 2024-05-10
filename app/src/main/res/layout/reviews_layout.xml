@@ -13,6 +13,13 @@
 
     <include layout="@layout/new_review" />
 
+    <!-- TO BE REMOVED, THIS IS JUST TO SEE THE LAYOUT -->
+    <include layout="@layout/single_review" />
+
+    <include layout="@layout/single_review" />
+
+    <include layout="@layout/single_review" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviews_recycler_view"
         android:layout_width="match_parent"
