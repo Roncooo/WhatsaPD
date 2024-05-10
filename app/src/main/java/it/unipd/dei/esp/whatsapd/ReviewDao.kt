@@ -1,12 +1,12 @@
-package it.unipd.dei.esp.whatsapd;
+package it.unipd.dei.esp.whatsapd
 
-import androidx.room.Dao;
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import androidx.room.Query;
+import androidx.room.Query
 
 
-import kotlinx.coroutines.flow.Flow;
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReviewDao {
