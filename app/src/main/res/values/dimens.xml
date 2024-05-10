@@ -8,5 +8,6 @@
     <dimen name="fragment_poi_title">40sp</dimen>
     <dimen name="fragment_poi_description">15sp</dimen>
     <dimen name="reviews_header">30sp</dimen>
-    <dimen name="review_text">20sp</dimen>
+    <dimen name="review_username">20sp</dimen>
+    <dimen name="review_text">15sp</dimen>
 </resources>

@@ -13,24 +13,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <TextView
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="username"
-            android:textSize="@dimen/review_text"
-            tools:ignore="HardcodedText" />
+            android:text="@tools:sample/full_names"
+            android:textSize="@dimen/review_username" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -43,14 +43,36 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/review_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/review_date_text"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/review_date_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@tools:sample/date/ddmmyy"
+                android:textColor="@color/gray" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/review_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
-            android:text="@tools:sample/lorem/random" />
+            android:text="@tools:sample/lorem[30]"
+            android:textSize="@dimen/review_text" />
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

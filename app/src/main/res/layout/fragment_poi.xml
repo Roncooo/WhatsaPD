@@ -33,10 +33,23 @@
                     tools:ignore="HardcodedText" />
 
                 <ImageButton
-                    android:id="@+id/set_favourite_poi"
+                    android:id="@+id/is_favourite_poi"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:src="@drawable/ic_menu_fav"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/is_not_favourite_poi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/baseline_favorite_border_24"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -60,11 +73,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@tools:sample/lorem/random"
+                android:text="@tools:sample/lorem[100]"
                 android:textSize="@dimen/fragment_poi_description"
                 tools:ignore="HardcodedText" />
 
             <include layout="@layout/reviews_layout" />
+
 
         </LinearLayout>
     </ScrollView>

@@ -13,7 +13,8 @@
     <string name="menu_favourites">Favourites</string>
     <string name="menu_near_me">Near me</string>
     <string name="reviews_header">Reviews</string>
-    <string name="new_review_placeholder">Insert a new review</string>
-    <string name="new_review_text">Insert a new review</string>
+    <string name="new_review_text_placeholder">Insert a new review here</string>
+    <string name="new_review_username_placeholder">Insert your name here</string>
     <string name="home_title">PADOVA</string>
+    <string name="review_date_text">"Reviewed on "</string>
 </resources>
