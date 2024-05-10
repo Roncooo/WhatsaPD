@@ -9,13 +9,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.WhatsaPD.AppBarOverlay">
+        android:theme="@style/Theme.WhatsaPD.AppBarOverlay"
+        app:liftOnScroll="true">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:menu="@menu/top_app_bar_home"
             app:popupTheme="@style/Theme.WhatsaPD.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

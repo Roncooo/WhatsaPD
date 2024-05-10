@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.gallery
+package it.unipd.dei.esp.whatsapd.ui.favourites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

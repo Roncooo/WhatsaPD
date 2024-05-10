@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.gallery
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import it.unipd.dei.esp.whatsapd.databinding.FragmentFavouritesBinding
+import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 
-class FavouritesFragment : Fragment() {
+class PoiFragment : Fragment() {
 
-    private var _binding: FragmentFavouritesBinding? = null
+    private var _binding: FragmentPoiBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,21 +22,23 @@ class FavouritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(FavouritesViewModel::class.java)
+        val poiViewModel =
+            ViewModelProvider(this).get(PoiViewModel::class.java)
 
-        _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
+        _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.poiTitle
+        poiViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

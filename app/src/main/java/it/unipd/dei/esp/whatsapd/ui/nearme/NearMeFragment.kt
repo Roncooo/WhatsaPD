@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.slideshow
+package it.unipd.dei.esp.whatsapd.ui.nearme
 
 import android.os.Bundle
 import android.view.LayoutInflater
