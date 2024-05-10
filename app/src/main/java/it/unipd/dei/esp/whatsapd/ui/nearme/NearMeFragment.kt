@@ -22,14 +22,14 @@ class NearMeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
+        val nearmeViewModel =
             ViewModelProvider(this).get(NearMeViewModel::class.java)
 
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textNearMe
+        nearmeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

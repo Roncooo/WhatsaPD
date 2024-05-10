@@ -9,11 +9,11 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/favourites"
+            android:id="@+id/nav_favourites"
             android:icon="@drawable/ic_menu_fav"
             android:title="@string/menu_favourites" />
         <item
-            android:id="@+id/near_me"
+            android:id="@+id/nav_near_me"
             android:icon="@drawable/ic_menu_near_me"
             android:title="@string/menu_near_me" />
     </group>

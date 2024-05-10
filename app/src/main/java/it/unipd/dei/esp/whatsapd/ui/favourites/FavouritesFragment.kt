@@ -22,14 +22,14 @@ class FavouritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
+        val favouritesViewModel =
             ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
         _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textFavourites
+        favouritesViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
