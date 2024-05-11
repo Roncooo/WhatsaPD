@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.poi
+package it.unipd.dei.esp.whatsapd
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import it.unipd.dei.esp.whatsapd.Poi
-import it.unipd.dei.esp.whatsapd.R
 
 class PoiListRecyclerViewAdapter(private val poiList: List<Poi>) :
     RecyclerView.Adapter<PoiListRecyclerViewAdapter.PoiViewHolder>() {

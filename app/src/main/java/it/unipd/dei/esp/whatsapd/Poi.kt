@@ -3,6 +3,7 @@ package it.unipd.dei.esp.whatsapd
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "poi_table")
 class Poi(
@@ -15,4 +16,4 @@ class Poi(
     @ColumnInfo(name = "wheelchair_accessible") val wheelchair_accessible: Boolean,
     @ColumnInfo(name = "deaf_accessible") val deaf_accessible: Boolean,
     @ColumnInfo(name = "blind_accessible") val blind_accessible: Boolean
-)
+) : Serializable

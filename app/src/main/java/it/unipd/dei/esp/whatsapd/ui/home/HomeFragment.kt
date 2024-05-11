@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import it.unipd.dei.esp.whatsapd.Poi
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
 
@@ -35,8 +36,19 @@ class HomeFragment : Fragment() {
 
         val button: Button = root.findViewById(R.id.button)
         button.setOnClickListener {
-
-            val action = HomeFragmentDirections.actionNavHomeToPoiFragment()
+            // todo, take pois from db and use recycler view
+            val poi: Poi = Poi(
+                "Prato della valle",
+                45.3984171,
+                11.8765285,
+                "Prato della valle è la piazza più grande d'europa e bla bla bla",
+                "prato_della_valle",
+                false,
+                true,
+                true,
+                true
+            )
+            val action = HomeFragmentDirections.actionNavHomeToPoiFragment(poi)
             root.findNavController().navigate(action)
         }
 

@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.poi
+package it.unipd.dei.esp.whatsapd
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 
 class PoiFragment : Fragment() {
@@ -22,16 +21,15 @@ class PoiFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val poiViewModel =
-            ViewModelProvider(this).get(PoiViewModel::class.java)
 
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.poiTitle
-        poiViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val poi = PoiFragmentArgs.fromBundle(requireArguments()).poi
+        val titleTv: TextView = root.findViewById(R.id.poi_title)
+        titleTv.text = poi.name
+        // todo other fields
+
         return root
     }
 
