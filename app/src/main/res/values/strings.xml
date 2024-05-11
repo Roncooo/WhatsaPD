@@ -19,4 +19,5 @@
     <string name="review_date_text">"Reviewed on "</string>
     <string name="search_bar_placeholder">Search \"Orto Botanico\"</string>
     <string name="menu_poi">Point of interess</string>
+    <string name="text_near_me">Calculate your position</string>
 </resources>

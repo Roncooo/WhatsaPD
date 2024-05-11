@@ -11,7 +11,7 @@ class Poi(
     @ColumnInfo(name = "latitude") val latitude: Double,
     @ColumnInfo(name = "longitude") val longitude: Double,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "photo_path") val photo_path: String,
+    @ColumnInfo(name = "photo_path") val photo_id: Int,
     @ColumnInfo(name = "favourite") val favourite: Boolean,
     @ColumnInfo(name = "wheelchair_accessible") val wheelchair_accessible: Boolean,
     @ColumnInfo(name = "deaf_accessible") val deaf_accessible: Boolean,

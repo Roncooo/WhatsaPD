@@ -5,37 +5,52 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class PoiListRecyclerViewAdapter(private val poiList: List<Poi>) :
-    RecyclerView.Adapter<PoiListRecyclerViewAdapter.PoiViewHolder>() {
+class PoiListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Poi> = ALPHABETICAL_COMPARATOR) :
+    ListAdapter<Poi, PoiListRecyclerViewAdapter.PoiViewHolder>(comparator) {
 
     // ViewHolder per contenere le viste degli elementi
     class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
         private val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
 
-        fun bind(poi_name: String, image_name: String) {
-            // poiImageView.src // TODO
+        fun bind(poi_name: String, image_id: Int) {
+            poiImageView.setImageResource(image_id)
             poiTitle.text = poi_name
+        }
+
+        companion object {
+            fun create(parent: ViewGroup): PoiViewHolder {
+                val view: View =
+                    LayoutInflater.from(parent.context).inflate(R.layout.single_poi, parent, false)
+                return PoiViewHolder(view)
+            }
         }
     }
 
     // Crea nuovi ViewHolder (invocato dal layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PoiViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.single_poi, parent, false)
-        return PoiViewHolder(view)
+        return PoiViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: PoiViewHolder, position: Int) {
-        val poi: Poi = poiList[position]
-        holder.bind(poi.name, poi.photo_path)
+        val current = getItem(position)
+        holder.bind(current.name, current.photo_id)
     }
 
-    // Restituisce la dimensione dell'elenco (invocato dal layout manager)
-    override fun getItemCount(): Int {
-        return poiList.size
+    companion object {
+        private val ALPHABETICAL_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
+            override fun areItemsTheSame(oldItem: Poi, newItem: Poi): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Poi, newItem: Poi): Boolean {
+                return oldItem.name == newItem.name
+            }
+        }
     }
 
 

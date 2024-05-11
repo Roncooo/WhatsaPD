@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
                 45.3984171,
                 11.8765285,
                 "Prato della valle è la piazza più grande d'europa e bla bla bla",
-                "prato_della_valle",
+                R.drawable.prato_della_valle,
                 false,
                 true,
                 true,

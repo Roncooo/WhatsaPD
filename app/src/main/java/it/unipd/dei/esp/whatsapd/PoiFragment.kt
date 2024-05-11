@@ -30,11 +30,10 @@ class PoiFragment : Fragment() {
         val root: View = binding.root
 
         val poi_name: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
-        val poi: Poi = poiViewModel.getPoiByName(poi_name)
+        // this gives error
+        // val poi: Poi = poiViewModel.getPoiByName(poi_name)
         val titleTv: TextView = root.findViewById(R.id.poi_title)
         titleTv.text = poi_name
-
-        // todo other fields
 
         return root
     }

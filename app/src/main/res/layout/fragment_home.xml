@@ -48,7 +48,7 @@
                 android:text="prova per vedere se si apre il poi e come viene fuori, funziona tutto, il funzionamento di questo bottone verrà messo sui singoli poi della schermata home" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/poi_recycler_view"
+                android:id="@+id/near_me_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -9,13 +9,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import it.unipd.dei.esp.whatsapd.Converters
 import it.unipd.dei.esp.whatsapd.Poi
 import it.unipd.dei.esp.whatsapd.PoiDao
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.Review
 import it.unipd.dei.esp.whatsapd.ReviewDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Poi::class, Review::class], version = 1, exportSchema = false)
+@Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PoiReviewRoomDatabase : RoomDatabase() {
 
@@ -78,7 +79,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 45.3984171,
                 11.8765285,
                 "Prato della valle è la piazza più grande d'europa e bla bla bla",
-                "prato_della_valle",
+                R.drawable.prato_della_valle,
                 false,
                 true,
                 true,
@@ -91,7 +92,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 45.3984171,
                 11.8765285,
                 "È l'orto più bello d'europa e bla bla bla",
-                "orto_botanico",
+                R.drawable.orto_botanico,
                 true,
                 true,
                 true,

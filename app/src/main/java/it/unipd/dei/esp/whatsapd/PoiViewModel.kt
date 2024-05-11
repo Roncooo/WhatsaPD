@@ -7,7 +7,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-// this should take as a parameter private val repository: PoiReviewRepository (or shouldn't?)
 class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
