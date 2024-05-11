@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 
 class PoiFragment : Fragment() {
@@ -15,6 +16,9 @@ class PoiFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val poiViewModel: PoiViewModel by viewModels {
+        PoiViewModelFactory((activity?.application as Application).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,9 +29,11 @@ class PoiFragment : Fragment() {
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val poi = PoiFragmentArgs.fromBundle(requireArguments()).poi
+        val poi_name: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
+        val poi: Poi = poiViewModel.getPoiByName(poi_name)
         val titleTv: TextView = root.findViewById(R.id.poi_title)
-        titleTv.text = poi.name
+        titleTv.text = poi_name
+
         // todo other fields
 
         return root

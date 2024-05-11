@@ -34,8 +34,8 @@
         tools:layout="@layout/fragment_near_me">
 
         <argument
-            android:name="poi"
-            app:argType="it.unipd.dei.esp.whatsapd.Poi" />
+            android:name="poi_name"
+            app:argType="string" />
 
     </fragment>
 

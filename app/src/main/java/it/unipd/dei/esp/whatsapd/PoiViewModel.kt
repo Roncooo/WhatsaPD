@@ -12,6 +12,10 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
 
+    fun getPoiByName(name: String): Poi {
+        return repository.getPoiByName(name)
+    }
+
     fun getAllPoisFilteredByName(searchString: String): LiveData<List<Poi>> {
         return repository.getPoisByNameAlphabetized(searchString).asLiveData()
     }
@@ -26,8 +30,7 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 class PoiViewModelFactory(private val repository: PoiReviewRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PoiViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return PoiViewModel(repository) as T
+            @Suppress("UNCHECKED_CAST") return PoiViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

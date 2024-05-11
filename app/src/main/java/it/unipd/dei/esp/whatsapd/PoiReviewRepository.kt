@@ -24,6 +24,10 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
         return reviewDao.getAllReviewsOfPoiByRating(poi_name)
     }
 
+    fun getPoiByName(searchedName: String): Poi {
+        return poiDao.getPoiByName(searchedName)
+    }
+
     @WorkerThread
     suspend fun updateFavourite(poi: Poi) {
         poiDao.updateFavourite(poi)

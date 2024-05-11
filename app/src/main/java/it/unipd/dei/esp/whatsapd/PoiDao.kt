@@ -25,6 +25,9 @@ interface PoiDao {
     @Query("SELECT * FROM POI_TABLE WHERE LOWER(NAME) LIKE '%' || LOWER(:searchedName) || '%' ORDER BY NAME ASC")
     fun getPoisByNameAlphabetized(searchedName: String): Flow<List<Poi>>
 
+    @Query("SELECT * FROM POI_TABLE WHERE NAME = :searchedName")
+    fun getPoiByName(searchedName: String): Poi
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(poi: Poi)
 

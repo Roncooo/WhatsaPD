@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
                 true,
                 true
             )
-            val action = HomeFragmentDirections.actionNavHomeToPoiFragment(poi)
+            val action = HomeFragmentDirections.actionNavHomeToPoiFragment("Prato della valle")
             root.findNavController().navigate(action)
         }
 
