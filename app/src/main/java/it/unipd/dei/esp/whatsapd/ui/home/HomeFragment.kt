@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val recyclerView: RecyclerView = binding.nearMeRecyclerView
+        val recyclerView: RecyclerView = binding.poiRecyclerView
         val adapter = PoiListRecyclerViewAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)

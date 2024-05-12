@@ -10,6 +10,6 @@
     <dimen name="reviews_header">30sp</dimen>
     <dimen name="review_username">20sp</dimen>
     <dimen name="review_text">15sp</dimen>
-    <dimen name="home_title">40sp</dimen>
+    <dimen name="home_title">20sp</dimen>
     <dimen name="poi_card_name">20sp</dimen>
 </resources>

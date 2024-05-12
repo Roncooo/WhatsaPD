@@ -25,7 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Cappella degli scrovegni"
+            android:text="Cappella degli Scrovegni"
             android:textAlignment="center"
             android:textSize="@dimen/poi_card_name"
             tools:ignore="HardcodedText" />
