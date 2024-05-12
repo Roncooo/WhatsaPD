@@ -25,6 +25,8 @@ class FavouritesFragment : Fragment() {
         val favouritesViewModel =
             ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
+        activity?.invalidateOptionsMenu()
+
         _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

@@ -26,6 +26,8 @@ class PoiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        activity?.invalidateOptionsMenu()
+
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

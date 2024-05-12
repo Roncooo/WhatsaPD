@@ -29,6 +29,8 @@ class NearMeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        
+        activity?.invalidateOptionsMenu()
 
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
         val root: View = binding.root
