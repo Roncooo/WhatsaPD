@@ -2,8 +2,10 @@ package it.unipd.dei.esp.whatsapd
 
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -12,6 +14,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import it.unipd.dei.esp.whatsapd.databinding.ActivityMainBinding
+import it.unipd.dei.esp.whatsapd.ui.favourites.FavouritesFragment
+import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,12 +46,45 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
-    
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(androidx.fragment.R.id.fragment_container_view_tag, fragment)
+            .commit()
+
+        // Chiamata per aggiornare il menu quando il fragment cambia
+        invalidateOptionsMenu()
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.top_app_bar_home, menu)
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        // Ottieni il fragment corrente
+
+        when (supportFragmentManager.findFragmentById(androidx.fragment.R.id.fragment_container_view_tag)) { //current fragment
+            is FavouritesFragment -> {
+
+                menu.findItem(R.id.favorite)?.isVisible = true
+                menu.findItem(R.id.search)?.isVisible = false
+            }
+            is HomeFragment -> {
+
+                menu.findItem(R.id.favorite)?.isVisible = false
+                menu.findItem(R.id.search)?.isVisible = true
+            }
+            else -> {
+                // Altri fragment, nascondi entrambe le icone
+                menu.findItem(R.id.favorite)?.isVisible = false
+                menu.findItem(R.id.search)?.isVisible = false
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onSupportNavigateUp(): Boolean {
