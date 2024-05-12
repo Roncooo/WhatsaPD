@@ -1,13 +1,25 @@
-package it.unipd.dei.esp.whatsapd.ui.home
+package it.unipd.dei.esp.whatsapd.ui.nearme
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import it.unipd.dei.esp.whatsapd.Poi
+import it.unipd.dei.esp.whatsapd.PoiReviewRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        // value = "This is home Fragment"
+    val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
+
+}
+
+class HomeViewModelFactory(private val repository: PoiReviewRepository) :
+
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST") return HomeViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
-    val text: LiveData<String> = _text
 }

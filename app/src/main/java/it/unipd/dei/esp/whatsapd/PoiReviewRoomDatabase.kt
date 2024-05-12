@@ -89,10 +89,58 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 
             poi = Poi(
                 "Orto Botanico",
-                45.3984171,
-                11.8765285,
+                0.1,
+                0.1,
                 "È l'orto più bello d'europa e bla bla bla",
                 R.drawable.orto_botanico,
+                true,
+                true,
+                true,
+                true
+            )
+            poiDao.insert(poi)
+            poi = Poi(
+                "Caffe pedrocchi",
+                0.1,
+                0.1,
+                "È il caffe più bello d'europa e bla bla bla",
+                R.drawable.caffe_pedrocchi,
+                true,
+                true,
+                true,
+                true
+            )
+            poiDao.insert(poi)
+            poi = Poi(
+                "Cappella degli scrovegni",
+                0.1,
+                0.1,
+                "È la cappella più bella d'europa e bla bla bla",
+                R.drawable.cappella_degli_scrovegni,
+                true,
+                true,
+                true,
+                true
+            )
+            poiDao.insert(poi)
+            poi = Poi(
+                "Porta portello",
+                45.0,
+                11.0,
+                "È la porta più bella d'europa e bla bla bla",
+                R.drawable.porta_portello,
+                true,
+                true,
+                true,
+                true
+            )
+            poiDao.insert(poi)
+            poi = Poi(
+                "Torre dell'orologio",
+                45.0,
+                11.0,
+                "È l'orologio più bello d'europa e bla bla bla",
+                R.drawable.torre_dell_orologio,
                 true,
                 true,
                 true,

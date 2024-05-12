@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import it.unipd.dei.esp.whatsapd.Poi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
+import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
+import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -20,34 +25,30 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory((activity?.application as Application).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val recyclerView: RecyclerView = binding.nearMeRecyclerView
+        val adapter = PoiListRecyclerViewAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+
         val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
+            pois.let { adapter.submitList(it) }
         }
 
         val button: Button = root.findViewById(R.id.button)
         button.setOnClickListener {
             // todo, take pois from db and use recycler view
-            val poi: Poi = Poi(
-                "Prato della valle",
-                45.3984171,
-                11.8765285,
-                "Prato della valle è la piazza più grande d'europa e bla bla bla",
-                R.drawable.prato_della_valle,
-                false,
-                true,
-                true,
-                true
-            )
             val action = HomeFragmentDirections.actionNavHomeToPoiFragment("Prato della valle")
             root.findNavController().navigate(action)
         }
