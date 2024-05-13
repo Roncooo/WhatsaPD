@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
@@ -37,7 +38,8 @@ class NearMeFragment : Fragment() {
 
         val button: Button = binding.nearMeButton
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
-        val adapter = PoiListRecyclerViewAdapter()
+        val navController = findNavController()
+        val adapter = PoiListRecyclerViewAdapter(navController)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
