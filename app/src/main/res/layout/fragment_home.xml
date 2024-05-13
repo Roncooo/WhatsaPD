@@ -41,12 +41,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="bottone apertura poi" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/poi_recycler_view"
             android:layout_width="match_parent"

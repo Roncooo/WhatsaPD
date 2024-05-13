@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
@@ -39,20 +40,14 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.poiRecyclerView
-        val adapter = PoiListRecyclerViewAdapter()
+        val navController = findNavController()
+        val adapter = PoiListRecyclerViewAdapter(navController)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         val textView: TextView = binding.textHome
         homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }
-        }
-
-        val button: Button = root.findViewById(R.id.button)
-        button.setOnClickListener {
-            // todo, take pois from db and use recycler view
-            val action = HomeFragmentDirections.actionNavHomeToPoiFragment("Prato della valle")
-            root.findNavController().navigate(action)
         }
 
         return root
