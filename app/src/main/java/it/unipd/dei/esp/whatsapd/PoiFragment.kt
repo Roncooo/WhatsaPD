@@ -10,6 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 
 class PoiFragment : Fragment() {
@@ -21,6 +23,9 @@ class PoiFragment : Fragment() {
     private val binding get() = _binding!!
     private val poiViewModel: PoiViewModel by viewModels {
         PoiViewModelFactory((activity?.application as Application).repository)
+    }
+    private val reviewViewModel: ReviewViewModel by viewModels {
+        ReviewViewModelFactory((activity?.application as Application).repository)
     }
 
     override fun onCreateView(
@@ -42,9 +47,24 @@ class PoiFragment : Fragment() {
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
 
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
-            AccessibilityBannerAdapter.AccessibilityBannerViewHolder.bind(accessibilityBanner, it)
-
+            AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
         }
+
+        val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
+        val adapter = ReviewListRecyclerViewAdapter()
+        reviewsRecyclerView.adapter = adapter
+        reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        reviewViewModel.getAllReviewsOfPoiByRating(poi_name).observe(viewLifecycleOwner) { pois ->
+            pois.let { adapter.submitList(it) }
+        }
+
+        val reviewLiveData: LiveData<List<Review>> =
+            reviewViewModel.getAllReviewsOfPoiByRating(poi_name)
+        reviewLiveData.observe(viewLifecycleOwner) { reviews ->
+            reviews.let { adapter.submitList(it) }
+        }
+
 
         return root
     }

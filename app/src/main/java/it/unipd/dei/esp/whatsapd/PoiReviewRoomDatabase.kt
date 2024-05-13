@@ -15,6 +15,7 @@ import it.unipd.dei.esp.whatsapd.ReviewDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -63,13 +64,13 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             // comment out the following line.
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    populateDatabase(database.poiDao())
+                    populateDatabase(database.poiDao(), database.reviewDao())
                 }
             }
         }
 
         // Questo serve per la prima volta che eseguo
-        suspend fun populateDatabase(poiDao: PoiDao) {
+        suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao) {
             // Delete all content here.
             poiDao.deleteAll()
 
@@ -159,6 +160,34 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 true
             )
             poiDao.insert(poi)
+
+            var review = Review(
+                username = "Pippo",
+                date = Date(),
+                poi = "Prato della valle",
+                rating = 5,
+                text = "Molto bello rilassarsi sotto agli alberi"
+            )
+            reviewDao.insert(review)
+
+            review = Review(
+                username = "Pluto",
+                date = Date(1912, 11, 4),
+                poi = "Prato della valle",
+                rating = 4,
+                text = "Che bello il mercato del mercoledì"
+            )
+            reviewDao.insert(review)
+
+            review = Review(
+                username = "Paperino",
+                date = Date(2034, 2, 17),
+                poi = "Porta Portello",
+                rating = 5,
+                text = "Per me un golosino"
+            )
+            reviewDao.insert(review)
+
         }
     }
 

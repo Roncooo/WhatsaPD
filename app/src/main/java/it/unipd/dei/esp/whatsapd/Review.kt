@@ -26,5 +26,6 @@ class Review(
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "date") val date: Date,
     @ColumnInfo(name = "poi") val poi: String,
-    @ColumnInfo(name = "rating") val rating: Byte
+    @ColumnInfo(name = "rating") val rating: Byte,
+    @ColumnInfo(name = "text") val text: String
 )
