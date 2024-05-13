@@ -147,6 +147,18 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 true
             )
             poiDao.insert(poi)
+            poi = Poi(
+                "DEI",
+                45.0,
+                11.0,
+                "È il dipartimento più bello d'europa e bla bla bla",
+                R.drawable.facciata_dei,
+                true,
+                true,
+                true,
+                true
+            )
+            poiDao.insert(poi)
         }
     }
 
