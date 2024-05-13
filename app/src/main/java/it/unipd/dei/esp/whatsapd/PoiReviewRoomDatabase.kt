@@ -83,7 +83,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 false,
                 true,
                 true,
-                true
+                false
             )
             poiDao.insert(poi)
 

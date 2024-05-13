@@ -1,5 +1,6 @@
 package it.unipd.dei.esp.whatsapd
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -26,7 +27,7 @@ interface PoiDao {
     fun getPoisByNameAlphabetized(searchedName: String): Flow<List<Poi>>
 
     @Query("SELECT * FROM POI_TABLE WHERE NAME = :searchedName")
-    fun getPoiByName(searchedName: String): Poi
+    fun getPoiByName(searchedName: String): LiveData<Poi>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(poi: Poi)

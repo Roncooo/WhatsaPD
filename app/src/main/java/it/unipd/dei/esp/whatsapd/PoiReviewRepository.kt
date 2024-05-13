@@ -1,6 +1,7 @@
 package it.unipd.dei.esp.whatsapd
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: ReviewDao) {
@@ -24,7 +25,7 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
         return reviewDao.getAllReviewsOfPoiByRating(poi_name)
     }
 
-    fun getPoiByName(searchedName: String): Poi {
+    fun getPoiByName(searchedName: String): LiveData<Poi> {
         return poiDao.getPoiByName(searchedName)
     }
 

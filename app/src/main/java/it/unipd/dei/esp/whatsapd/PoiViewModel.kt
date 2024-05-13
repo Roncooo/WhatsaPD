@@ -11,7 +11,7 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
 
-    fun getPoiByName(name: String): Poi {
+    fun getPoiByName(name: String): LiveData<Poi> {
         return repository.getPoiByName(name)
     }
 
