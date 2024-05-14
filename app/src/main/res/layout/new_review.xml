@@ -16,6 +16,7 @@
         android:padding="15dp">
 
         <EditText
+            android:id="@+id/new_review_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/new_review_username_placeholder"
@@ -31,20 +32,20 @@
             android:orientation="horizontal">
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/new_review_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:rating="3.5"
-                android:stepSize="0.5"
+                android:rating="4"
+                android:stepSize="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/enter_review"
+                android:id="@+id/new_review_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
