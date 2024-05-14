@@ -182,7 +182,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             review = Review(
                 username = "Paperino",
                 date = Date(2034, 2, 17),
-                poi = "Porta Portello",
+                poi = "Porta portello",
                 rating = 5,
                 text = "Per me un golosino"
             )
