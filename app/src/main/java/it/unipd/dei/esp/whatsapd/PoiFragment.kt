@@ -43,9 +43,9 @@ class PoiFragment : Fragment() {
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val poi_name: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
+        val poiName: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
         // this gives error
-        val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poi_name)
+        val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poiName)
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
             root.findViewById<TextView>(R.id.poi_description).text = it.description
@@ -61,12 +61,12 @@ class PoiFragment : Fragment() {
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        reviewViewModel.getAllReviewsOfPoiByRating(poi_name).observe(viewLifecycleOwner) { pois ->
+        reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }
         }
 
         val reviewLiveData: LiveData<List<Review>> =
-            reviewViewModel.getAllReviewsOfPoiByRating(poi_name)
+            reviewViewModel.getAllReviewsOfPoiByRating(poiName)
         reviewLiveData.observe(viewLifecycleOwner) { reviews ->
             reviews.let { adapter.submitList(it) }
         }
@@ -108,7 +108,7 @@ class PoiFragment : Fragment() {
         return Review(username, poiName, rating, text)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // callback definition
