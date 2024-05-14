@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +20,16 @@ import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
             return PoiViewHolder.create(parent)
         }
 
+
         override fun onBindViewHolder(holder: PoiViewHolder, position: Int) {
             val current = getItem(position)
             holder.bind(current.name, current.photo_id)
         }
+
+        fun filterPoi(searchTExt: String) {
+
+        }
+
 
         // ViewHolder per contenere le viste degli elementi
         class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

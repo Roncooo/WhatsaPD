@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SearchView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +28,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         activity?.invalidateOptionsMenu()
 
@@ -44,12 +42,28 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
+
+        view?.findViewById<SearchView>(R.id.search)
+            ?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    // Chiama la funzione per filtrare la lista quando il testo cambia
+                    //adapter.filterPoi(newText.orEmpty().trim())
+                    return true
+                }
+            })
+
         homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }
         }
 
         return root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

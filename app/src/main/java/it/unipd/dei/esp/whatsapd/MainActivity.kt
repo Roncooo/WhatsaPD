@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.top_app_bar_home, menu)
         return true
     }
+
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         // Ottieni il fragment corrente

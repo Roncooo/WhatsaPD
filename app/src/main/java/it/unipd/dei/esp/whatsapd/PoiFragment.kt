@@ -2,7 +2,6 @@ package it.unipd.dei.esp.whatsapd
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -12,7 +11,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -28,8 +26,6 @@ class PoiFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-
-
     private val binding get() = _binding!!
     private val poiViewModel: PoiViewModel by viewModels {
         PoiViewModelFactory((activity?.application as Application).repository)
@@ -47,9 +43,11 @@ class PoiFragment : Fragment() {
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
         val poiName: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
         // this gives error
         val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poiName)
+
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
             root.findViewById<TextView>(R.id.poi_description).text = it.description
@@ -58,6 +56,7 @@ class PoiFragment : Fragment() {
             //da prendere quando apro il poi
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
+
         }
 
         val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
@@ -86,6 +85,7 @@ class PoiFragment : Fragment() {
 
         return root
     }
+
 
     private fun clearNewReview(root: View) {
         val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)
