@@ -4,10 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.databinding.FragmentFavouritesBinding
+import it.unipd.dei.esp.whatsapd.ui.nearme.NearMeViewModel
+import it.unipd.dei.esp.whatsapd.ui.nearme.NearMeViewModelFactory
 
 class FavouritesFragment : Fragment() {
 
@@ -16,24 +23,30 @@ class FavouritesFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val favouritesViewModel: FavouritesViewModel by viewModels {
+        FavouritesViewModelFactory((activity?.application as Application).repository)
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val favouritesViewModel =
-            ViewModelProvider(this).get(FavouritesViewModel::class.java)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
 
         activity?.invalidateOptionsMenu()
 
         _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textFavourites
-        favouritesViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val recyclerView: RecyclerView = binding.favRecyclerView
+        val navController = findNavController()
+        val adapter = PoiListRecyclerViewAdapter(navController)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        favouritesViewModel.favPois.observe(viewLifecycleOwner) { pois ->
+            pois.let { adapter.submitList(it) }
         }
+
+
         return root
     }
 

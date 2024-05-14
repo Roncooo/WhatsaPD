@@ -5,13 +5,15 @@
         android:id="@+id/favorite"
         android:icon="@drawable/baseline_favorite_border_24"
         android:visible="true"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:checkable="true"/>
 
     <item
         android:id="@+id/search"
         android:icon="@drawable/baseline_search_24"
         android:visible="true"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
         android:id="@+id/settings"

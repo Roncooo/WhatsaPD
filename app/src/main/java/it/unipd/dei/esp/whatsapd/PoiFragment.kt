@@ -2,6 +2,7 @@ package it.unipd.dei.esp.whatsapd
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -11,6 +12,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -26,6 +28,8 @@ class PoiFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
+
+
     private val binding get() = _binding!!
     private val poiViewModel: PoiViewModel by viewModels {
         PoiViewModelFactory((activity?.application as Application).repository)
@@ -51,7 +55,7 @@ class PoiFragment : Fragment() {
             root.findViewById<TextView>(R.id.poi_description).text = it.description
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
-
+            //da prendere quando apro il poi
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
         }

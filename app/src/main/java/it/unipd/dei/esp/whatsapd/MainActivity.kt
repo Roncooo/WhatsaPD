@@ -47,15 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(androidx.fragment.R.id.fragment_container_view_tag, fragment)
-            .commit()
-
-        // Chiamata per aggiornare il menu quando il fragment cambia
-        invalidateOptionsMenu()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.top_app_bar_home, menu)
