@@ -36,7 +36,7 @@ import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
                 poiTitle.text = poi_name
 
                 itemView.setOnClickListener{
-                    val action = HomeFragmentDirections.actionNavHomeToPoiFragment(poi_name)
+                    val action = HomeFragmentDirections.actionToPoiFragment(poi_name)
                     itemView.findNavController().navigate(action)
                 }
             }

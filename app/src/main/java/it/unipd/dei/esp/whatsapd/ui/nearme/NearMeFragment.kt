@@ -36,14 +36,14 @@ class NearMeFragment : Fragment() {
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val button: Button = binding.nearMeButton
+        val buttonPosition: Button = binding.nearMeButton
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
         val navController = findNavController()
         val adapter = PoiListRecyclerViewAdapter(navController)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        button.setOnClickListener {
+        buttonPosition.setOnClickListener {
             // nearmeViewModel.update()
         }
 

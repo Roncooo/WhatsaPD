@@ -11,7 +11,7 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_nav_home_to_poi_fragment"
+            android:id="@+id/action_to_poi_fragment"
             app:destination="@id/poi_fragment" />
     </fragment>
 
@@ -21,7 +21,7 @@
         android:label="@string/menu_favourites"
         tools:layout="@layout/fragment_favourites" >
         <action
-            android:id="@+id/action_nav_favourites_to_poi_fragment"
+            android:id="@+id/action_to_poi_fragment"
             app:destination="@id/poi_fragment" />
     </fragment>
 
@@ -31,7 +31,7 @@
         android:label="@string/menu_near_me"
         tools:layout="@layout/fragment_near_me" >
         <action
-            android:id="@+id/action_nav_near_me_to_poi_fragment"
+            android:id="@+id/action_to_poi_fragment"
             app:destination="@id/poi_fragment" />
     </fragment>
 
