@@ -9,10 +9,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
@@ -41,9 +43,9 @@ class PoiFragment : Fragment() {
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val poiName: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
+        val poi_name: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
         // this gives error
-        val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poiName)
+        val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poi_name)
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
             root.findViewById<TextView>(R.id.poi_description).text = it.description
@@ -59,12 +61,12 @@ class PoiFragment : Fragment() {
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
+        reviewViewModel.getAllReviewsOfPoiByRating(poi_name).observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }
         }
 
         val reviewLiveData: LiveData<List<Review>> =
-            reviewViewModel.getAllReviewsOfPoiByRating(poiName)
+            reviewViewModel.getAllReviewsOfPoiByRating(poi_name)
         reviewLiveData.observe(viewLifecycleOwner) { reviews ->
             reviews.let { adapter.submitList(it) }
         }
@@ -104,6 +106,19 @@ class PoiFragment : Fragment() {
             return null
 
         return Review(username, poiName, rating, text)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        super.onViewCreated(view, savedInstanceState)
+
+        // callback definition
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navController = findNavController()
+                navController.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     override fun onDestroyView() {
