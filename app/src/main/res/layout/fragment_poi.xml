@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/poi_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@tools:sample/cities"
+            android:textAlignment="center"
+            android:textSize="@dimen/fragment_poi_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/poi_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@tools:sample/cities"
-                android:textAlignment="center"
-                android:textSize="@dimen/fragment_poi_title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText" />
+        <ImageView
+            android:id="@+id/poi_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true" />
 
-            <ImageView
-                android:id="@+id/poi_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:adjustViewBounds="true" />
+        <include
+            android:id="@+id/accessibility_banner"
+            layout="@layout/accessibility_banner" />
 
-            <include
-                android:id="@+id/accessibility_banner"
-                layout="@layout/accessibility_banner" />
+        <TextView
+            android:id="@+id/poi_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@tools:sample/lorem[100]"
+            android:textSize="@dimen/fragment_poi_description" />
 
-            <TextView
-                android:id="@+id/poi_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@tools:sample/lorem[100]"
-                android:textSize="@dimen/fragment_poi_description" />
+        <include layout="@layout/reviews_layout" />
 
-            <include layout="@layout/reviews_layout" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</RelativeLayout>
+</ScrollView>
