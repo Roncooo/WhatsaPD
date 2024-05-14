@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.opencsv.CSVReader
 import it.unipd.dei.esp.whatsapd.Converters
 import it.unipd.dei.esp.whatsapd.Poi
 import it.unipd.dei.esp.whatsapd.PoiDao
@@ -15,7 +16,9 @@ import it.unipd.dei.esp.whatsapd.ReviewDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.Date
+
 
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -69,26 +72,49 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             }
         }
 
-        // Questo serve per la prima volta che eseguo
+        // For the first time the app is executed
         suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao) {
             // Delete all content here.
             poiDao.deleteAll()
 
-            // Add sample words.
-            var poi = Poi(
-                "Prato della valle",
-                45.3984171,
-                11.8765285,
-                "Prato della valle è la piazza più grande d'europa e bla bla bla",
-                R.drawable.prato_della_valle,
-                false,
-                true,
-                true,
-                false
-            )
-            poiDao.insert(poi)
+            try {
+                val inputStream = this.javaClass.classLoader.getResourceAsStream("res/raw/pois.csv")
 
-            poi = Poi(
+                CSVReader(inputStream.reader()).use { reader ->
+                    var line: Array<String?>?
+                    while (reader.readNext().also { line = it } != null) {
+                        val name = line?.get(0).toString()
+                        val latitude = line?.get(1)?.toDouble()!!
+                        val longitude = line?.get(2)?.toDouble()!!
+                        val description = line?.get(3).toString()
+                        val photo_path = line?.get(4)
+                            .toString()   // è stringa, va trasformato anche nel db in stringa
+                        val favourite = line?.get(5).toBoolean()
+                        val wheelchair_accessible = line?.get(6).toBoolean()
+                        val deaf_accessible = line?.get(7).toBoolean()
+                        val blind_accessible = line?.get(8).toBoolean()
+
+                        val poi = Poi(
+                            name,
+                            latitude,
+                            longitude,
+                            description,
+                            R.drawable.prato_della_valle,   // todo change to string
+                            favourite,
+                            wheelchair_accessible,
+                            deaf_accessible,
+                            blind_accessible
+                        )
+                        poiDao.insert(poi)
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
+            // Add sample pois
+            var poi = Poi(
                 "Orto Botanico",
                 0.1,
                 0.1,
