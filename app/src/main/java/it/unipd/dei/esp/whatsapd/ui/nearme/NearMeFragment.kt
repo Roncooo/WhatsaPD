@@ -30,7 +30,7 @@ class NearMeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        
+
         activity?.invalidateOptionsMenu()
 
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
@@ -39,7 +39,7 @@ class NearMeFragment : Fragment() {
         val buttonPosition: Button = binding.nearMeButton
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
         val navController = findNavController()
-        val adapter = PoiListRecyclerViewAdapter(navController)
+        val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
