@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -50,19 +51,27 @@ class PoiFragment : Fragment() {
 
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
-            root.findViewById<TextView>(R.id.poi_description).text = it.description
+            root.findViewById<WebView>(R.id.poi_description).loadData(it.description, "text/html", "UTF-8")
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
             //da prendere quando apro il poi
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
-
         }
 
         val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
         val adapter = ReviewListRecyclerViewAdapter()
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        /*val webView = root.findViewById<WebView>(R.id.poi_description)
+        val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        if (isDarkMode) {
+            webView.setBackgroundColor(resources.getColor(android.R.color.black))
+        } else {
+            webView.setBackgroundColor(resources.getColor(android.R.color.white))
+        }*/
+
 
         reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }

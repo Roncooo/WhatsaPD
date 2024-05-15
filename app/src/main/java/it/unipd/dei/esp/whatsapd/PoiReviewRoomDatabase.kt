@@ -6,18 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.opencsv.CSVReader
 import it.unipd.dei.esp.whatsapd.Converters
 import it.unipd.dei.esp.whatsapd.Poi
 import it.unipd.dei.esp.whatsapd.PoiDao
-import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.Review
 import it.unipd.dei.esp.whatsapd.ReviewDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.util.Date
 import it.unipd.dei.esp.whatsapd.CSVParser
 
 
@@ -87,7 +83,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             }
 
 
-            TODO("Same thing with reviews. Use Converters().fromTimestamp to read the string")
+            //TODO("Same thing with reviews. Use Converters().fromTimestamp to read the string")
 
 
             /**    // Add sample pois
