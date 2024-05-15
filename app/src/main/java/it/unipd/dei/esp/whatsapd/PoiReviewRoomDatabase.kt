@@ -88,7 +88,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                         val longitude = line?.get(2)?.toDouble()!!
                         val description = line?.get(3).toString()
                         val photo_path = line?.get(4)
-                            .toString()   // è stringa, va trasformato anche nel db in stringa
+                            .toString()
                         val favourite = line?.get(5).toBoolean()
                         val wheelchair_accessible = line?.get(6).toBoolean()
                         val deaf_accessible = line?.get(7).toBoolean()
@@ -111,6 +111,8 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+
+            TODO("Same thing with reviews. Use Converters().fromTimestamp to read the string")
 
 
             // Add sample pois

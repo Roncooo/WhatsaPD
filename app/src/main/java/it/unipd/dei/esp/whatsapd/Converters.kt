@@ -9,7 +9,7 @@ import java.util.Locale
 class Converters {
 
     var dateFormat = SimpleDateFormat(
-        "d MMM yyyy",
+        "dd/MM/yyyy",
         Locale.getDefault()
     )
 

@@ -23,7 +23,7 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
             reviewUsername.text = review.username
             reviewRatingbar.rating = review.rating.toFloat()
             reviewTextView.text = review.text
-            reviewDateTextView.text = review.date.toString()
+            reviewDateTextView.text = Converters().dateToTimestamp(review.date)
         }
 
         companion object {
