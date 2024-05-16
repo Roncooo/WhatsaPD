@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -16,7 +14,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -40,7 +37,6 @@ class PoiFragment : Fragment() {
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModelFactory((activity?.application as Application).repository)
     }
-    private val webViewStyle = "<style> p {text-align: justify;} </style>"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -58,8 +54,16 @@ class PoiFragment : Fragment() {
 
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
-            root.findViewById<WebView>(R.id.poi_description)
-                .loadData(webViewStyle + it.description, "text/html", "UTF-8")
+
+            val webView = root.findViewById<WebView>(R.id.poi_description)
+            webView.setBackgroundColor(Color.TRANSPARENT)
+            val html: String = addStyle(it.description)
+            webView.loadData(
+                html,
+                "text/html",
+                "UTF-8"
+            )
+
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
             //da prendere quando apro il poi
@@ -71,36 +75,6 @@ class PoiFragment : Fragment() {
         val adapter = ReviewListRecyclerViewAdapter()
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        val webView = root.findViewById<WebView>(R.id.poi_description)
-        webView.setBackgroundColor(Color.TRANSPARENT)
-
-        val isDarkMode =
-            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        if (isDarkMode) {
-            val webSettings: WebSettings = webView.settings
-            webSettings.javaScriptEnabled = true
-        } else {
-            webView.setBackgroundColor(resources.getColor(android.R.color.white))
-        }
-        val textColor: Int = if (isDarkMode) android.R.color.white else android.R.color.black
-
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-
-                // Ottieni il valore esadecimale del colore del testo
-                val textColorHex =
-                    String.format("#%06X", ContextCompat.getColor(requireContext(), textColor))
-
-                // Esegui uno script JavaScript per cambiare il colore del testo nel DOM
-                val js = "document.body.style.color = '$textColorHex';"
-                webView.evaluateJavascript(js, null)
-                //{ result ->
-                //  Log.d("WebView", "Script executed: $result")}
-            }
-        }
-
 
         reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }
@@ -125,6 +99,16 @@ class PoiFragment : Fragment() {
     }
 
 
+    private fun addStyle(innerHtml: String): String {
+        var style = "<style> p {text-align: justify;} *{color:"
+        val isDarkMode =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        val textColor = if (isDarkMode) "white" else "black"
+        style = style + textColor + "}</style>"
+        return style + innerHtml
+    }
+
+
     private fun clearNewReview(root: View) {
         val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)
         val reviewTextEditText = root.findViewById<EditText>(R.id.new_review_text)
@@ -144,8 +128,7 @@ class PoiFragment : Fragment() {
         val text: String = reviewTextEditText.text.toString()
         val rating: Byte = reviewRatingBar.rating.toInt().toByte()
 
-        if (username == "" || text == "")
-            return null
+        if (username == "" || text == "") return null
 
         return Review(username, poiName, rating, text)
     }
