@@ -43,8 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textSize="@dimen/fragment_poi_description"
-            android:textAlignment="viewEnd"/>
+            android:textSize="@dimen/fragment_poi_description" />
 
         <include layout="@layout/reviews_layout" />
 

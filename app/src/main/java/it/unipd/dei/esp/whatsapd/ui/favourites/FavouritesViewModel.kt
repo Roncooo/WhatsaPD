@@ -7,9 +7,9 @@ import androidx.lifecycle.asLiveData
 import it.unipd.dei.esp.whatsapd.Poi
 import it.unipd.dei.esp.whatsapd.PoiReviewRepository
 
-class FavouritesViewModel(private val repository: PoiReviewRepository): ViewModel() {
+class FavouritesViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
-    val favPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
+    val favPois: LiveData<List<Poi>> = repository.favouritePoiAlphabetized.asLiveData()
 
 }
 

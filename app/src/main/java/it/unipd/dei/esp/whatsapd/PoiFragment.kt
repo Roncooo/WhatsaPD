@@ -1,6 +1,7 @@
 package it.unipd.dei.esp.whatsapd
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class PoiFragment : Fragment() {
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModelFactory((activity?.application as Application).repository)
     }
+    private val webViewStyle = "<style> p {text-align: justify;} </style>"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,7 +58,8 @@ class PoiFragment : Fragment() {
 
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
-            root.findViewById<WebView>(R.id.poi_description).loadData(it.description, "text/html", "UTF-8")
+            root.findViewById<WebView>(R.id.poi_description)
+                .loadData(webViewStyle + it.description, "text/html", "UTF-8")
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
             //da prendere quando apro il poi
@@ -70,35 +73,33 @@ class PoiFragment : Fragment() {
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
         val webView = root.findViewById<WebView>(R.id.poi_description)
-        val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        webView.setBackgroundColor(Color.TRANSPARENT)
+
+        val isDarkMode =
+            resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         if (isDarkMode) {
-            webView.setBackgroundColor(resources.getColor(android.R.color.black))
-            val webSettings: WebSettings = webView.getSettings()
+            val webSettings: WebSettings = webView.settings
             webSettings.javaScriptEnabled = true
         } else {
             webView.setBackgroundColor(resources.getColor(android.R.color.white))
         }
-        val textColor: Int = if (isDarkMode) {
-            android.R.color.white // Colore del testo per dark mode
-        } else {
-            android.R.color.black // Colore del testo per light mode
-        }
+        val textColor: Int = if (isDarkMode) android.R.color.white else android.R.color.black
 
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
 
                 // Ottieni il valore esadecimale del colore del testo
-                val textColorHex = String.format("#%06X", ContextCompat.getColor(requireContext(), textColor))
+                val textColorHex =
+                    String.format("#%06X", ContextCompat.getColor(requireContext(), textColor))
 
                 // Esegui uno script JavaScript per cambiare il colore del testo nel DOM
                 val js = "document.body.style.color = '$textColorHex';"
                 webView.evaluateJavascript(js, null)
                 //{ result ->
-                  //  Log.d("WebView", "Script executed: $result")}
+                //  Log.d("WebView", "Script executed: $result")}
             }
         }
-
 
 
         reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
