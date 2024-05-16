@@ -2,7 +2,6 @@ package it.unipd.dei.esp.whatsapd
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,8 +93,9 @@ class PoiFragment : Fragment() {
 
                 // Esegui uno script JavaScript per cambiare il colore del testo nel DOM
                 val js = "document.body.style.color = '$textColorHex';"
-                webView.evaluateJavascript(js) { result ->
-                    Log.d("WebView", "Script executed: $result")}
+                webView.evaluateJavascript(js, null)
+                //{ result ->
+                  //  Log.d("WebView", "Script executed: $result")}
             }
         }
 
