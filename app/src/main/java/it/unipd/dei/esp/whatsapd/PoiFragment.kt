@@ -1,10 +1,14 @@
 package it.unipd.dei.esp.whatsapd
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -12,6 +16,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -20,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
+
 
 class PoiFragment : Fragment() {
 
@@ -64,13 +70,35 @@ class PoiFragment : Fragment() {
         reviewsRecyclerView.adapter = adapter
         reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        /*val webView = root.findViewById<WebView>(R.id.poi_description)
+        val webView = root.findViewById<WebView>(R.id.poi_description)
         val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         if (isDarkMode) {
             webView.setBackgroundColor(resources.getColor(android.R.color.black))
+            val webSettings: WebSettings = webView.getSettings()
+            webSettings.javaScriptEnabled = true
         } else {
             webView.setBackgroundColor(resources.getColor(android.R.color.white))
-        }*/
+        }
+        val textColor: Int = if (isDarkMode) {
+            android.R.color.white // Colore del testo per dark mode
+        } else {
+            android.R.color.black // Colore del testo per light mode
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+
+                // Ottieni il valore esadecimale del colore del testo
+                val textColorHex = String.format("#%06X", ContextCompat.getColor(requireContext(), textColor))
+
+                // Esegui uno script JavaScript per cambiare il colore del testo nel DOM
+                val js = "document.body.style.color = '$textColorHex';"
+                webView.evaluateJavascript(js) { result ->
+                    Log.d("WebView", "Script executed: $result")}
+            }
+        }
+
 
 
         reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
