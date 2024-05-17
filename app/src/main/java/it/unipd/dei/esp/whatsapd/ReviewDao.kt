@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ReviewDao {
 
-    @Query("SELECT * FROM REVIEW_TABLE WHERE LOWER(POI)=LOWER(:poi_name) ORDER BY RATING ASC")
+    @Query("SELECT * FROM REVIEW_TABLE WHERE LOWER(POI)=LOWER(:poi_name) ORDER BY RATING DESC")
     fun getAllReviewsOfPoiByRating(poi_name: String): Flow<List<Review>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
