@@ -11,6 +11,10 @@ class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
 
+    fun getPoisByNameAlphabetized(searchedName: String): LiveData<List<Poi>> {
+        return repository.getPoisByNameAlphabetized(searchedName).asLiveData()
+    }
+
 }
 
 class HomeViewModelFactory(private val repository: PoiReviewRepository) :

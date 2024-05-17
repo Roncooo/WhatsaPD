@@ -1,11 +1,12 @@
 package it.unipd.dei.esp.whatsapd.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +19,8 @@ import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
+
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -27,6 +29,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModelFactory((activity?.application as Application).repository)
     }
+    private lateinit var adapter: PoiListRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,11 +41,10 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.poiRecyclerView
-        val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
+        adapter = PoiListRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             GridLayoutManager(activity, resources.getInteger(R.integer.grid_column_count))
-
 
         homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
             // this is necessary to let the adapter insert the banner at the beginning of the recycler view
@@ -55,33 +57,54 @@ class HomeFragment : Fragment() {
         }
 
 
-        view?.findViewById<SearchView>(R.id.search)
-            ?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(searchString: String?): Boolean {
-                    Log.e("Prova", "ok")
-                    var _searchString: String = searchString ?: ""/*
-                    homeViewModel.getAllPoisByName(_searchString)
-                        .observe(viewLifecycleOwner) { pois ->
-                            pois.let { adapter.submitList(it) }
-                        }
-
-                     */
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    // Chiama la funzione per filtrare la lista quando il testo cambia
-                    //adapter.filterPoi(newText.orEmpty().trim())
-                    Log.e("Prova", "ok")
-                    return true
-                }
-            })
-
         return root
+    }
+
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            homeViewModel.getPoisByNameAlphabetized(query).observe(viewLifecycleOwner) { pois ->
+                val dummy = Poi(
+                    "", 0.0, 0.0, "", 0, true, true, true, true
+                )
+                val list = listOf(dummy) + pois
+                list.let { adapter.submitList(it) }
+            }
+        }
+        return true
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    // Functions for the search bar
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText != null) {
+            homeViewModel.getPoisByNameAlphabetized(newText).observe(viewLifecycleOwner) { pois ->
+                val dummy = Poi(
+                    "", 0.0, 0.0, "", 0, true, true, true, true
+                )
+                val list = listOf(dummy) + pois
+                list.let { adapter.submitList(it) }
+            }
+        }
+        return true
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar_home, menu)
+        val search = menu.findItem(R.id.search)
+        val searchView = search?.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+    }
+
+
 }

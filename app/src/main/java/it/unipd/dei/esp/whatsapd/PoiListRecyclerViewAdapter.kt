@@ -85,10 +85,6 @@ class PoiListRecyclerViewAdapter(
         } else throw IllegalArgumentException("Invalid viewType")
     }
 
-    fun filterPoi(searchTExt: String) {
-
-    }
-
 
     companion object {
 
