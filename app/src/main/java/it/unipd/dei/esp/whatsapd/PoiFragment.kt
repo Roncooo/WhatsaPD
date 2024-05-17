@@ -3,7 +3,10 @@ package it.unipd.dei.esp.whatsapd
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -151,4 +154,25 @@ class PoiFragment : Fragment() {
         _binding = null
     }
 
+    // Functions for the favourite button on the toolbar
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar_home, menu)
+        val favorite = menu.findItem(R.id.favorite)
+        favorite.setChecked(true)   // può servire per cambiare l'icona, al momento non serve a niente
+        favorite.setOnMenuItemClickListener {
+            Log.e("prova", "click sul cuore")
+
+            // todo qua bisogna fare la query per mettere come preferito il poi e cambiare l'icona
+
+            true
+        }
+    }
 }
+
+

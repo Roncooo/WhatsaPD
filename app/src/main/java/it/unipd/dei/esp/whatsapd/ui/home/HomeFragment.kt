@@ -19,7 +19,7 @@ import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
 
-class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
+class HomeFragment : Fragment() {
 
 
     private var _binding: FragmentHomeBinding? = null
@@ -61,38 +61,12 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            homeViewModel.getPoisByNameAlphabetized(query).observe(viewLifecycleOwner) { pois ->
-                val dummy = Poi(
-                    "", 0.0, 0.0, "", 0, true, true, true, true
-                )
-                val list = listOf(dummy) + pois
-                list.let { adapter.submitList(it) }
-            }
-        }
-        return true
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     // Functions for the search bar
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            homeViewModel.getPoisByNameAlphabetized(newText).observe(viewLifecycleOwner) { pois ->
-                val dummy = Poi(
-                    "", 0.0, 0.0, "", 0, true, true, true, true
-                )
-                val list = listOf(dummy) + pois
-                list.let { adapter.submitList(it) }
-            }
-        }
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
@@ -103,7 +77,35 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater.inflate(R.menu.top_app_bar_home, menu)
         val search = menu.findItem(R.id.search)
         val searchView = search?.actionView as SearchView
-        searchView.setOnQueryTextListener(this)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    homeViewModel.getPoisByNameAlphabetized(query)
+                        .observe(viewLifecycleOwner) { pois ->
+                            val dummy = Poi(
+                                "", 0.0, 0.0, "", 0, true, true, true, true
+                            )
+                            val list = listOf(dummy) + pois
+                            list.let { adapter.submitList(it) }
+                        }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    homeViewModel.getPoisByNameAlphabetized(newText)
+                        .observe(viewLifecycleOwner) { pois ->
+                            val dummy = Poi(
+                                "", 0.0, 0.0, "", 0, true, true, true, true
+                            )
+                            val list = listOf(dummy) + pois
+                            list.let { adapter.submitList(it) }
+                        }
+                }
+                return true
+            }
+        })
     }
 
 
