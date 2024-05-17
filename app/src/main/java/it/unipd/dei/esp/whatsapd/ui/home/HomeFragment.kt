@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.Poi
@@ -39,10 +38,10 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.poiRecyclerView
-        val navController = findNavController()
         val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager =
+            GridLayoutManager(activity, resources.getInteger(R.integer.grid_column_count))
 
 
         homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
@@ -59,7 +58,7 @@ class HomeFragment : Fragment() {
         view?.findViewById<SearchView>(R.id.search)
             ?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(searchString: String?): Boolean {
-                    Log.e("fanculo fulvio", "ok")
+                    Log.e("Prova", "ok")
                     var _searchString: String = searchString ?: ""/*
                     homeViewModel.getAllPoisByName(_searchString)
                         .observe(viewLifecycleOwner) { pois ->
@@ -73,7 +72,7 @@ class HomeFragment : Fragment() {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     // Chiama la funzione per filtrare la lista quando il testo cambia
                     //adapter.filterPoi(newText.orEmpty().trim())
-                    Log.e("fanculo fulvio", "ok")
+                    Log.e("Prova", "ok")
                     return true
                 }
             })

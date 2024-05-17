@@ -77,9 +77,8 @@ class PoiListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BannerViewHolder) {
-            val title = context.resources.getString(R.string.home_title)
-            val imageId = R.drawable.foto_pd_home
-            holder.bind(title, imageId)
+            // intentionally left blank
+            // layout home_banner is inflated, it already contains img and text
         } else if (holder is PoiViewHolder) {
             val current = getItem(position)
             holder.bind(current.name, current.photo_id)
