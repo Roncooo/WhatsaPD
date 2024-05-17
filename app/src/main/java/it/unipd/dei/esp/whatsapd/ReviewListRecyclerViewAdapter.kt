@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-
 class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = ALPHABETICAL_COMPARATOR) :
     ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
 
@@ -23,7 +22,7 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
             reviewUsername.text = review.username
             reviewRatingbar.rating = review.rating.toFloat()
             reviewTextView.text = review.text
-            reviewDateTextView.text = Converters().dateToTimestamp(review.date)
+            reviewDateTextView.text = Converters.dateToTimestamp(review.date)
         }
 
         companion object {

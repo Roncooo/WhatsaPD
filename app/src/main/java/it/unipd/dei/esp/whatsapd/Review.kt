@@ -26,6 +26,6 @@ class Review(
     @ColumnInfo(name = "rating") val rating: Byte,
     @ColumnInfo(name = "text") val text: String,
     @ColumnInfo(name = "date") val date: Date = Date(),
-    // autoGenerate manges the autoincrementing id so we don't have to
+    // autoGenerate manages the autoincrementing id so we don't have to
     @PrimaryKey(autoGenerate = true) val id: Long = 0
 )
