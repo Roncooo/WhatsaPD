@@ -3,10 +3,11 @@ package it.unipd.dei.esp.whatsapd
 import android.content.Context
 import com.opencsv.CSVReader
 import java.io.IOException
+import it.unipd.dei.esp.whatsapd.Converters
 
 class CSVParser {
 companion object {
-    fun fileParsing(context: Context): MutableList<Poi> {
+    fun poiParsing(context: Context): MutableList<Poi> {
         val poiList = mutableListOf<Poi>()
         try {
             val inputStream = this.javaClass.classLoader.getResourceAsStream("res/raw/pois.csv")
@@ -42,7 +43,6 @@ companion object {
                         deaf_accessible,
                         blind_accessible
                     )
-                    //poiDao.insert(poi)
                     poiList.add(poi)
                 }
             }
@@ -51,6 +51,40 @@ companion object {
         }
 
         return poiList
+    }
+
+    fun reviewParsing(context: Context): MutableList<Review>{
+        val reviewList = mutableListOf<Review>()
+        try{
+
+            val inputStream = this.javaClass.classLoader.getResourceAsStream("res/raw/reviews.csv")
+
+            CSVReader(inputStream.reader()).use { reader->
+                var line: Array<String>?
+                while(reader.readNext().also { line = it } != null){
+
+                    val username = line?.get(0).toString()
+                    val poi = line?.get(1).toString()
+                    val rating = line?.get(2)?.toByte()!!
+                    val text = line?.get(3).toString()
+                    val date = Converters.fromTimestamp(line?.get(4).toString())!!
+
+                    val review = Review(
+                        username,
+                        poi,
+                        rating,
+                        text,
+                        date,
+                     )
+
+                    reviewList.add(review)
+                }
+            }
+
+        } catch(e: IOException) {
+            e.printStackTrace()
+        }
+        return reviewList
     }
 }
 }
