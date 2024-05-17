@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import it.unipd.dei.esp.whatsapd.CSVParser
+import java.util.Date
 
 
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
@@ -75,124 +76,26 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             // Delete all content here.
             poiDao.deleteAll()
 
-            val poiList = CSVParser.fileParsing(context)
+            val poiList = CSVParser.poiParsing(context)
 
             while (poiList.isNotEmpty()) {
                 val poi = poiList.removeAt(0)
                 poiDao.insert(poi)
             }
 
+            val reviewList = CSVParser.reviewParsing(context)
 
-            //TODO("Same thing with reviews. Use Converters().fromTimestamp to read the string")
-
-
-            /**    // Add sample pois
-            var poi = Poi(
-            "Orto Botanico",
-            0.1,
-            0.1,
-            "È l'orto più bello d'europa e bla bla bla",
-            R.drawable.orto_botanico,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-            poi = Poi(
-            "Caffe pedrocchi",
-            0.1,
-            0.1,
-            "È il caffe più bello d'europa e bla bla bla",
-            R.drawable.caffe_pedrocchi,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-            poi = Poi(
-            "Cappella degli scrovegni",
-            0.1,
-            0.1,
-            "È la cappella più bella d'europa e bla bla bla",
-            R.drawable.cappella_degli_scrovegni,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-            poi = Poi(
-            "Porta portello",
-            45.0,
-            11.0,
-            "È la porta più bella d'europa e bla bla bla",
-            R.drawable.porta_portello,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-            poi = Poi(
-            "Torre dell'orologio",
-            45.0,
-            11.0,
-            "È l'orologio più bello d'europa e bla bla bla",
-            R.drawable.torre_dell_orologio,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-            poi = Poi(
-            "DEI",
-            45.0,
-            11.0,
-            "È il dipartimento più bello d'europa e bla bla bla",
-            R.drawable.facciata_dei,
-            true,
-            true,
-            true,
-            true
-            )
-            poiDao.insert(poi)
-
-            var review = Review(
-            username = "Pippo",
-            date = Date(),
-            poi = "Prato della valle",
-            rating = 5,
-            text = "Molto bello rilassarsi sotto agli alberi"
-            )
-            reviewDao.insert(review)
-
-            review = Review(
-            username = "Pluto",
-            date = Date(1912, 11, 4),
-            poi = "Prato della valle",
-            rating = 4,
-            text = "Che bello il mercato del mercoledì"
-            )
-            reviewDao.insert(review)
-
-            review = Review(
-            username = "Paperino",
-            date = Date(2034, 2, 17),
-            poi = "Porta portello",
-            rating = 5,
-            text = "Per me un golosino"
-            )
-            reviewDao.insert(review)
+            while (reviewList.isNotEmpty()) {
+                val review = reviewList.removeAt(0)
+                reviewDao.insert(review)
 
             }
-             **/
+            }
+
         }
 
 
     }
-}
+
 
 
