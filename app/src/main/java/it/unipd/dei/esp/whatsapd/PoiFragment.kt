@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -44,6 +45,7 @@ class PoiFragment : Fragment() {
     }
     lateinit var poiLiveData: LiveData<Poi>
     lateinit var poiName: String
+    private var favoriteMenuButton: MenuItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -66,7 +68,11 @@ class PoiFragment : Fragment() {
             )
 
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
-            val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
+
+            favoriteMenuButton?.setIcon(
+                if (it.favourite) R.drawable.baseline_favorite_24
+                else R.drawable.baseline_favorite_border_24
+            )
 
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
@@ -166,10 +172,11 @@ class PoiFragment : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_app_bar_home, menu)
-        val favorite = menu.findItem(R.id.favorite)
-        favorite.setChecked(true)   // può servire per cambiare l'icona, al momento non serve a niente
-        favorite.setOnMenuItemClickListener {
+        favoriteMenuButton = menu.findItem(R.id.favorite)!!
+        favoriteMenuButton!!.setChecked(true)   // può servire per cambiare l'icona, al momento non serve a niente
+        favoriteMenuButton!!.setOnMenuItemClickListener {
 
+            // set the new favourite state of the poi
             poiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
                 var obs = this
                 override fun onChanged(poi: Poi) {
@@ -180,11 +187,11 @@ class PoiFragment : Fragment() {
                 }
             }))
 
-            // todo qua bisogna fare la query per mettere come preferito il poi e cambiare l'icona
-
             true
         }
     }
+
+
 }
 
 
