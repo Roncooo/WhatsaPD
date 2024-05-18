@@ -3,7 +3,6 @@ package it.unipd.dei.esp.whatsapd
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -20,11 +19,14 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
+import kotlinx.coroutines.launch
 
 
 class PoiFragment : Fragment() {
@@ -40,21 +42,19 @@ class PoiFragment : Fragment() {
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModelFactory((activity?.application as Application).repository)
     }
+    lateinit var poiLiveData: LiveData<Poi>
+    lateinit var poiName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         activity?.invalidateOptionsMenu()
-
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-        val poiName: String = PoiFragmentArgs.fromBundle(requireArguments()).poiName
-        // this gives error
-        val poiLiveData: LiveData<Poi> = poiViewModel.getPoiByName(poiName)
-
+        poiName = PoiFragmentArgs.fromBundle(requireArguments()).poiName
+        poiLiveData = poiViewModel.getPoiByName(poiName)
         poiLiveData.observe(viewLifecycleOwner) {
             root.findViewById<TextView>(R.id.poi_title).text = it.name
 
@@ -62,14 +62,12 @@ class PoiFragment : Fragment() {
             webView.setBackgroundColor(Color.TRANSPARENT)
             val html: String = addStyle(it.description)
             webView.loadData(
-                html,
-                "text/html",
-                "UTF-8"
+                html, "text/html", "UTF-8"
             )
 
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
             val isFavourite: Boolean = it.favourite // todo use this to set the app bar icon
-            //da prendere quando apro il poi
+
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
         }
@@ -103,12 +101,17 @@ class PoiFragment : Fragment() {
 
 
     private fun addStyle(innerHtml: String): String {
-        var style = "<style> p {text-align: justify;} *{color:"
+        val styleStart = "<style>"
+        val styleEnd = "</style>"
+        val pStyle = "p {text-align: justify}"
+
+        var colorStyle = "*{color:"
         val isDarkMode =
             resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         val textColor = if (isDarkMode) "white" else "black"
-        style = style + textColor + "}</style>"
-        return style + innerHtml
+        colorStyle = "$colorStyle$textColor}"
+
+        return styleStart + pStyle + colorStyle + styleEnd + innerHtml
     }
 
 
@@ -166,7 +169,16 @@ class PoiFragment : Fragment() {
         val favorite = menu.findItem(R.id.favorite)
         favorite.setChecked(true)   // può servire per cambiare l'icona, al momento non serve a niente
         favorite.setOnMenuItemClickListener {
-            Log.e("prova", "click sul cuore")
+
+            poiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
+                var obs = this
+                override fun onChanged(poi: Poi) {
+                    lifecycleScope.launch {
+                        poiViewModel.changeFavourite(poiName, !poi.favourite)
+                        poiLiveData.removeObserver(obs)
+                    }
+                }
+            }))
 
             // todo qua bisogna fare la query per mettere come preferito il poi e cambiare l'icona
 

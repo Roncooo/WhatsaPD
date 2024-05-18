@@ -19,6 +19,22 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
         return repository.getPoisByNameAlphabetized(searchString).asLiveData()
     }
 
+    suspend fun changeFavourite(poiName: String, newFavouriteValue: Boolean) {
+        /*
+                var poiLiveData = getPoiByName(poiName)
+                poiLiveData.observe()(object : Observer<Poi> {
+                    var obs = this
+                    override fun onChanged(poi: Poi) {
+                        viewModelScope.launch {
+                            repository.updateFavourite(poiName, !poi.favourite)
+                            poiLiveData.removeObserver(obs)
+                        }
+                    }
+                })
+        */
+        repository.updateFavourite(poiName, newFavouriteValue)
+    }
+
     fun insert(poi: Poi) = viewModelScope.launch {
         repository.insert(poi)
     }

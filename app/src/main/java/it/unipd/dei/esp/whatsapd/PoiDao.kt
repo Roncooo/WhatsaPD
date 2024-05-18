@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -32,8 +31,8 @@ interface PoiDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(poi: Poi)
 
-    @Update
-    suspend fun updateFavourite(poi: Poi)
+    @Query("UPDATE POI_TABLE SET FAVOURITE = :newFavouriteValue WHERE name = :poiName")
+    suspend fun updateFavourite(poiName: String, newFavouriteValue: Boolean)
 
     @Query("DELETE FROM POI_TABLE")
     suspend fun deleteAll()

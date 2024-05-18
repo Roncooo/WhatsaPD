@@ -30,8 +30,8 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
     }
 
     @WorkerThread
-    suspend fun updateFavourite(poi: Poi) {
-        poiDao.updateFavourite(poi)
+    suspend fun updateFavourite(poiName: String, newFavouriteValue: Boolean) {
+        poiDao.updateFavourite(poiName, newFavouriteValue)
     }
 
     @WorkerThread
