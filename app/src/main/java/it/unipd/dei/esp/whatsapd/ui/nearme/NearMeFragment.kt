@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.PoiListRecyclerViewAdapter
@@ -41,7 +41,7 @@ class NearMeFragment : Fragment() {
         val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
-            GridLayoutManager(activity, resources.getInteger(R.integer.grid_column_count))
+            LinearLayoutManager(activity)
 
         buttonPosition.setOnClickListener {
             // nearmeViewModel.update()

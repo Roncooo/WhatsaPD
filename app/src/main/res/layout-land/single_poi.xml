@@ -2,32 +2,34 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="15dp"
-    app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/poi_image"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
         <TextView
             android:id="@+id/poi_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="5dp"
             android:text="Cappella degli Scrovegni"
             android:textAlignment="center"
-            android:textSize="@dimen/poi_card_name"
+            android:textSize="@dimen/poi_card_name_land"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>

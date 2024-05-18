@@ -171,7 +171,6 @@ class PoiFragment : Fragment() {
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_app_bar_home, menu)
         favoriteMenuButton = menu.findItem(R.id.favorite)!!
         favoriteMenuButton!!.setChecked(true)   // può servire per cambiare l'icona, al momento non serve a niente
         favoriteMenuButton!!.setOnMenuItemClickListener {

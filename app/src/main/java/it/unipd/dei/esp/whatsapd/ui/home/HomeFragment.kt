@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.Poi
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
         adapter = PoiListRecyclerViewAdapter(requireContext(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
-            GridLayoutManager(activity, resources.getInteger(R.integer.grid_column_count))
+            LinearLayoutManager(activity)
 
         homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
             // this is necessary to let the adapter insert the banner at the beginning of the recycler view
@@ -74,7 +74,6 @@ class HomeFragment : Fragment() {
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_app_bar_home, menu)
         val search = menu.findItem(R.id.search)
         val searchView = search?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
