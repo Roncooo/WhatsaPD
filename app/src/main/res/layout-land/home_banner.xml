@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/home_banner_photo"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@drawable/foto_pd_home_land"
