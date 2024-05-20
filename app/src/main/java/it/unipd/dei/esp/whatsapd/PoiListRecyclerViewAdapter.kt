@@ -17,7 +17,7 @@ import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
 class PoiListRecyclerViewAdapter(
     private val context: Context,
     private val fragment: Fragment,
-    comparator: DiffUtil.ItemCallback<Poi> = ALPHABETICAL_COMPARATOR
+    comparator: DiffUtil.ItemCallback<Poi> = POI_COMPARATOR
 ) : ListAdapter<Poi, RecyclerView.ViewHolder>(comparator) {
 
     // ViewHolder per contenere le viste degli elementi
@@ -91,17 +91,20 @@ class PoiListRecyclerViewAdapter(
         private val BANNER_VIEW_TYPE = 0
         private val POI_VIEW_TYPE = 1
 
-        private val ALPHABETICAL_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
+        private val POI_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
             override fun areItemsTheSame(oldItem: Poi, newItem: Poi): Boolean {
-                return oldItem === newItem
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(oldItem: Poi, newItem: Poi): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.latitude == newItem.latitude && oldItem.longitude == newItem.longitude && oldItem.description == newItem.description && oldItem.photo_id == newItem.photo_id && oldItem.favourite == newItem.favourite && oldItem.deaf_accessible == newItem.deaf_accessible && oldItem.wheelchair_accessible == newItem.wheelchair_accessible && oldItem.blind_accessible == newItem.blind_accessible
+
             }
         }
     }
 }
+
+
 
 
 

@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = ALPHABETICAL_COMPARATOR) :
+
+class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR) :
     ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
 
     // ViewHolder per contenere le viste degli elementi
@@ -27,9 +28,8 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 
         companion object {
             fun create(parent: ViewGroup): ReviewViewHolder {
-                val view: View =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.single_review, parent, false)
+                val view: View = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.single_review, parent, false)
                 return ReviewViewHolder(view)
             }
         }
@@ -46,13 +46,13 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
     }
 
     companion object {
-        private val ALPHABETICAL_COMPARATOR = object : DiffUtil.ItemCallback<Review>() {
+        private val REVIEW_COMPARATOR = object : DiffUtil.ItemCallback<Review>() {
             override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean {
-                return oldItem === newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Review, newItem: Review): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.username == newItem.username && oldItem.poi == newItem.poi && oldItem.rating == newItem.rating && oldItem.text == newItem.text && oldItem.date == newItem.date
             }
         }
     }
