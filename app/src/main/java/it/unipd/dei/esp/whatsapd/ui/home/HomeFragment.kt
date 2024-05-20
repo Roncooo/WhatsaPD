@@ -87,6 +87,7 @@ class HomeFragment : Fragment() {
                             val list = listOf(dummy) + pois
                             list.let { adapter.submitList(it) }
                         }
+                    searchView.clearFocus()
                 }
                 return true
             }
