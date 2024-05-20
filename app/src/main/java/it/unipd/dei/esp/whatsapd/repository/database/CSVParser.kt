@@ -1,9 +1,8 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.repository.database
 
 import android.content.Context
 import com.opencsv.CSVReader
 import java.io.IOException
-import it.unipd.dei.esp.whatsapd.Converters
 
 class CSVParser {
 companion object {

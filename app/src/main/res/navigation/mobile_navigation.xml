@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/poi_fragment"
-        android:name="it.unipd.dei.esp.whatsapd.PoiFragment"
+        android:name="it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment"
         android:label="@string/menu_poi"
         tools:layout="@layout/fragment_near_me">
 

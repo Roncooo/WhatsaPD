@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import it.unipd.dei.esp.whatsapd.Poi
-import it.unipd.dei.esp.whatsapd.PoiReviewRepository
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 
 class NearMeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample
+package it.unipd.dei.esp.whatsapd.repository.database
 
 import android.content.Context
 import androidx.room.Database
@@ -6,16 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import it.unipd.dei.esp.whatsapd.Converters
-import it.unipd.dei.esp.whatsapd.Poi
-import it.unipd.dei.esp.whatsapd.PoiDao
-import it.unipd.dei.esp.whatsapd.Review
-import it.unipd.dei.esp.whatsapd.ReviewDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import it.unipd.dei.esp.whatsapd.CSVParser
-import java.util.Date
 
 
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)

@@ -1,7 +1,11 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.repository
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.repository.database.PoiDao
+import it.unipd.dei.esp.whatsapd.repository.database.Review
+import it.unipd.dei.esp.whatsapd.repository.database.ReviewDao
 import kotlinx.coroutines.flow.Flow
 
 class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: ReviewDao) {

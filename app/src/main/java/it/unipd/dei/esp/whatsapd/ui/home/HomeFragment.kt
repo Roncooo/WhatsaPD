@@ -12,8 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.Poi
-import it.unipd.dei.esp.whatsapd.PoiListRecyclerViewAdapter
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.ui.poi.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel

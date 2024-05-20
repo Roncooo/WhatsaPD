@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.repository.database.Converters
+import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.repository.database.Review
 
 class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR) :
     ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {

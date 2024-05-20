@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.repository.database
 
 import androidx.room.TypeConverter
 import java.text.SimpleDateFormat

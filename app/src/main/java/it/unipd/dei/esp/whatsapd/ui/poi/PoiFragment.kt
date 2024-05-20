@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.content.res.Configuration
 import android.graphics.Color
@@ -25,7 +25,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
+import it.unipd.dei.esp.whatsapd.repository.database.Review
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 import kotlinx.coroutines.launch
 

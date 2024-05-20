@@ -1,8 +1,10 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.view.View
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.R
 
 class AccessibilityBannerAdapter {
     class AccessibilityBannerViewHolder(val cardView: CardView) {

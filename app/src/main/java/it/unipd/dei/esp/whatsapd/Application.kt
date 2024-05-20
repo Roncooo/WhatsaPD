@@ -1,7 +1,8 @@
 package it.unipd.dei.esp.whatsapd
 
 import android.app.Application
-import com.example.android.roomwordssample.PoiReviewRoomDatabase
+import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
+import it.unipd.dei.esp.whatsapd.repository.database.PoiReviewRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

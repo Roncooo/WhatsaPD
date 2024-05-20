@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.repository.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

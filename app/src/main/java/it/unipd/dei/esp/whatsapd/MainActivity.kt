@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import it.unipd.dei.esp.whatsapd.databinding.ActivityMainBinding
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
+import it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment
 
 class MainActivity : AppCompatActivity() {
 

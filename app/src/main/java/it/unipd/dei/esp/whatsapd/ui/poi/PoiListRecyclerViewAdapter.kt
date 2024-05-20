@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
 

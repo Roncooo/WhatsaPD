@@ -1,10 +1,12 @@
-package it.unipd.dei.esp.whatsapd
+package it.unipd.dei.esp.whatsapd.ui.poi
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
+import it.unipd.dei.esp.whatsapd.repository.database.Review
 import kotlinx.coroutines.launch
 
 
