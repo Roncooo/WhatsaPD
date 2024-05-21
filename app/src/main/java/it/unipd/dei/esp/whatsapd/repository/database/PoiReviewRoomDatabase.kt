@@ -10,7 +10,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+/**
+ * Defines the database containing Poi and review records, extends class RoomDatabase
+ */
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PoiReviewRoomDatabase : RoomDatabase() {
@@ -18,9 +20,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
     abstract fun poiDao(): PoiDao
     abstract fun reviewDao(): ReviewDao
 
-    // The companion object makes the variable and the function static
     companion object {
-
         @Volatile
         private var INSTANCE: PoiReviewRoomDatabase? = null
 
@@ -47,7 +47,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
     }
 
 
-    // serve solo per chiamare popuateDatabase all'interno di una coroutine
+    // necessary in order to call fun populateDatabase(...) inside a coroutine
     private class PoiReviewDatabaseCallback(
         private val scope: CoroutineScope,
         private val context: Context
@@ -55,8 +55,6 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            // If you want to keep the data through app restarts,
-            // comment out the following line.
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
                     populateDatabase(database.poiDao(), database.reviewDao(), context)
@@ -64,8 +62,10 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
             }
         }
 
-        // For the first time the app is executed
-        suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao, context: Context ) {
+        /**
+         * Is called the first time the database is initiated, populates the database
+         */
+        suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao, context: Context) {
             // Delete all content here.
             poiDao.deleteAll()
 
@@ -83,12 +83,12 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
                 reviewDao.insert(review)
 
             }
-            }
-
         }
 
-
     }
+
+
+}
 
 
 
