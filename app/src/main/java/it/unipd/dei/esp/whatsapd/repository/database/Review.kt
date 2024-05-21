@@ -6,6 +6,10 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.Date
 
+/**
+ * Defines the table "Review" in the database where each item rappresents a different review
+ */
+
 /*
 parentColumns is the name of the column of the other table
 childColumns is the name of the column of this table
@@ -19,7 +23,6 @@ onDelete CASCADE means that when a Poi is deleted, all its Reviews will be delet
         onDelete = ForeignKey.CASCADE
     )]
 )
-
 class Review(
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "poi") val poi: String,
