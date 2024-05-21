@@ -1,4 +1,4 @@
-package it.unipd.dei.esp.whatsapd.ui.poi
+package it.unipd.dei.esp.whatsapd.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

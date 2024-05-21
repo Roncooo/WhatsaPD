@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.ui.poi.PoiListRecyclerViewAdapter
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.databinding.FragmentFavouritesBinding
 
 class FavouritesFragment : Fragment() {

@@ -31,6 +31,7 @@ import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
+import it.unipd.dei.esp.whatsapd.ui.adapters.ReviewListRecyclerViewAdapter
 import kotlinx.coroutines.launch
 
 
