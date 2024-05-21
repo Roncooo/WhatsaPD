@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        // Ottieni il fragment corrente
-
-        when (supportFragmentManager.fragments[0].childFragmentManager.fragments[0]) { //current fragment
+        //in each fragment set the icons in the app bar
+        //get the current fragment
+        when (supportFragmentManager.fragments[0].childFragmentManager.fragments[0]) {
             is PoiFragment -> {
 
                 menu.findItem(R.id.favorite)?.isVisible = true
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> {
-                // Altri fragment, nascondi entrambe le icone
+                //other fragments, hide both icons
                 menu.findItem(R.id.favorite)?.isVisible = false
                 menu.findItem(R.id.search)?.isVisible = false
             }

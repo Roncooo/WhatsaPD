@@ -7,12 +7,18 @@ import androidx.lifecycle.asLiveData
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 
+/**
+ * ViewModel for managing favourite POIs.
+ */
 class FavouritesViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val favPois: LiveData<List<Poi>> = repository.favouritePoiAlphabetized.asLiveData()
 
 }
 
+/**
+ * Factory class for creating an instance of FavouritesViewModel.
+ */
 class FavouritesViewModelFactory(private val repository: PoiReviewRepository) :
 
     ViewModelProvider.Factory {

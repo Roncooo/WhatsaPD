@@ -18,34 +18,29 @@ class NearMeFragment : Fragment() {
 
     private var _binding: FragmentNearMeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private val nearmeViewModel: NearMeViewModel by viewModels {
         NearMeViewModelFactory((activity?.application as Application).repository)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
+        // Invalidate the options menu to ensure it's recreated when the fragment is displayed
         activity?.invalidateOptionsMenu()
-
+        // Inflate the layout for this fragment using View Binding
         _binding = FragmentNearMeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val buttonPosition: Button = binding.nearMeButton
+        // Initialize RecyclerView and its adapter
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
         val adapter = PoiListRecyclerViewAdapter( this, R.layout.single_poi_with_distance)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager =
-            LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        buttonPosition.setOnClickListener {
-            // nearmeViewModel.update()
-        }
+        buttonPosition.setOnClickListener {}
 
         nearmeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
             pois.let { adapter.submitList(it) }

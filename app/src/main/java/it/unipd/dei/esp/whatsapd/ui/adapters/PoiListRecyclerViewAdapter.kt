@@ -1,6 +1,5 @@
 package it.unipd.dei.esp.whatsapd.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,18 @@ import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
 
+/**
+ * Adapter for displaying a list of POIs (Points of Interest) in a RecyclerView.
+ */
 class PoiListRecyclerViewAdapter(
     private val fragment: Fragment,
     private val singlePoiLayout: Int,
     comparator: DiffUtil.ItemCallback<Poi> = POI_COMPARATOR
 ) : ListAdapter<Poi, RecyclerView.ViewHolder>(comparator) {
 
-    // ViewHolder per contenere le viste degli elementi
+    /**
+     * ViewHolder for holding the views of individual POI items.
+     */
     class PoiViewHolder(itemView: View, singlePoiLayout: Int) : RecyclerView.ViewHolder(itemView) {
         private val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
         private val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
@@ -38,6 +42,9 @@ class PoiListRecyclerViewAdapter(
         }
 
         companion object {
+            /**
+             * Creates a new instance of PoiViewHolder.
+             */
             fun create(parent: ViewGroup, singlePoiLayout: Int): PoiViewHolder {
                 val view: View =
                     LayoutInflater.from(parent.context).inflate(singlePoiLayout, parent, false)
@@ -47,7 +54,9 @@ class PoiListRecyclerViewAdapter(
     }
 
 
-    // ViewHolder per contenere le viste degli elementi
+    /**
+     * ViewHolder for holding the views of the banner item.
+     */
     class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val bannerImageView: ImageView = itemView.findViewById(R.id.home_banner_photo)
         private val bannerTitle: TextView = itemView.findViewById(R.id.home_banner_text)
@@ -61,11 +70,16 @@ class PoiListRecyclerViewAdapter(
         }
     }
 
+    /**
+     * Determines the view type for a given position.
+     */
     override fun getItemViewType(position: Int): Int {
         return if (fragment is HomeFragment && position == 0) BANNER_VIEW_TYPE else POI_VIEW_TYPE
     }
 
-    // Crea nuovi ViewHolder (invocato dal layout manager)
+    /**
+     * Creates new ViewHolder instances (called by the layout manager).
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == BANNER_VIEW_TYPE) return BannerViewHolder.create(parent)
         else if (viewType == POI_VIEW_TYPE) return PoiViewHolder.create(parent, singlePoiLayout)
@@ -88,6 +102,9 @@ class PoiListRecyclerViewAdapter(
         private val BANNER_VIEW_TYPE = 0
         private val POI_VIEW_TYPE = 1
 
+        /**
+         * Comparator for calculating the difference between two POI objects.
+         */
         private val POI_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
             override fun areItemsTheSame(oldItem: Poi, newItem: Poi): Boolean {
                 return oldItem.name == newItem.name

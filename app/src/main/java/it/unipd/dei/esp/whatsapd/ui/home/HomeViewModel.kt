@@ -7,6 +7,9 @@ import androidx.lifecycle.asLiveData
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 
+/**
+ * ViewModel for managing Home POIs.
+ */
 class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
@@ -17,6 +20,9 @@ class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
 }
 
+/**
+ * Factory class for creating an instance of HomeViewModel.
+ */
 class HomeViewModelFactory(private val repository: PoiReviewRepository) :
 
     ViewModelProvider.Factory {

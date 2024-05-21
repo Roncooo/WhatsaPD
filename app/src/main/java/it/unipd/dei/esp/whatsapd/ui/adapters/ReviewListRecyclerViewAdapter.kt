@@ -12,10 +12,12 @@ import it.unipd.dei.esp.whatsapd.repository.database.Converters
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 
+/**
+ * Adapter for displaying a list of reviews in a RecyclerView.
+ */
 class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR) :
     ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
 
-    // ViewHolder per contenere le viste degli elementi
     class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val reviewUsername: TextView = itemView.findViewById(R.id.review_username)
         private val reviewRatingbar: RatingBar = itemView.findViewById(R.id.review_rating_bar)
@@ -38,7 +40,9 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
         }
     }
 
-    // Crea nuovi ViewHolder (invocato dal layout manager)
+    /**
+     * Create new ViewHolders (invoked by the layout manager)
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
         return ReviewViewHolder.create(parent)
     }
@@ -49,18 +53,23 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
     }
 
     companion object {
+        /**
+         * Comparator for calculating the difference between two Review objects.
+         */
         private val REVIEW_COMPARATOR = object : DiffUtil.ItemCallback<Review>() {
+            /**
+             * Checks if two Review items are the same.
+             */
             override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean {
                 return oldItem.id == newItem.id
             }
-
+            /**
+             * Checks if the contents of two Review items are the same.
+             */
             override fun areContentsTheSame(oldItem: Review, newItem: Review): Boolean {
                 return oldItem.username == newItem.username && oldItem.poi == newItem.poi && oldItem.rating == newItem.rating && oldItem.text == newItem.text && oldItem.date == newItem.date
             }
         }
     }
 
-
 }
-
-

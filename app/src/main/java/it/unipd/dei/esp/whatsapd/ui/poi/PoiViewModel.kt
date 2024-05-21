@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
+    // LiveData holding a list of all POIs, ordered alphabetically.
     val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
 
     fun getPoiByName(name: String): LiveData<Poi> {
@@ -21,19 +22,10 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
         return repository.getPoisByNameAlphabetized(searchString).asLiveData()
     }
 
+    /**
+     * Changes the favourite status of a POI.
+     */
     suspend fun changeFavourite(poiName: String, newFavouriteValue: Boolean) {
-        /*
-                var poiLiveData = getPoiByName(poiName)
-                poiLiveData.observe()(object : Observer<Poi> {
-                    var obs = this
-                    override fun onChanged(poi: Poi) {
-                        viewModelScope.launch {
-                            repository.updateFavourite(poiName, !poi.favourite)
-                            poiLiveData.removeObserver(obs)
-                        }
-                    }
-                })
-        */
         repository.updateFavourite(poiName, newFavouriteValue)
     }
 
@@ -43,7 +35,9 @@ class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
 }
 
-
+/**
+ * Factory class for creating an instance of PoiViewModel.
+ */
 class PoiViewModelFactory(private val repository: PoiReviewRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PoiViewModel::class.java)) {
