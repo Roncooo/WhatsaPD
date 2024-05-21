@@ -1,5 +1,7 @@
 package it.unipd.dei.esp.whatsapd.ui.adapters
 
+import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,29 +12,28 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
+import java.lang.String.format
 
-/**
- * Adapter for displaying a list of POIs (Points of Interest) in a RecyclerView.
- */
-class PoiListRecyclerViewAdapter(
+class PoiDistanceListRecyclerViewAdapter(
     private val fragment: Fragment,
-    comparator: DiffUtil.ItemCallback<Poi> = POI_COMPARATOR
-) : ListAdapter<Poi, RecyclerView.ViewHolder>(comparator) {
+    private var context: Context,
+    comparator: DiffUtil.ItemCallback<PoiWrapper> = POI_WRAPPER_COMPARATOR
+) : ListAdapter<PoiWrapper, RecyclerView.ViewHolder>(comparator) {
 
-    /**
-     * ViewHolder for holding the views of individual POI items.
-     */
-    class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    // ViewHolder per contenere le viste degli elementi
+    class PoiViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
         private val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
 
-        fun bind(poi_name: String, image_id: Int) {
+        fun bind(poi_name: String, image_id: Int, distance: Double) {
             poiImageView.setImageResource(image_id)
             poiTitle.text = poi_name
+
+            val textDistance = format(context.getString(R.string.distance_text), distance)
+            itemView.findViewById<TextView>(R.id.poi_distance).text = textDistance
 
             itemView.setOnClickListener {
                 val action = HomeFragmentDirections.actionToPoiFragment(poi_name)
@@ -41,21 +42,16 @@ class PoiListRecyclerViewAdapter(
         }
 
         companion object {
-            /**
-             * Creates a new instance of PoiViewHolder.
-             */
-            fun create(parent: ViewGroup): PoiViewHolder {
-                val view: View =
-                    LayoutInflater.from(parent.context).inflate(R.layout.single_poi, parent, false)
-                return PoiViewHolder(view)
+            fun create(parent: ViewGroup, context: Context): PoiViewHolder {
+                val view: View = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.single_poi_with_distance, parent, false)
+                return PoiViewHolder(view, context)
             }
         }
     }
 
 
-    /**
-     * ViewHolder for holding the views of the banner item.
-     */
+    // ViewHolder per contenere le viste degli elementi
     class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val bannerImageView: ImageView = itemView.findViewById(R.id.home_banner_photo)
         private val bannerTitle: TextView = itemView.findViewById(R.id.home_banner_text)
@@ -69,19 +65,14 @@ class PoiListRecyclerViewAdapter(
         }
     }
 
-    /**
-     * Determines the view type for a given position.
-     */
     override fun getItemViewType(position: Int): Int {
         return if (fragment is HomeFragment && position == 0) BANNER_VIEW_TYPE else POI_VIEW_TYPE
     }
 
-    /**
-     * Creates new ViewHolder instances (called by the layout manager).
-     */
+    // Crea nuovi ViewHolder (invocato dal layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == BANNER_VIEW_TYPE) return BannerViewHolder.create(parent)
-        else if (viewType == POI_VIEW_TYPE) return PoiViewHolder.create(parent)
+        else if (viewType == POI_VIEW_TYPE) return PoiViewHolder.create(parent, context)
         else throw IllegalArgumentException("Invalid viewType")
     }
 
@@ -90,8 +81,11 @@ class PoiListRecyclerViewAdapter(
             // intentionally left blank
             // layout home_banner is inflated, it already contains img and text
         } else if (holder is PoiViewHolder) {
-            val current = getItem(position)
-            holder.bind(current.name, current.photo_id)
+            val currentPoiWrapper = getItem(position)
+            val currentPoi = currentPoiWrapper.poi
+            val currentDistance = currentPoiWrapper.distance
+            holder.bind(currentPoi.name, currentPoi.photo_id, currentDistance)
+
         } else throw IllegalArgumentException("Invalid viewType")
     }
 
@@ -101,17 +95,20 @@ class PoiListRecyclerViewAdapter(
         private val BANNER_VIEW_TYPE = 0
         private val POI_VIEW_TYPE = 1
 
-        /**
-         * Comparator for calculating the difference between two POI objects.
-         */
-        private val POI_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
-            override fun areItemsTheSame(oldItem: Poi, newItem: Poi): Boolean {
-                return oldItem.name == newItem.name
+        private val POI_WRAPPER_COMPARATOR = object : DiffUtil.ItemCallback<PoiWrapper>() {
+            override fun areItemsTheSame(oldItem: PoiWrapper, newItem: PoiWrapper): Boolean {
+                return oldItem.poi.name == newItem.poi.name
             }
 
-            override fun areContentsTheSame(oldItem: Poi, newItem: Poi): Boolean {
-                return oldItem.latitude == newItem.latitude && oldItem.longitude == newItem.longitude && oldItem.description == newItem.description && oldItem.photo_id == newItem.photo_id && oldItem.favourite == newItem.favourite && oldItem.deaf_accessible == newItem.deaf_accessible && oldItem.wheelchair_accessible == newItem.wheelchair_accessible && oldItem.blind_accessible == newItem.blind_accessible
-
+            override fun areContentsTheSame(oldItem: PoiWrapper, newItem: PoiWrapper): Boolean {
+                return oldItem.poi.latitude == newItem.poi.latitude &&
+                        oldItem.poi.longitude == newItem.poi.longitude &&
+                        oldItem.poi.description == newItem.poi.description &&
+                        oldItem.poi.photo_id == newItem.poi.photo_id &&
+                        oldItem.poi.favourite == newItem.poi.favourite &&
+                        oldItem.poi.deaf_accessible == newItem.poi.deaf_accessible &&
+                        oldItem.poi.wheelchair_accessible == newItem.poi.wheelchair_accessible &&
+                        oldItem.poi.blind_accessible == newItem.poi.blind_accessible
             }
         }
     }

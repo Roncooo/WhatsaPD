@@ -10,9 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.R
-import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.databinding.FragmentNearMeBinding
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiDistanceListRecyclerViewAdapter
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NearMeFragment : Fragment() {
 
@@ -24,6 +26,7 @@ class NearMeFragment : Fragment() {
         NearMeViewModelFactory((activity?.application as Application).repository)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -36,15 +39,20 @@ class NearMeFragment : Fragment() {
         val buttonPosition: Button = binding.nearMeButton
         // Initialize RecyclerView and its adapter
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
-        val adapter = PoiListRecyclerViewAdapter( this, R.layout.single_poi_with_distance)
+        val adapter = PoiDistanceListRecyclerViewAdapter(this, requireContext())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         buttonPosition.setOnClickListener {}
 
-        nearmeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
-            pois.let { adapter.submitList(it) }
+        val currentLatitude = 45.40921
+        val currentLongitude = 11.89431
+
+        GlobalScope.launch {
+            adapter.submitList(nearmeViewModel.getPoisByDistance(currentLatitude, currentLongitude))
         }
+
+
         return root
     }
 

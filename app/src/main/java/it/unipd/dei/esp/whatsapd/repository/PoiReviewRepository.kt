@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.Flow
  */
 class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: ReviewDao) {
 
+    // get all pois
+    fun getPoisUnordered(): List<Poi> = poiDao.getPoisUnordered()
+
+    // get all pois alphabetized
     val allPoiAlphabetized: Flow<List<Poi>> = poiDao.getAllPoisAlphabetized()
     val favouritePoiAlphabetized: Flow<List<Poi>> = poiDao.getFavouritePoisAlphabetized()
 

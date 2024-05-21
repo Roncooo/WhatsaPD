@@ -25,6 +25,9 @@ interface PoiDao {
     @Query("SELECT * FROM POI_TABLE")
     fun getAllPois(): Flow<List<Poi>>
 
+    @Query("SELECT * FROM POI_TABLE")
+    fun getPoisUnordered(): List<Poi>
+
     /**
      * Returns alphabetical ordered Pois with favourite = 1 where 1 means true
      */
