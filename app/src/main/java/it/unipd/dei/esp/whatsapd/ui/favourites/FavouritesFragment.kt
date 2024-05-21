@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.databinding.FragmentFavouritesBinding
 
@@ -34,7 +35,7 @@ class FavouritesFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.favRecyclerView
-        val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
+        val adapter = PoiListRecyclerViewAdapter( this, R.layout.single_poi)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(activity)

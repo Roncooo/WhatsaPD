@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.poiRecyclerView
-        adapter = PoiListRecyclerViewAdapter(requireContext(), this)
+        adapter = PoiListRecyclerViewAdapter( this, R.layout.single_poi)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(activity)

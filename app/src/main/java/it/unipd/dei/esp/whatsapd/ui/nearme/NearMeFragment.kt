@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.databinding.FragmentNearMeBinding
 
@@ -37,7 +38,7 @@ class NearMeFragment : Fragment() {
 
         val buttonPosition: Button = binding.nearMeButton
         val recyclerView: RecyclerView = binding.nearMeRecyclerView
-        val adapter = PoiListRecyclerViewAdapter(requireContext(), this)
+        val adapter = PoiListRecyclerViewAdapter( this, R.layout.single_poi_with_distance)
         recyclerView.adapter = adapter
         recyclerView.layoutManager =
             LinearLayoutManager(activity)

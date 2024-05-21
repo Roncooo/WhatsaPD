@@ -17,13 +17,13 @@ import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
 
 class PoiListRecyclerViewAdapter(
-    private val context: Context,
     private val fragment: Fragment,
+    private val singlePoiLayout: Int,
     comparator: DiffUtil.ItemCallback<Poi> = POI_COMPARATOR
 ) : ListAdapter<Poi, RecyclerView.ViewHolder>(comparator) {
 
     // ViewHolder per contenere le viste degli elementi
-    class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class PoiViewHolder(itemView: View, singlePoiLayout: Int) : RecyclerView.ViewHolder(itemView) {
         private val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
         private val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
 
@@ -38,10 +38,10 @@ class PoiListRecyclerViewAdapter(
         }
 
         companion object {
-            fun create(parent: ViewGroup): PoiViewHolder {
+            fun create(parent: ViewGroup, singlePoiLayout: Int): PoiViewHolder {
                 val view: View =
-                    LayoutInflater.from(parent.context).inflate(R.layout.single_poi, parent, false)
-                return PoiViewHolder(view)
+                    LayoutInflater.from(parent.context).inflate(singlePoiLayout, parent, false)
+                return PoiViewHolder(view, singlePoiLayout)
             }
         }
     }
@@ -51,11 +51,6 @@ class PoiListRecyclerViewAdapter(
     class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val bannerImageView: ImageView = itemView.findViewById(R.id.home_banner_photo)
         private val bannerTitle: TextView = itemView.findViewById(R.id.home_banner_text)
-
-        fun bind(title_string: String, image_id: Int) {
-            bannerImageView.setImageResource(image_id)
-            bannerTitle.text = title_string
-        }
 
         companion object {
             fun create(parent: ViewGroup): BannerViewHolder {
@@ -73,7 +68,7 @@ class PoiListRecyclerViewAdapter(
     // Crea nuovi ViewHolder (invocato dal layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == BANNER_VIEW_TYPE) return BannerViewHolder.create(parent)
-        else if (viewType == POI_VIEW_TYPE) return PoiViewHolder.create(parent)
+        else if (viewType == POI_VIEW_TYPE) return PoiViewHolder.create(parent, singlePoiLayout)
         else throw IllegalArgumentException("Invalid viewType")
     }
 

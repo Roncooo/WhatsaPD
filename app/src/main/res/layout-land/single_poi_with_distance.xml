@@ -21,14 +21,14 @@
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/poi_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="Cappella degli Scrovegni"
@@ -36,6 +36,8 @@
                 android:textSize="@dimen/poi_card_name_land"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/poi_distance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="HardcodedText" />
 
             <TextView
