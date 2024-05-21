@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
+/**
+ * Defines the table "Poi" in the database where each item rappresents a different Point of Interest
+ */
 @Entity(tableName = "poi_table")
 class Poi(
     @PrimaryKey @ColumnInfo(name = "name") val name: String,
