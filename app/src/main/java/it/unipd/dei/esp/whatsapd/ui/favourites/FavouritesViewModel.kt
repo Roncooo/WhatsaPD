@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
 
 /**
- * ViewModel for managing favourite POIs.
+ * ViewModel for managing favourite Pois.
  */
 class FavouritesViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 

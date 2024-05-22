@@ -26,11 +26,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
-import it.unipd.dei.esp.whatsapd.repository.database.Review
 import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.repository.database.Review
 import it.unipd.dei.esp.whatsapd.ui.adapters.ReviewListRecyclerViewAdapter
 import kotlinx.coroutines.launch
 
@@ -47,16 +47,17 @@ class PoiFragment : Fragment() {
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModelFactory((activity?.application as Application).repository)
     }
-    lateinit var poiLiveData: LiveData<Poi>
-    lateinit var poiName: String
-    private var favoriteMenuButton: MenuItem? = null
+    private lateinit var poiLiveData: LiveData<Poi>
+    private lateinit var poiName: String
+    private lateinit var favoriteMenuButton: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        //Invalidate the options menu to ensure it's recreated when the fragment is displayed
+        // Invalidates the options menu to ensure it's recreated when the fragment is displayed
         activity?.invalidateOptionsMenu()
-        // Inflate the layout for this fragment using View Binding
+
+        // Inflates the layout for this fragment using View Binding
         _binding = FragmentPoiBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -77,34 +78,26 @@ class PoiFragment : Fragment() {
 
             root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photo_id)
 
-            //Sets the icon of the favourite button in each POI, based on the value of boolean var favourite
-            favoriteMenuButton?.setIcon(
-                if (it.favourite) R.drawable.baseline_favorite_24
-                else R.drawable.baseline_favorite_border_24
-            )
             //Bind accessibility features to UI elements
             val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
             AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
+
+            // Initialize RecyclerView for the reviews and its adapter
+            val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
+            val adapter = ReviewListRecyclerViewAdapter()
+            reviewsRecyclerView.adapter = adapter
+            reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+            // Observe changes in reviews LiveData and update RecyclerView accordingly
+            val reviewLiveData: LiveData<List<Review>> =
+                reviewViewModel.getAllReviewsOfPoiByRating(poiName)
+            reviewLiveData.observe(viewLifecycleOwner) { reviews ->
+                reviews.let { adapter.submitList(it) }
+            }
+
         }
 
-        // Initialize RecyclerView and its adapter
-        val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
-        val adapter = ReviewListRecyclerViewAdapter()
-        reviewsRecyclerView.adapter = adapter
-        reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        //Reviews functions
-        reviewViewModel.getAllReviewsOfPoiByRating(poiName).observe(viewLifecycleOwner) { pois ->
-            pois.let { adapter.submitList(it) }
-        }
-
-        // Observe changes in reviews LiveData and update RecyclerView accordingly
-        val reviewLiveData: LiveData<List<Review>> =
-            reviewViewModel.getAllReviewsOfPoiByRating(poiName)
-        reviewLiveData.observe(viewLifecycleOwner) { reviews ->
-            reviews.let { adapter.submitList(it) }
-        }
-
+        // Submission of new review
         val newReviewSubmit: ImageButton = root.findViewById(new_review_submit)
         newReviewSubmit.setOnClickListener {
             val newReview = takeReview(root, poiName)
@@ -121,6 +114,7 @@ class PoiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Define a callback for the back button press
+        // this lets the user return to the previous fragment
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val navController = findNavController()
@@ -131,46 +125,57 @@ class PoiFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         // Enable options menu for fragment
         setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    /**
-     * Functions for the favourite button on the toolbar
-     */
+
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        favoriteMenuButton = menu.findItem(R.id.favorite)!!
-        favoriteMenuButton!!.setChecked(true)
-        favoriteMenuButton!!.setOnMenuItemClickListener {
+        favoriteMenuButton = menu.findItem(R.id.favorite)
 
-            // set the new favourite state of the poi
+        // Sets the icon of the favourite button based on the value of boolean var favourite
+        // Thanks to the observer, the icon will change each time the poi changes
+        poiLiveData.observe(viewLifecycleOwner) { poi ->
+            favoriteMenuButton.setIcon(
+                if (poi.favourite) R.drawable.baseline_favorite_24
+                else R.drawable.baseline_favorite_border_24
+            )
+        }
+
+        // When the favourite button is clicked, the value of poi.favourite is changed
+        favoriteMenuButton.setOnMenuItemClickListener {
             poiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
+                // Necessary to remove the observer
                 var obs = this
                 override fun onChanged(poi: Poi) {
                     lifecycleScope.launch {
-                        poiViewModel.changeFavourite(poiName, !poi.favourite)
+                        poiViewModel.setFavourite(poiName, !poi.favourite)
+                        // This is a one-time (per click) operation so the observer is removed
                         poiLiveData.removeObserver(obs)
                     }
                 }
             }))
+
             true
         }
     }
 
     /**
-    Adds CSS styling to the given HTML string
-    */
+     * Adds CSS styling to the given HTML string.
+     */
     private fun addStyle(innerHtml: String): String {
         val styleStart = "<style>"
         val styleEnd = "</style>"
         val pStyle = "p {text-align: justify}"
         var colorStyle = "*{color:"
+
         // Determine if the device is in dark mode
         val isDarkMode =
             resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
@@ -182,19 +187,21 @@ class PoiFragment : Fragment() {
     }
 
     /**
-    Clears the input fields for a new review.
-    */
+     * Clears the input fields after the submission of a new review.
+     */
     private fun clearNewReview(root: View) {
         val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)
         val reviewTextEditText = root.findViewById<EditText>(R.id.new_review_text)
         val reviewRatingBar = root.findViewById<RatingBar>(R.id.new_review_rating_bar)
 
         usernameEditText.text.clear()
-        reviewRatingBar.rating = 3F
+        reviewRatingBar.rating = resources.getInteger(R.integer.default_star_number).toFloat()
         reviewTextEditText.text.clear()
     }
+
     /**
-    Extracts a review from the input fields and returns a Review object if the inputs are valid.
+     * Extracts a review from the input fields and returns a Review object if the inputs are valid
+     * (not empty); otherwise, returns null.
      */
     private fun takeReview(root: View, poiName: String): Review? {
         val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)

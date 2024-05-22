@@ -12,10 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
-import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
 
@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
 
         // Initialize RecyclerView and its adapter
         val recyclerView: RecyclerView = binding.poiRecyclerView
-        adapter = PoiListRecyclerViewAdapter( this)
+        adapter = PoiListRecyclerViewAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 

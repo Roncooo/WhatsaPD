@@ -1,6 +1,5 @@
 package it.unipd.dei.esp.whatsapd.repository.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -45,7 +44,7 @@ interface PoiDao {
      * Returns the Poi whose name corresponds to searchedName
      */
     @Query("SELECT * FROM POI_TABLE WHERE NAME = :searchedName")
-    fun getPoiByName(searchedName: String): LiveData<Poi>
+    fun getPoiByName(searchedName: String): Flow<Poi>
 
     /**
      * Inserts poi into the database, if conflicts happen we ignore them

@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
@@ -54,6 +56,20 @@ class NearMeFragment : Fragment() {
 
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Define a callback for the back button press
+        // this lets the user return to the previous fragment
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navController = findNavController()
+                navController.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     override fun onDestroyView() {

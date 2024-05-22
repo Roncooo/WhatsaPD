@@ -4,33 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
-import kotlinx.coroutines.launch
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
 
 class PoiViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 
-    // LiveData holding a list of all POIs, ordered alphabetically.
-    val allPois: LiveData<List<Poi>> = repository.allPoiAlphabetized.asLiveData()
-
     fun getPoiByName(name: String): LiveData<Poi> {
-        return repository.getPoiByName(name)
-    }
-
-    fun getAllPoisFilteredByName(searchString: String): LiveData<List<Poi>> {
-        return repository.getPoisByNameAlphabetized(searchString).asLiveData()
+        return repository.getPoiByName(name).asLiveData()
     }
 
     /**
-     * Changes the favourite status of a POI.
+     * Changes the favourite status of a Poi.
      */
-    suspend fun changeFavourite(poiName: String, newFavouriteValue: Boolean) {
+    suspend fun setFavourite(poiName: String, newFavouriteValue: Boolean) {
         repository.updateFavourite(poiName, newFavouriteValue)
-    }
-
-    fun insert(poi: Poi) = viewModelScope.launch {
-        repository.insert(poi)
     }
 
 }

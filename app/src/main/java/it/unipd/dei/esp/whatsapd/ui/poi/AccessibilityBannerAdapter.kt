@@ -3,8 +3,8 @@ package it.unipd.dei.esp.whatsapd.ui.poi
 import android.view.View
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
 
 //Adapter to manage the accessibility banner for Points of Interest (POI).
 class AccessibilityBannerAdapter {

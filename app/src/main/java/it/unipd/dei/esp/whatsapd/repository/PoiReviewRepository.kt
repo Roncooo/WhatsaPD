@@ -1,7 +1,6 @@
 package it.unipd.dei.esp.whatsapd.repository
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.database.PoiDao
 import it.unipd.dei.esp.whatsapd.repository.database.Review
@@ -37,7 +36,7 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
     /**
      * Returns Poi as LiveData whose name corresponds to searchedName
      */
-    fun getPoiByName(searchedName: String): LiveData<Poi> {
+    fun getPoiByName(searchedName: String): Flow<Poi> {
         return poiDao.getPoiByName(searchedName)
     }
 
