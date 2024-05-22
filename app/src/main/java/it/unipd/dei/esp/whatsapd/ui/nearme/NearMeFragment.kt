@@ -45,8 +45,8 @@ class NearMeFragment : Fragment() {
 
         buttonPosition.setOnClickListener {}
 
-        val currentLatitude = 45.40921
-        val currentLongitude = 11.89431
+        val currentLatitude = -45.407717
+        val currentLongitude = -168.126554
 
         GlobalScope.launch {
             adapter.submitList(nearmeViewModel.getPoisByDistance(currentLatitude, currentLongitude))
