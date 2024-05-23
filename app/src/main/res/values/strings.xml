@@ -8,7 +8,6 @@
     <string name="email_roncolato">francesco.roncolato@studenti.unipd.it</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_favourites">Favourites</string>
     <string name="menu_near_me">Near me</string>
@@ -20,5 +19,4 @@
     <string name="menu_poi">Point of interests</string>
     <string name="text_near_me">Calculate your position</string>
     <string name="distance_text">%1$.3f km</string>
-
 </resources>

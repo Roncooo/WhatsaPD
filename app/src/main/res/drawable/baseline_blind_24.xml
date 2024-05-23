@@ -6,7 +6,7 @@
 
     <path
         android:strokeColor="@color/black"
-        android:strokeWidth="1.5"
+        android:strokeWidth="2"
         android:pathData="M12 7C8 7 4 9 2 12c2 3 6 5 10 5s8-2 10-5c-2-3-6-5-10-5z"/>
 
     <path

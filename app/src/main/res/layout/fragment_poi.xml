@@ -16,7 +16,6 @@
             android:id="@+id/poi_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@tools:sample/cities"
             android:textAlignment="center"
             android:textSize="@dimen/fragment_poi_title"
             app:layout_constraintBottom_toBottomOf="parent"
