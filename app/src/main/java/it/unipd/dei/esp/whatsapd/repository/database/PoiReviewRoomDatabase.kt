@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Defines the database containing Poi and review records, extends class RoomDatabase
+ * Defines the database containing [Poi] and [Review] records, extends class [RoomDatabase].
  */
 @Database(entities = [Poi::class, Review::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
@@ -25,18 +25,21 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 		@Volatile
 		private var INSTANCE: PoiReviewRoomDatabase? = null
 		
+		/**
+		 * Singleton pattern: if [INSTANCE] is not null then it is returned, if it is null then
+		 * it is initialized. This also works as a proxy pattern because [PoiReviewRoomDatabase]
+		 * object can be created without actually initializing the database, this operation can
+		 * be done at a later time by invoking [getDatabase].
+		 */
 		fun getDatabase(
 			context: Context, scope: CoroutineScope
 		): PoiReviewRoomDatabase {
-			// if the INSTANCE is not null, then return it,
-			// if it is, then create the database
 			return INSTANCE ?: synchronized(this) {
 				val instance = Room.databaseBuilder(
 					context.applicationContext,
 					PoiReviewRoomDatabase::class.java,
 					"poi_review_database"
 				).fallbackToDestructiveMigration()
-					// quando parte il db non deve salvare i dati della versione precedente
 					.addCallback(PoiReviewDatabaseCallback(scope, context)).build()
 				INSTANCE = instance
 				// return instance
@@ -44,7 +47,6 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 			}
 		}
 	}
-	
 	
 	// necessary in order to call fun populateDatabase(...) inside a coroutine
 	private class PoiReviewDatabaseCallback(

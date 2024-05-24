@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.R
-import it.unipd.dei.esp.whatsapd.ui.adapters.PoiDistanceListRecyclerViewAdapter
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 
 class NearMeFragment : Fragment() {
 	
@@ -38,12 +38,12 @@ class NearMeFragment : Fragment() {
 		
 		// Initialize RecyclerView and its adapter
 		val recyclerView: RecyclerView = root.findViewById(R.id.near_me_recycler_view)
-		val adapter = PoiDistanceListRecyclerViewAdapter(this, requireContext())
+		val adapter = PoiListRecyclerViewAdapter(this)
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		nearmeViewModel.getPoisByDistance(currentLatitude, currentLongitude)
 			.observe(viewLifecycleOwner) {
-				adapter.submitList(it)
+				adapter.submitList(it.toMutableList())
 			}
 		
 		return root

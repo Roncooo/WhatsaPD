@@ -5,13 +5,13 @@ import com.opencsv.CSVReader
 import java.io.InputStream
 
 /**
- * Provides static methods in order to parse CSV files into objects (Poi and Review).
+ * Provides static methods in order to parse CSV [inputStream]s into objects ([Poi] and [Review]).
  */
 class CSVParser {
 	companion object {
 		
 		/**
-		 * Responsible of parsing an inputStream in csv format into a Mutable List of Pois.
+		 * Responsible of parsing an [inputStream] in CSV format into a [MutableList] of [Poi]s.
 		 */
 		@JvmStatic
 		fun poiParsing(inputStream: InputStream, context: Context): MutableList<Poi> {
@@ -53,7 +53,7 @@ class CSVParser {
 		}
 		
 		/**
-		 * Responsible of parsing an inputStream in csv format into a Mutable List of Reviews.
+		 * Responsible of parsing an [inputStream] in CSV format into a [MutableList] of [Review]s.
 		 */
 		@JvmStatic
 		fun reviewParsing(inputStream: InputStream): MutableList<Review> {

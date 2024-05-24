@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
-import it.unipd.dei.esp.whatsapd.ui.adapters.PoiWrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.math.acos

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.R
-import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
@@ -40,64 +40,53 @@ class HomeFragment : Fragment() {
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		
-		homeViewModel.allPois.observe(viewLifecycleOwner) { pois ->
-			// this is necessary to let the adapter insert the banner at the beginning of the recycler view
-			// without skipping a "real" Poi
-			// Create a dummy POI to be inserted as a banner at the beginning of the RecyclerView
-			val dummy = Poi(
-				"", 0.0, 0.0, "", 0, true, true, true, true
-			)
-			// Combine the dummy POI with the list of actual POIs
-			val list = listOf(dummy) + pois
-			// Submit the combined list to the adapter
-			list.let { adapter.submitList(it) }
+		homeViewModel.allPois.observe(viewLifecycleOwner) { poiList ->
+			adapter.submitList(poiList.toMutableList())
 		}
+		
 		return root
 	}
 	
 	/**
-	 * Functions for the search bar
+	 * Functions for the search bar.
 	 */
 	override fun onCreate(savedInstanceState: Bundle?) {
 		setHasOptionsMenu(true)
 		super.onCreate(savedInstanceState)
 	}
 	
+	/**
+	 * Overriden to set the behaviour of the search bar in the menu
+	 */
 	@Deprecated("Deprecated in Java")
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-		//searchView implementation
-		val search = menu.findItem(R.id.search)
-		val searchView = search?.actionView as SearchView
+		
+		val search: MenuItem = menu.findItem(R.id.search)
+		val searchView: SearchView = search.actionView as SearchView
 		searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 			
-			//Filter as you press Enter
+			// Filter as you press Enter
 			override fun onQueryTextSubmit(query: String?): Boolean {
 				if (query != null) {
-					// Observe POIs filtered by name and update the adapter
+					// Observe Pois filtered by name and update the adapter
 					homeViewModel.getPoisByNameAlphabetized(query)
-						.observe(viewLifecycleOwner) { pois ->
-							val dummy = Poi(
-								"", 0.0, 0.0, "", 0, true, true, true, true
-							)
-							val list = listOf(dummy) + pois
-							list.let { adapter.submitList(it) }
+						.observe(viewLifecycleOwner) { poiList ->
+							adapter.submitList(poiList.toMutableList())
 						}
-					searchView.clearFocus() //When you press Enter, the keyboard disappears
+					
+					//  When you press Enter, the keyboard disappears
+					searchView.clearFocus()
 				}
 				return true
 			}
 			
-			//Filter as you enter text
+			// Filter as you enter text
 			override fun onQueryTextChange(newText: String?): Boolean {
 				if (newText != null) {
 					// Observe POIs filtered by name and update the adapter
 					homeViewModel.getPoisByNameAlphabetized(newText)
-						.observe(viewLifecycleOwner) { pois ->
-							val dummy = Poi(
-								"", 0.0, 0.0, "", 0, true, true, true, true
-							)
-							val list = listOf(dummy) + pois
-							list.let { adapter.submitList(it) }
+						.observe(viewLifecycleOwner) { poiList ->
+							adapter.submitList(poiList.toMutableList())
 						}
 				}
 				return true

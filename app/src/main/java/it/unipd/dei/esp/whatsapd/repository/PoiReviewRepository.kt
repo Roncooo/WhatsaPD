@@ -17,29 +17,30 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
 	val favouritePoiAlphabetized: Flow<List<Poi>> = poiDao.getFavouritePoisAlphabetized()
 	
 	/**
-	 * Returns a Flow of Pois' List in alphabetized order
+	 * Returns, in alphabetized order, [Poi]s that contain [searchedName] in their name.
 	 */
 	fun getPoisByNameAlphabetized(searchedName: String): Flow<List<Poi>> {
 		return poiDao.getPoisByNameAlphabetized(searchedName)
 	}
 	
 	/**
-	 * Returns a Flow of Pois' List in decreasing rating order
+	 * Returns [Review]s of [Poi] with id [poi_name] in decreasing rating order.
+	 * [poi_name] must match an existing [Poi].
 	 */
 	fun getAllReviewsOfPoiByRating(poi_name: String): Flow<List<Review>> {
 		return reviewDao.getAllReviewsOfPoiByRating(poi_name)
 	}
 	
 	/**
-	 * Returns Poi as LiveData whose name corresponds to searchedName
+	 * Returns the [Poi] (if it exists) whose name corresponds to [searchedName]
 	 */
 	fun getPoiByName(searchedName: String): Flow<Poi> {
 		return poiDao.getPoiByName(searchedName)
 	}
 	
 	/**
-	 * Can only be called inside a worker thread, makes Poi corresponding to poiName
-	 * a user's favourite Poi
+	 * Can only be called inside a worker thread. Sets the value of favourite attribute for the
+	 * [Poi] with name [poiName]. If the name is wrong nothing happens.
 	 */
 	@WorkerThread
 	suspend fun updateFavourite(poiName: String, newFavouriteValue: Boolean) {
@@ -47,7 +48,7 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
 	}
 	
 	/**
-	 * Can only be called inside a worker thread, inserts Poi in the database
+	 * Can only be called inside a worker thread, inserts [poi] in the database.
 	 */
 	@WorkerThread
 	suspend fun insert(poi: Poi) {
@@ -55,7 +56,7 @@ class PoiReviewRepository(private val poiDao: PoiDao, private val reviewDao: Rev
 	}
 	
 	/**
-	 * Can only be called inside a worker thread, inserts Review in the database
+	 * Can only be called inside a worker thread, inserts [review] in the database.
 	 */
 	@WorkerThread
 	suspend fun insert(review: Review) {

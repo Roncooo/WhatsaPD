@@ -30,9 +30,9 @@ import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.database.Review
+import it.unipd.dei.esp.whatsapd.ui.adapters.AccessibilityBannerAdapter
 import it.unipd.dei.esp.whatsapd.ui.adapters.ReviewListRecyclerViewAdapter
 import kotlinx.coroutines.launch
-
 
 class PoiFragment : Fragment() {
 	
@@ -43,8 +43,10 @@ class PoiFragment : Fragment() {
 		ReviewViewModelFactory((activity?.application as Application).repository)
 	}
 	
-	// initialized in onCreateView
+	/** Initialized in [onCreateView] */
 	private lateinit var poiLiveData: LiveData<Poi>
+	
+	/** Initialized in [onCreateView] */
 	private lateinit var poiName: String
 	
 	override fun onCreateView(
@@ -71,7 +73,7 @@ class PoiFragment : Fragment() {
 			
 			root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photoId)
 			
-			//Bind accessibility features to UI elements
+			// Bind accessibility features to UI elements
 			val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
 			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
 			
@@ -150,9 +152,9 @@ class PoiFragment : Fragment() {
 			poiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
 				// Necessary to remove the observer
 				var obs = this
-				override fun onChanged(poi: Poi) {
+				override fun onChanged(value: Poi) {
 					lifecycleScope.launch {
-						poiViewModel.setFavourite(poiName, !poi.favourite)
+						poiViewModel.setFavourite(poiName, !value.favourite)
 						// This is a one-time (per click) operation so the observer is removed
 						poiLiveData.removeObserver(obs)
 					}

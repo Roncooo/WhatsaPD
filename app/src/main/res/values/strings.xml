@@ -18,5 +18,5 @@
     <string name="review_date_text">"Reviewed on "</string>
     <string name="menu_poi">Point of interests</string>
     <string name="text_near_me">Calculate your position</string>
-    <string name="distance_text">%1$.3f km</string>
+    <string name="distance_text_format">%1$.3f km</string>
 </resources>

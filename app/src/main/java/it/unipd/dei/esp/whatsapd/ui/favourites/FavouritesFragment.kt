@@ -36,8 +36,8 @@ class FavouritesFragment : Fragment() {
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		
 		// Observe changes in the list of favourite POIs and update the adapter
-		favouritesViewModel.favPois.observe(viewLifecycleOwner) { pois ->
-			pois.let { adapter.submitList(it) }
+		favouritesViewModel.favPois.observe(viewLifecycleOwner) { poiList ->
+			adapter.submitList(poiList.toMutableList())
 		}
 		
 		return root
