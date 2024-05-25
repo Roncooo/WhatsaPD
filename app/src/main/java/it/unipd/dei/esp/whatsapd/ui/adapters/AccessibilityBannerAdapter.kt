@@ -8,7 +8,8 @@ import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment
 
 /**
- * Adapter to manage the accessibility banner for a [Poi] showed in [PoiFragment].
+ * Adapter for displaying the accessibility banner ([R.layout.accessibility_banner]) for a [Poi]
+ * in [PoiFragment].
  */
 class AccessibilityBannerAdapter {
 	class AccessibilityBannerViewHolder(private val cardView: CardView) {

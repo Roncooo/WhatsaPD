@@ -47,8 +47,10 @@ class HomeFragment : Fragment() {
 		return root
 	}
 	
+	// Functions for the menu bar.
 	/**
-	 * Functions for the search bar.
+	 * Overriden to call [Fragment.setHasOptionsMenu] that signals that this fragment manages
+	 * its menu bar icons and functions (in this case the [SearchView]).
 	 */
 	override fun onCreate(savedInstanceState: Bundle?) {
 		setHasOptionsMenu(true)
@@ -56,7 +58,7 @@ class HomeFragment : Fragment() {
 	}
 	
 	/**
-	 * Overriden to set the behaviour of the search bar in the menu
+	 * Overriden to set the behaviour of the [SearchView] in the menu.
 	 */
 	@Deprecated("Deprecated in Java")
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -83,7 +85,7 @@ class HomeFragment : Fragment() {
 			// Filter as you enter text
 			override fun onQueryTextChange(newText: String?): Boolean {
 				if (newText != null) {
-					// Observe POIs filtered by name and update the adapter
+					// Observe Pois filtered by name and update the adapter
 					homeViewModel.getPoisByNameAlphabetized(newText)
 						.observe(viewLifecycleOwner) { poiList ->
 							adapter.submitList(poiList.toMutableList())
@@ -93,6 +95,4 @@ class HomeFragment : Fragment() {
 			}
 		})
 	}
-	
-	
 }

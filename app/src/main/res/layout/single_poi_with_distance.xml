@@ -40,14 +40,14 @@
 
             <TextView
                 android:id="@+id/poi_distance"
-                android:text="20000.000 km"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:paddingEnd="15dp"
+                android:text="20000.000 km"
                 android:textSize="@dimen/poi_card_name"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText,RtlSymmetry" />
 

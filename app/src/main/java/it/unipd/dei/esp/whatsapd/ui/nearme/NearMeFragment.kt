@@ -24,8 +24,10 @@ class NearMeFragment : Fragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
+		
 		// Invalidate the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
+		
 		val root: View = inflater.inflate(R.layout.fragment_near_me, container, false)
 		
 		
@@ -49,11 +51,13 @@ class NearMeFragment : Fragment() {
 		return root
 	}
 	
+	/**
+	 * Overriden to define a callback for the back button press that lets the user return to
+	 * previous [Fragment]
+	 */
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		// Define a callback for the back button press
-		// This lets the user return to the previous fragment
 		val callback = object : OnBackPressedCallback(true) {
 			override fun handleOnBackPressed() {
 				val navController = findNavController()

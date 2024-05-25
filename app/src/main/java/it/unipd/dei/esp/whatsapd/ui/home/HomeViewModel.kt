@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 
 /**
- * ViewModel for managing Home Pois.
+ * [ViewModel] for managing [Poi]s in [HomeFragment].
  */
 class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 	
@@ -22,7 +23,7 @@ class HomeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 }
 
 /**
- * Factory class for creating an instance of HomeViewModel.
+ * Factory class for creating an instance of [HomeViewModel].
  */
 class HomeViewModelFactory(private val repository: PoiReviewRepository) :
 	

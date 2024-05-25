@@ -44,7 +44,7 @@ class PoiFragment : Fragment() {
 	}
 	
 	/** Initialized in [onCreateView] */
-	private lateinit var poiLiveData: LiveData<Poi>
+	private lateinit var currentPoiLiveData: LiveData<Poi>
 	
 	/** Initialized in [onCreateView] */
 	private lateinit var poiName: String
@@ -52,30 +52,33 @@ class PoiFragment : Fragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
+		
 		// Invalidates the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
+		
 		val root = inflater.inflate(R.layout.fragment_poi, container, false)
 		
+		// Takes the poiName from nagivation arguments and uses it to retreive a Poi in the viewModel
 		poiName = PoiFragmentArgs.fromBundle(requireArguments()).poiName
-		poiLiveData = poiViewModel.getPoiByName(poiName)
-		// Observing changes in the POI LiveData
-		poiLiveData.observe(viewLifecycleOwner) {
-			root.findViewById<TextView>(R.id.poi_title).text = it.name
+		currentPoiLiveData = poiViewModel.getPoiByName(poiName)
+		
+		currentPoiLiveData.observe(viewLifecycleOwner) { poi ->
 			
-			//The webview is used to display the description of each POI
-			//The description is a html text in the pois.csv file
+			root.findViewById<TextView>(R.id.poi_title).text = poi.name
+			
+			// The webview is used to display the description of each Poi as an HTML text
 			val webView = root.findViewById<WebView>(R.id.poi_description)
 			webView.setBackgroundColor(Color.TRANSPARENT)
-			val html: String = addStyle(it.description)
+			val html: String = addStyle(poi.description)
 			webView.loadData(
 				html, "text/html", "UTF-8"
 			)
 			
-			root.findViewById<ImageView>(R.id.poi_image).setImageResource(it.photoId)
+			root.findViewById<ImageView>(R.id.poi_image).setImageResource(poi.photoId)
 			
 			// Bind accessibility features to UI elements
 			val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
-			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(it)
+			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(poi)
 			
 			// Initialize RecyclerView for the reviews and its adapter
 			val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
@@ -87,14 +90,14 @@ class PoiFragment : Fragment() {
 			val reviewLiveData: LiveData<List<Review>> =
 				reviewViewModel.getAllReviewsOfPoiByRating(poiName)
 			reviewLiveData.observe(viewLifecycleOwner) { reviews ->
-				reviews.let { adapter.submitList(it) }
+				reviews.let { adapter.submitList(reviews) }
 			}
 			
 		}
 		
 		// Submission of new review
-		val newReviewSubmit: ImageButton = root.findViewById(new_review_submit)
-		newReviewSubmit.setOnClickListener {
+		val newReviewSubmitButton: ImageButton = root.findViewById(new_review_submit)
+		newReviewSubmitButton.setOnClickListener {
 			val newReview = takeReview(root, poiName)
 			if (newReview != null) {
 				reviewViewModel.insert(newReview)
@@ -105,11 +108,13 @@ class PoiFragment : Fragment() {
 		return root
 	}
 	
+	/**
+	 * Overriden to define a callback for the back button press that lets the user return to
+	 * previous [Fragment].
+	 */
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		// Define a callback for the back button press
-		// This lets the user return to the previous fragment
 		val callback = object : OnBackPressedCallback(true) {
 			override fun handleOnBackPressed() {
 				val navController = findNavController()
@@ -119,19 +124,22 @@ class PoiFragment : Fragment() {
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 	}
 	
+	// Functions for the menu bar.
+	/**
+	 * Overriden to call [Fragment.setHasOptionsMenu] that signals that this fragment manages
+	 * its menu bar icons and functions (in this case the favorite menu button).
+	 */
 	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		// Enable options menu for fragment
 		setHasOptionsMenu(true)
+		super.onCreate(savedInstanceState)
 	}
-	
 	
 	/**
 	 * Overriden to manage the behaviour of favourite icon button.
-	 * This function sets an observer to keep the icon updated to the status of the Poi and
-	 * sets the click listener to change the status of the Poi.
-	 * In the lifecycle of Fragment, onCreateOptionsMenu comes after onCreateView so at this time
-	 * poiLiveData is certainly already initialized
+	 * This function sets an observer to keep the icon updated to the status of the [Poi] and
+	 * sets the click listener to change the status of the [Poi].
+	 * In the lifecycle of [Fragment], [onCreateOptionsMenu] comes after [onCreateView] so at this time
+	 * [currentPoiLiveData] is certainly already initialized.
 	 */
 	@Deprecated("Deprecated in Java")
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -140,7 +148,7 @@ class PoiFragment : Fragment() {
 		
 		// Sets the icon of the favourite button based on the value of boolean var favourite
 		// Thanks to the observer, the icon will change each time the poi changes
-		poiLiveData.observe(viewLifecycleOwner) { poi ->
+		currentPoiLiveData.observe(viewLifecycleOwner) { poi ->
 			favoriteMenuButton.setIcon(
 				if (poi.favourite) R.drawable.baseline_favorite_24
 				else R.drawable.baseline_favorite_border_24
@@ -149,14 +157,14 @@ class PoiFragment : Fragment() {
 		
 		// When the favourite button is clicked, the value of poi.favourite is changed
 		favoriteMenuButton.setOnMenuItemClickListener {
-			poiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
+			currentPoiLiveData.observe(viewLifecycleOwner, (object : Observer<Poi> {
 				// Necessary to remove the observer
 				var obs = this
 				override fun onChanged(value: Poi) {
 					lifecycleScope.launch {
 						poiViewModel.setFavourite(poiName, !value.favourite)
 						// This is a one-time (per click) operation so the observer is removed
-						poiLiveData.removeObserver(obs)
+						currentPoiLiveData.removeObserver(obs)
 					}
 				}
 			}))
@@ -166,7 +174,7 @@ class PoiFragment : Fragment() {
 	}
 	
 	/**
-	 * Adds CSS styling to the given HTML string.
+	 * Adds CSS styling to the given HTML string [innerHtml].
 	 */
 	private fun addStyle(innerHtml: String): String {
 		val styleStart = "<style>"
@@ -198,7 +206,7 @@ class PoiFragment : Fragment() {
 	}
 	
 	/**
-	 * Extracts a review from the input fields and returns a Review object if the inputs are valid
+	 * Extracts a review from the input fields and returns a [Review] object if the inputs are valid
 	 * (not empty); otherwise, returns null.
 	 */
 	private fun takeReview(root: View, poiName: String): Review? {

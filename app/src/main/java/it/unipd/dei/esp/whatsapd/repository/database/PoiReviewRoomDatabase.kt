@@ -27,7 +27,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 		
 		/**
 		 * Singleton pattern: if [INSTANCE] is not null then it is returned, if it is null then
-		 * it is initialized. This also works as a proxy pattern because [PoiReviewRoomDatabase]
+		 * it is initialized. [getDatabase] also works as a proxy pattern because [PoiReviewRoomDatabase]
 		 * object can be created without actually initializing the database, this operation can
 		 * be done at a later time by invoking [getDatabase].
 		 */
@@ -48,7 +48,7 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 		}
 	}
 	
-	// necessary in order to call fun populateDatabase(...) inside a coroutine
+	// Necessary in order to call fun populateDatabase(...) inside a coroutine
 	private class PoiReviewDatabaseCallback(
 		private val scope: CoroutineScope, private val context: Context
 	) : Callback() {
@@ -57,15 +57,16 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 			super.onCreate(db)
 			INSTANCE?.let { database ->
 				scope.launch(Dispatchers.IO) {
-					populateDatabase(database.poiDao(), database.reviewDao(), context)
+					populateDatabase(database.poiDao(), database.reviewDao())
 				}
 			}
 		}
 		
 		/**
-		 * Called the first time the database is initiated.
+		 * Called the first time the database is initiated. It fills the database with data
+		 * taken from CSV files [R.raw.pois] and [R.raw.reviews]
 		 */
-		suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao, context: Context) {
+		suspend fun populateDatabase(poiDao: PoiDao, reviewDao: ReviewDao) {
 			// Delete all content here.
 			poiDao.deleteAll()
 			
@@ -85,6 +86,3 @@ abstract class PoiReviewRoomDatabase : RoomDatabase() {
 		}
 	}
 }
-
-
-

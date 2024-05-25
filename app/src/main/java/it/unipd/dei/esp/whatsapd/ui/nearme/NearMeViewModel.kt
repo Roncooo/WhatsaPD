@@ -13,11 +13,11 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * ViewModel for managing NearMe POIs.
+ * [ViewModel] for managing ordered list of [PoiWrapper]s ([Poi] with distance from a given position).
  */
-class NearMeViewModel(private val repository: PoiReviewRepository) : ViewModel() {
+class NearMeViewModel(repository: PoiReviewRepository) : ViewModel() {
 	
-	private val allPois: Flow<List<Poi>> = repository.allPois
+	private val allPois: Flow<List<Poi>> = repository.allPoi
 	fun getPoisByDistance(latitude: Double, longitude: Double): LiveData<List<PoiWrapper>> {
 		
 		val poiWrappers = allPois.map { poiList: List<Poi> ->
@@ -28,6 +28,9 @@ class NearMeViewModel(private val repository: PoiReviewRepository) : ViewModel()
 		return poiWrappers.asLiveData()
 	}
 	
+	/**
+	 * Calculates the distance (in meters) between two given couples of coordinates.
+	 */
 	private fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
 		val phi1 = lat1 * Math.PI / 180
 		val phi2 = lat2 * Math.PI / 180
@@ -45,7 +48,7 @@ class NearMeViewModel(private val repository: PoiReviewRepository) : ViewModel()
 }
 
 /**
- * Factory class for creating an instance of NearMeViewModel.
+ * Factory class for creating an instance of [NearMeViewModel].
  */
 class NearMeViewModelFactory(private val repository: PoiReviewRepository) :
 	ViewModelProvider.Factory {

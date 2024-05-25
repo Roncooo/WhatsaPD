@@ -5,7 +5,8 @@ import com.opencsv.CSVReader
 import java.io.InputStream
 
 /**
- * Provides static methods in order to parse CSV [inputStream]s into objects ([Poi] and [Review]).
+ * Provides static methods in order to parse CSV [inputStream]s into [MutableList] of [Poi]s
+ * and [Review]s.
  */
 class CSVParser {
 	companion object {
@@ -74,7 +75,7 @@ class CSVParser {
 						poi,
 						rating,
 						text,
-						date,
+						date
 					)
 					reviewList.add(review)
 				}

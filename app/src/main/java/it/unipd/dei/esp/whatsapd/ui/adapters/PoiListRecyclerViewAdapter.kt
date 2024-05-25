@@ -13,27 +13,33 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter.BannerViewHolder
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter.PoiDistanceViewHolder
+import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter.PoiViewHolder
+import it.unipd.dei.esp.whatsapd.ui.favourites.FavouritesFragment
+import it.unipd.dei.esp.whatsapd.ui.favourites.FavouritesViewModel
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragment
 import it.unipd.dei.esp.whatsapd.ui.home.HomeFragmentDirections
 import it.unipd.dei.esp.whatsapd.ui.nearme.NearMeFragment
+import it.unipd.dei.esp.whatsapd.ui.nearme.NearMeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.PoiWrapper
 
 /**
- * Adapter for displaying a list of ```Poi``` in a ```RecyclerView```.
- * According to ```fragment```, the behaviour of the class changes:
- *  - in ```HomeFragment``` a banner (see ```res/layout/home_banner.xml```) is displayed at the
- *    beginning of the ```RecyclerView```, before all the ```Poi```s in alphabetical order
- *  - in ```FavouriteFragment```, only the ```Poi```s are showed (and only the favourite ones, given
- *    by ```FavouriteViewModel``` to ```FavouriteFragment```)
- *  - in ```NearMeFragment```, the ```RecyclerView``` holds a list of ```PoiWrapper```s holden in
- *    special layout (```res/layout/single_poi_with_distance.xml```) that shows the distance from a
- *    given position (ordered by distance, as given by ```NearMeViewModel``` to ```NearMeFragment```)
+ * Adapter for displaying a list of [Poi] in a [RecyclerView].
+ * According to fragment, the behaviour of the class changes:
+ *  - in [HomeFragment] a banner (see [R.layout.home_banner]) is displayed at the
+ *   beginning of the [RecyclerView], before all the [Poi]s in alphabetical order
+ *  - in [FavouritesFragment], only the [Poi]s are showed (and only the favourite ones, given
+ *   by [FavouritesViewModel] to [FavouritesFragment])
+ *  - in [NearMeFragment] the [RecyclerView] holds a list of [PoiWrapper]s holden in
+ *   special layout ([R.layout.single_poi_with_distance]) that shows the distance from a
+ *   given position (ordered by distance, as given by [NearMeViewModel] to [NearMeFragment])
  *
- * The class has three nested classes that extend ```RecyclerView.ViewHolder```: ```PoiViewHolder```,
- * ```PoiDistanceViewHolder```, ```BannerViewHolder```. The first two classes implement a ```bind```
- * method to map the data of a ```Poi``` into the graphical container. All three classes have a
- * ```create``` function in a companion object: this is needed to let them extend ```ViewHolder```
- * with ```itemView``` while still be bound to the ```parent ViewGroup```.
+ * The class has three nested classes that extend [RecyclerView.ViewHolder]: [PoiViewHolder],
+ * [PoiDistanceViewHolder], [BannerViewHolder]. The first two classes implement a ```bind```
+ * method to map the data of a [Poi] into the graphical container. All three classes have a
+ * create function in a companion object: this is needed to let them extend [RecyclerView.ViewHolder]
+ * with ```itemView``` while still be bound to the parent ```ViewGroup```.
  */
 
 class PoiListRecyclerViewAdapter(
@@ -41,7 +47,7 @@ class PoiListRecyclerViewAdapter(
 ) : ListAdapter<Poi, RecyclerView.ViewHolder>(comparator) {
 	
 	/**
-	 * ViewHolder for holding the views of individual Poi items.
+	 * [RecyclerView.ViewHolder] for holding the view of individual [Poi] items.
 	 */
 	class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		
@@ -69,7 +75,7 @@ class PoiListRecyclerViewAdapter(
 	
 	
 	/**
-	 * ViewHolder for holding the views of individual Poi items with their distance from a given position.
+	 * [RecyclerView.ViewHolder] for holding the view of individual [PoiWrapper] items.
 	 */
 	class PoiDistanceViewHolder(itemView: View, val context: Context) :
 		RecyclerView.ViewHolder(itemView) {
@@ -103,7 +109,7 @@ class PoiListRecyclerViewAdapter(
 	}
 	
 	/**
-	 * ViewHolder for holding the views of the banner item.
+	 * [RecyclerView.ViewHolder] for holding the view of the banner item.
 	 */
 	class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		companion object {
@@ -116,9 +122,9 @@ class PoiListRecyclerViewAdapter(
 	}
 	
 	/**
-	 * Overriden to manage the different behaviour of the recycler view in Home fragment. In that case, a
-	 * dummy Poi is inserted at the beginning of the list so that it can be replaced with the banner.
-	 * In all the other cases the list submitted is just the list passed as a parameter.
+	 * Overriden to manage the different behaviour of the recycler view in [HomeFragment]. In that case, a
+	 * dummy [Poi] is inserted at the beginning of the [list] so that it can be replaced with the banner.
+	 * In all the other cases the list submitted is just the [list] passed as a parameter.
 	 */
 	override fun submitList(list: MutableList<Poi>?) {
 		if (fragment is HomeFragment) {
@@ -133,7 +139,10 @@ class PoiListRecyclerViewAdapter(
 	
 	
 	/**
-	 * Determines the view type for a given position.
+	 * Determines the view type for a given position. Returned values are
+	 *  - [BANNER_VIEW_TYPE]
+	 *  - [POI_DISTANCE_VIEW_TYPE]
+	 *  - [POI_VIEW_TYPE]
 	 */
 	override fun getItemViewType(position: Int): Int {
 		return if (fragment is HomeFragment && position == 0) BANNER_VIEW_TYPE
@@ -142,7 +151,7 @@ class PoiListRecyclerViewAdapter(
 	}
 	
 	/**
-	 * Creates new ViewHolder instances (called by the layout manager).
+	 * Creates new [RecyclerView.ViewHolder] instances (called by the layout manager).
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		return when (viewType) {
@@ -174,28 +183,32 @@ class PoiListRecyclerViewAdapter(
 	
 	companion object {
 		
+		/** Tags a [RecyclerView.ViewHolder] as a banner for [HomeFragment]*/
 		private const val BANNER_VIEW_TYPE = 0
+		
+		/** Tags a [RecyclerView.ViewHolder] as a [R.layout.single_poi] for [HomeFragment] and [FavouritesFragment] */
 		private const val POI_VIEW_TYPE = 1
+		
+		/** Tags a [RecyclerView.ViewHolder] as a [R.layout.single_poi_with_distance] for [NearMeFragment] */
 		private const val POI_DISTANCE_VIEW_TYPE = 2
 		
 		/**
-		 * Comparator that spots the difference between two Poi objects.
+		 * Comparator that spots the difference between two [Poi] objects.
 		 */
 		private val POI_COMPARATOR = object : DiffUtil.ItemCallback<Poi>() {
+			/**
+			 * Checks if two [Poi] items are the same.
+			 */
 			override fun areItemsTheSame(oldItem: Poi, newItem: Poi): Boolean {
 				return oldItem.name == newItem.name
 			}
 			
+			/**
+			 * Checks if the contents of two [Poi] items are the same.
+			 */
 			override fun areContentsTheSame(oldItem: Poi, newItem: Poi): Boolean {
 				return oldItem.latitude == newItem.latitude && oldItem.longitude == newItem.longitude && oldItem.description == newItem.description && oldItem.photoId == newItem.photoId && oldItem.favourite == newItem.favourite && oldItem.deafAccessible == newItem.deafAccessible && oldItem.wheelchairAccessible == newItem.wheelchairAccessible && oldItem.blindAccessible == newItem.blindAccessible
 			}
 		}
 	}
 }
-
-
-
-
-
-
-

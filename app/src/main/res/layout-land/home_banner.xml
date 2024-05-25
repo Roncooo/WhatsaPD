@@ -21,10 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_title"
-        android:textSize="@dimen/home_title"
         android:textColor="@color/white"
+        android:textSize="@dimen/home_title"
         app:layout_constraintBottom_toBottomOf="@id/home_banner_photo"
         app:layout_constraintEnd_toEndOf="@id/home_banner_photo"
-        app:layout_constraintStart_toStartOf="@id/home_banner_photo"/>
+        app:layout_constraintStart_toStartOf="@id/home_banner_photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

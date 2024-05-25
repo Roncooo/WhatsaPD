@@ -35,19 +35,21 @@ class FavouritesFragment : Fragment() {
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 		
-		// Observe changes in the list of favourite POIs and update the adapter
-		favouritesViewModel.favPois.observe(viewLifecycleOwner) { poiList ->
+		// Observe changes in the list of favourite Pois and update the adapter
+		favouritesViewModel.favPoi.observe(viewLifecycleOwner) { poiList ->
 			adapter.submitList(poiList.toMutableList())
 		}
 		
 		return root
 	}
 	
+	/**
+	 * Overriden to define a callback for the back button press that lets the user return to
+	 * previous [Fragment]
+	 */
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		
-		// Define a callback for the back button press
-		// This lets the user return to the previous fragment
 		val callback = object : OnBackPressedCallback(true) {
 			override fun handleOnBackPressed() {
 				val navController = findNavController()

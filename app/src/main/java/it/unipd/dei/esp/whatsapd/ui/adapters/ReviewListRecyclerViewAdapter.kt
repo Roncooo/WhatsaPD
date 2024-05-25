@@ -13,21 +13,27 @@ import it.unipd.dei.esp.whatsapd.repository.database.Converters
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 
 /**
- * Adapter for displaying a list of reviews in a RecyclerView.
+ * Adapter for displaying a list of [Review]s in a [RecyclerView].
  */
 class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR) :
 	ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
 	
+	/**
+	 * [RecyclerView.ViewHolder] for holding the view of individual [Review] items.
+	 */
 	class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-		private val reviewUsername: TextView = itemView.findViewById(R.id.review_username)
-		private val reviewRatingbar: RatingBar = itemView.findViewById(R.id.review_rating_bar)
-		private val reviewTextView: TextView = itemView.findViewById(R.id.review_text)
-		private val reviewDateTextView: TextView = itemView.findViewById(R.id.review_date)
 		
 		fun bind(review: Review) {
+			val reviewUsername: TextView = itemView.findViewById(R.id.review_username)
 			reviewUsername.text = review.username
+			
+			val reviewRatingbar: RatingBar = itemView.findViewById(R.id.review_rating_bar)
 			reviewRatingbar.rating = review.rating.toFloat()
+			
+			val reviewTextView: TextView = itemView.findViewById(R.id.review_text)
 			reviewTextView.text = review.text
+			
+			val reviewDateTextView: TextView = itemView.findViewById(R.id.review_date)
 			reviewDateTextView.text = Converters.dateToString(review.date)
 		}
 		
@@ -41,7 +47,7 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 	}
 	
 	/**
-	 * Create new ViewHolders (invoked by the layout manager)
+	 * Create new [RecyclerView.ViewHolder] instances (called by the layout manager)
 	 */
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
 		return ReviewViewHolder.create(parent)
@@ -54,23 +60,22 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 	
 	companion object {
 		/**
-		 * Comparator for calculating the difference between two Review objects.
+		 * Comparator that spots the difference between two [Review] objects.
 		 */
 		private val REVIEW_COMPARATOR = object : DiffUtil.ItemCallback<Review>() {
 			/**
-			 * Checks if two Review items are the same.
+			 * Checks if two [Review] items are the same.
 			 */
 			override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean {
 				return oldItem.id == newItem.id
 			}
 			
 			/**
-			 * Checks if the contents of two Review items are the same.
+			 * Checks if the contents of two [Review] items are the same.
 			 */
 			override fun areContentsTheSame(oldItem: Review, newItem: Review): Boolean {
 				return oldItem.username == newItem.username && oldItem.poi == newItem.poi && oldItem.rating == newItem.rating && oldItem.text == newItem.text && oldItem.date == newItem.date
 			}
 		}
 	}
-	
 }

@@ -17,4 +17,5 @@
             android:icon="@drawable/ic_menu_near_me"
             android:title="@string/menu_near_me" />
     </group>
+
 </menu>

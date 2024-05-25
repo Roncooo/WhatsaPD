@@ -34,10 +34,10 @@
                 android:text="Cappella degli Scrovegni"
                 android:textAlignment="center"
                 android:textSize="@dimen/poi_card_name_land"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/poi_distance"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -47,11 +47,11 @@
                 android:padding="5dp"
                 android:text="5km"
                 android:textSize="@dimen/poi_card_name"
+                app:layout_constraintBaseline_toBottomOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/poi_name"
-                app:layout_constraintBaseline_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/poi_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

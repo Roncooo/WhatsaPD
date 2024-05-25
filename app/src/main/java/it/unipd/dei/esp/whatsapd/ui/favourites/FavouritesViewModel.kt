@@ -8,16 +8,16 @@ import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 
 /**
- * ViewModel for managing favourite Pois.
+ * [ViewModel] for managing favourite [Poi]s.
  */
-class FavouritesViewModel(private val repository: PoiReviewRepository) : ViewModel() {
+class FavouritesViewModel(repository: PoiReviewRepository) : ViewModel() {
 	
-	val favPois: LiveData<List<Poi>> = repository.favouritePoiAlphabetized.asLiveData()
+	val favPoi: LiveData<List<Poi>> = repository.favouritePoiAlphabetized.asLiveData()
 	
 }
 
 /**
- * Factory class for creating an instance of FavouritesViewModel.
+ * Factory class for creating an instance of [FavouritesViewModel].
  */
 class FavouritesViewModelFactory(private val repository: PoiReviewRepository) :
 	
@@ -29,4 +29,3 @@ class FavouritesViewModelFactory(private val repository: PoiReviewRepository) :
 		throw IllegalArgumentException("Unknown ViewModel class")
 	}
 }
-

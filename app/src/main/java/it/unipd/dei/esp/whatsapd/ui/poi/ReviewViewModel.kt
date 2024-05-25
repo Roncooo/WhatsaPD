@@ -6,24 +6,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
+import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 import kotlinx.coroutines.launch
 
 
 /**
- * ViewModel for managing reviews related to a specific Poi.
+ * [ViewModel] for managing [Review]s related to a specific [Poi].
  */
 class ReviewViewModel(private val repository: PoiReviewRepository) : ViewModel() {
 	
 	/**
-	 * Retrieves all reviews of a POI filtered by rating.
+	 * Retrieves all [Review]s of the [Poi] with name [poiName], ordered by rating.
 	 */
-	fun getAllReviewsOfPoiByRating(searchString: String): LiveData<List<Review>> {
-		return repository.getAllReviewsOfPoiByRating(searchString).asLiveData()
+	fun getAllReviewsOfPoiByRating(poiName: String): LiveData<List<Review>> {
+		return repository.getAllReviewsOfPoiByRating(poiName).asLiveData()
 	}
 	
 	/**
-	 * Inserts a new review into the repository.
+	 * Inserts a new [Review] into the repository.
 	 */
 	fun insert(review: Review) = viewModelScope.launch {
 		repository.insert(review)
@@ -32,7 +33,7 @@ class ReviewViewModel(private val repository: PoiReviewRepository) : ViewModel()
 }
 
 /**
- * Factory class for creating an instance of ReviewViewModel.
+ * Factory class for creating an instance of [ReviewViewModel].
  */
 class ReviewViewModelFactory(private val repository: PoiReviewRepository) :
 	ViewModelProvider.Factory {
