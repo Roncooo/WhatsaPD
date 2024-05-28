@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.FragmentFavouritesBinding
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 
 class FavouritesFragment : Fragment() {
@@ -20,17 +20,23 @@ class FavouritesFragment : Fragment() {
 		FavouritesViewModelFactory((activity?.application as Application).repository)
 	}
 	
+	private var _binding: FragmentFavouritesBinding? = null
+	
+	// This properties are only valid between onCreateView and onDestroyView.
+	private val binding get() = _binding!!
+	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
 		
+		_binding = FragmentFavouritesBinding.inflate(inflater, container, false)
+		val root = binding.root
+		
 		// Invalidate the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
 		
-		val root: View = inflater.inflate(R.layout.fragment_favourites, container, false)
-		
 		// Initialize RecyclerView and its adapter
-		val recyclerView: RecyclerView = root.findViewById(R.id.fav_recycler_view)
+		val recyclerView: RecyclerView = binding.favRecyclerView
 		val adapter = PoiListRecyclerViewAdapter(this)
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -57,5 +63,11 @@ class FavouritesFragment : Fragment() {
 			}
 		}
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		// Nullify binding to avoid memory leaks
+		_binding = null
 	}
 }

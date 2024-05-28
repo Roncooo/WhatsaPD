@@ -2,7 +2,6 @@ package it.unipd.dei.esp.whatsapd.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +11,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.HomeBannerBinding
+import it.unipd.dei.esp.whatsapd.databinding.SinglePoiBinding
+import it.unipd.dei.esp.whatsapd.databinding.SinglePoiWithDistanceBinding
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter.BannerViewHolder
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter.PoiDistanceViewHolder
@@ -49,26 +51,28 @@ class PoiListRecyclerViewAdapter(
 	/**
 	 * [RecyclerView.ViewHolder] for holding the view of individual [Poi] items.
 	 */
-	class PoiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+	class PoiViewHolder(private val singlePoiBinding: SinglePoiBinding) :
+		RecyclerView.ViewHolder(singlePoiBinding.root) {
 		
 		fun bind(poi: Poi) {
-			val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
+			val poiImageView: ImageView = singlePoiBinding.poiImage
 			poiImageView.setImageResource(poi.photoId)
 			
-			val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
+			val poiTitle: TextView = singlePoiBinding.poiName
 			poiTitle.text = poi.name
 			
-			itemView.setOnClickListener {
+			singlePoiBinding.root.setOnClickListener {
 				val action = HomeFragmentDirections.actionToPoiFragment(poi.name)
-				itemView.findNavController().navigate(action)
+				singlePoiBinding.root.findNavController().navigate(action)
 			}
 		}
 		
 		companion object {
 			fun create(parent: ViewGroup): PoiViewHolder {
-				val view: View =
-					LayoutInflater.from(parent.context).inflate(R.layout.single_poi, parent, false)
-				return PoiViewHolder(view)
+				val binding: SinglePoiBinding = SinglePoiBinding.inflate(
+					LayoutInflater.from(parent.context), parent, false
+				)
+				return PoiViewHolder(binding)
 			}
 		}
 	}
@@ -77,33 +81,35 @@ class PoiListRecyclerViewAdapter(
 	/**
 	 * [RecyclerView.ViewHolder] for holding the view of individual [PoiWrapper] items.
 	 */
-	class PoiDistanceViewHolder(itemView: View, val context: Context) :
-		RecyclerView.ViewHolder(itemView) {
+	class PoiDistanceViewHolder(
+		private val singlePoiWithDistanceBinding: SinglePoiWithDistanceBinding, val context: Context
+	) : RecyclerView.ViewHolder(singlePoiWithDistanceBinding.root) {
 		
 		fun bind(poiWrapper: PoiWrapper) {
-			val poiImageView: ImageView = itemView.findViewById(R.id.poi_image)
+			val poiImageView: ImageView = singlePoiWithDistanceBinding.poiImage
 			poiImageView.setImageResource(poiWrapper.photoId)
 			
-			val poiTitle: TextView = itemView.findViewById(R.id.poi_name)
+			val poiTitle: TextView = singlePoiWithDistanceBinding.poiName
 			poiTitle.text = poiWrapper.name
 			
-			val poiDistance: TextView = itemView.findViewById(R.id.poi_distance)
+			val poiDistance: TextView = singlePoiWithDistanceBinding.poiDistance
 			val textDistance = String.format(
 				context.getString(R.string.distance_text_format), poiWrapper.distance
 			)
 			poiDistance.text = textDistance
 			
-			itemView.setOnClickListener {
+			singlePoiWithDistanceBinding.root.setOnClickListener {
 				val action = HomeFragmentDirections.actionToPoiFragment(poiWrapper.name)
-				itemView.findNavController().navigate(action)
+				singlePoiWithDistanceBinding.root.findNavController().navigate(action)
 			}
 		}
 		
 		companion object {
 			fun create(parent: ViewGroup): PoiDistanceViewHolder {
-				val view: View = LayoutInflater.from(parent.context)
-					.inflate(R.layout.single_poi_with_distance, parent, false)
-				return PoiDistanceViewHolder(view, parent.context)
+				val binding: SinglePoiWithDistanceBinding = SinglePoiWithDistanceBinding.inflate(
+					LayoutInflater.from(parent.context), parent, false
+				)
+				return PoiDistanceViewHolder(binding, parent.context)
 			}
 		}
 	}
@@ -111,12 +117,14 @@ class PoiListRecyclerViewAdapter(
 	/**
 	 * [RecyclerView.ViewHolder] for holding the view of the banner item.
 	 */
-	class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+	class BannerViewHolder(homeBannerBinding: HomeBannerBinding) :
+		RecyclerView.ViewHolder(homeBannerBinding.root) {
 		companion object {
 			fun create(parent: ViewGroup): BannerViewHolder {
-				val view: View =
-					LayoutInflater.from(parent.context).inflate(R.layout.home_banner, parent, false)
-				return BannerViewHolder(view)
+				val binding: HomeBannerBinding = HomeBannerBinding.inflate(
+					LayoutInflater.from(parent.context), parent, false
+				)
+				return BannerViewHolder(binding)
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
-import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.FragmentNearMeBinding
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 
 class NearMeFragment : Fragment() {
@@ -21,25 +21,30 @@ class NearMeFragment : Fragment() {
 		NearMeViewModelFactory((activity?.application as Application).repository)
 	}
 	
+	private var _binding: FragmentNearMeBinding? = null
+	
+	// This properties are only valid between onCreateView and onDestroyView.
+	private val binding get() = _binding!!
+	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
 		
+		_binding = FragmentNearMeBinding.inflate(inflater, container, false)
+		val root = binding.root
+		
 		// Invalidate the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
 		
-		val root: View = inflater.inflate(R.layout.fragment_near_me, container, false)
-		
-		
 		// todo take real position
-		val buttonPosition: Button = root.findViewById(R.id.near_me_button)
+		val buttonPosition: Button = binding.nearMeButton
 		buttonPosition.setOnClickListener {}
 		val currentLatitude = -45.407717
 		val currentLongitude = -168.126554
 		
 		
 		// Initialize RecyclerView and its adapter
-		val recyclerView: RecyclerView = root.findViewById(R.id.near_me_recycler_view)
+		val recyclerView: RecyclerView = binding.nearMeRecyclerView
 		val adapter = PoiListRecyclerViewAdapter(this)
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -49,6 +54,12 @@ class NearMeFragment : Fragment() {
 			}
 		
 		return root
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		// Nullify binding to avoid memory leaks
+		_binding = null
 	}
 	
 	/**

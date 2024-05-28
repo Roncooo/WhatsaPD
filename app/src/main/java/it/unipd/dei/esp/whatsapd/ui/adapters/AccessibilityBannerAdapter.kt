@@ -1,9 +1,8 @@
 package it.unipd.dei.esp.whatsapd.ui.adapters
 
 import android.view.View
-import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.AccessibilityBannerBinding
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment
 
@@ -12,24 +11,24 @@ import it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment
  * in [PoiFragment].
  */
 class AccessibilityBannerAdapter {
-	class AccessibilityBannerViewHolder(private val cardView: CardView) {
+	class AccessibilityBannerViewHolder(private val accessibilityBannerBinding: AccessibilityBannerBinding) {
 		fun bind(poi: Poi) {
 			// Manages the visibility of the wheelchair accessibility icon
-			cardView.findViewById<ImageView>(R.id.wheelchair_accessible).visibility =
+			accessibilityBannerBinding.wheelchairAccessible.visibility =
 				if (poi.wheelchairAccessible) View.VISIBLE else View.GONE
-			cardView.findViewById<ImageView>(R.id.wheelchair_not_accessible).visibility =
+			accessibilityBannerBinding.wheelchairNotAccessible.visibility =
 				if (poi.wheelchairAccessible) View.GONE else View.VISIBLE
 			
 			// Manages the visibility of the blind accessibility icon
-			cardView.findViewById<ImageView>(R.id.blind_accessible).visibility =
+			accessibilityBannerBinding.blindAccessible.visibility =
 				if (poi.blindAccessible) View.VISIBLE else View.GONE
-			cardView.findViewById<ImageView>(R.id.blind_not_accessible).visibility =
+			accessibilityBannerBinding.blindNotAccessible.visibility =
 				if (poi.blindAccessible) View.GONE else View.VISIBLE
 			
 			// Manages the visibility of the deaf accessibility icon
-			cardView.findViewById<ImageView>(R.id.deaf_accessible).visibility =
+			accessibilityBannerBinding.deafAccessible.visibility =
 				if (poi.deafAccessible) View.VISIBLE else View.GONE
-			cardView.findViewById<ImageView>(R.id.deaf_not_accessible).visibility =
+			accessibilityBannerBinding.deafNotAccessible.visibility =
 				if (poi.deafAccessible) View.GONE else View.VISIBLE
 		}
 	}

@@ -1,14 +1,13 @@
 package it.unipd.dei.esp.whatsapd.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.SingleReviewBinding
 import it.unipd.dei.esp.whatsapd.repository.database.Converters
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 
@@ -21,27 +20,29 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 	/**
 	 * [RecyclerView.ViewHolder] for holding the view of individual [Review] items.
 	 */
-	class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+	class ReviewViewHolder(private val singleReviewBinding: SingleReviewBinding) :
+		RecyclerView.ViewHolder(singleReviewBinding.root) {
 		
 		fun bind(review: Review) {
-			val reviewUsername: TextView = itemView.findViewById(R.id.review_username)
+			val reviewUsername: TextView = singleReviewBinding.reviewUsername
 			reviewUsername.text = review.username
 			
-			val reviewRatingbar: RatingBar = itemView.findViewById(R.id.review_rating_bar)
+			val reviewRatingbar: RatingBar = singleReviewBinding.reviewRatingBar
 			reviewRatingbar.rating = review.rating.toFloat()
 			
-			val reviewTextView: TextView = itemView.findViewById(R.id.review_text)
+			val reviewTextView: TextView = singleReviewBinding.reviewText
 			reviewTextView.text = review.text
 			
-			val reviewDateTextView: TextView = itemView.findViewById(R.id.review_date)
+			val reviewDateTextView: TextView = singleReviewBinding.reviewDate
 			reviewDateTextView.text = Converters.dateToString(review.date)
 		}
 		
 		companion object {
 			fun create(parent: ViewGroup): ReviewViewHolder {
-				val view: View = LayoutInflater.from(parent.context)
-					.inflate(R.layout.single_review, parent, false)
-				return ReviewViewHolder(view)
+				val singleReviewBinding: SingleReviewBinding = SingleReviewBinding.inflate(
+					LayoutInflater.from(parent.context), parent, false
+				)
+				return ReviewViewHolder(singleReviewBinding)
 			}
 		}
 	}

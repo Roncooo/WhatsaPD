@@ -44,7 +44,9 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/ic_launcher_background" />
 
-                <include layout="@layout/reviews_layout" />
+                <include
+                    android:id="@+id/reviews_layout"
+                    layout="@layout/reviews_layout" />
 
             </LinearLayout>
 

@@ -11,7 +11,9 @@
         android:text="@string/reviews_header"
         android:textSize="@dimen/reviews_header" />
 
-    <include layout="@layout/new_review" />
+    <include
+        android:id="@+id/new_review"
+        layout="@layout/new_review" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviews_recycler_view"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.R
+import it.unipd.dei.esp.whatsapd.databinding.FragmentHomeBinding
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModel
 import it.unipd.dei.esp.whatsapd.ui.nearme.HomeViewModelFactory
@@ -25,17 +26,23 @@ class HomeFragment : Fragment() {
 	}
 	private lateinit var adapter: PoiListRecyclerViewAdapter
 	
+	private var _binding: FragmentHomeBinding? = null
+	
+	// This properties are only valid between onCreateView and onDestroyView.
+	private val binding get() = _binding!!
+	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
 		
+		_binding = FragmentHomeBinding.inflate(inflater, container, false)
+		val root = binding.root
+		
 		// Invalidate the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
 		
-		val root: View = inflater.inflate(R.layout.fragment_home, container, false)
-		
 		// Initialize RecyclerView and its adapter
-		val recyclerView: RecyclerView = root.findViewById(R.id.poi_recycler_view)
+		val recyclerView: RecyclerView = binding.poiRecyclerView
 		adapter = PoiListRecyclerViewAdapter(this)
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -45,6 +52,12 @@ class HomeFragment : Fragment() {
 		}
 		
 		return root
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		// Nullify binding to avoid memory leaks
+		_binding = null
 	}
 	
 	// Functions for the menu bar.

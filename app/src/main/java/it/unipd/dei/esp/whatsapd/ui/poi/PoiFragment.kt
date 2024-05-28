@@ -9,14 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -27,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.R
-import it.unipd.dei.esp.whatsapd.R.id.new_review_submit
+import it.unipd.dei.esp.whatsapd.databinding.FragmentPoiBinding
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import it.unipd.dei.esp.whatsapd.repository.database.Review
 import it.unipd.dei.esp.whatsapd.ui.adapters.AccessibilityBannerAdapter
@@ -49,14 +43,23 @@ class PoiFragment : Fragment() {
 	/** Initialized in [onCreateView] */
 	private lateinit var poiName: String
 	
+	private var _binding: FragmentPoiBinding? = null
+	
+	// This properties are only valid between onCreateView and onDestroyView.
+	private val binding get() = _binding!!
+	private val accessibilityBannerBinding get() = binding.accessibilityBanner
+	private val reviewsLayoutBinding get() = binding.reviewsLayout
+	private val newReviewBinding get() = reviewsLayoutBinding.newReview
+	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
 		
+		_binding = FragmentPoiBinding.inflate(inflater, container, false)
+		val root = binding.root
+		
 		// Invalidates the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
-		
-		val root = inflater.inflate(R.layout.fragment_poi, container, false)
 		
 		// Takes the poiName from nagivation arguments and uses it to retreive a Poi in the viewModel
 		poiName = PoiFragmentArgs.fromBundle(requireArguments()).poiName
@@ -64,24 +67,24 @@ class PoiFragment : Fragment() {
 		
 		currentPoiLiveData.observe(viewLifecycleOwner) { poi ->
 			
-			root.findViewById<TextView>(R.id.poi_title).text = poi.name
+			binding.poiTitle.text = poi.name
 			
 			// The webview is used to display the description of each Poi as an HTML text
-			val webView = root.findViewById<WebView>(R.id.poi_description)
+			val webView = binding.poiDescription
 			webView.setBackgroundColor(Color.TRANSPARENT)
 			val html: String = addStyle(poi.description)
 			webView.loadData(
 				html, "text/html", "UTF-8"
 			)
 			
-			root.findViewById<ImageView>(R.id.poi_image).setImageResource(poi.photoId)
+			binding.poiImage.setImageResource(poi.photoId)
 			
 			// Bind accessibility features to UI elements
-			val accessibilityBanner: CardView = root.findViewById(R.id.accessibility_banner)
-			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBanner).bind(poi)
+			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBannerBinding)
+				.bind(poi)
 			
 			// Initialize RecyclerView for the reviews and its adapter
-			val reviewsRecyclerView: RecyclerView = root.findViewById(R.id.reviews_recycler_view)
+			val reviewsRecyclerView: RecyclerView = reviewsLayoutBinding.reviewsRecyclerView
 			val adapter = ReviewListRecyclerViewAdapter()
 			reviewsRecyclerView.adapter = adapter
 			reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -96,9 +99,9 @@ class PoiFragment : Fragment() {
 		}
 		
 		// Submission of new review
-		val newReviewSubmitButton: ImageButton = root.findViewById(new_review_submit)
+		val newReviewSubmitButton: ImageButton = newReviewBinding.newReviewSubmit
 		newReviewSubmitButton.setOnClickListener {
-			val newReview = takeReview(root, poiName)
+			val newReview = takeReview(poiName)
 			if (newReview != null) {
 				reviewViewModel.insert(newReview)
 				clearNewReview(root)
@@ -122,6 +125,12 @@ class PoiFragment : Fragment() {
 			}
 		}
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+	}
+	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		// Nullify binding to avoid memory leaks
+		_binding = null
 	}
 	
 	// Functions for the menu bar.
@@ -196,9 +205,9 @@ class PoiFragment : Fragment() {
 	 * Clears the input fields after the submission of a new review.
 	 */
 	private fun clearNewReview(root: View) {
-		val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)
-		val reviewTextEditText = root.findViewById<EditText>(R.id.new_review_text)
-		val reviewRatingBar = root.findViewById<RatingBar>(R.id.new_review_rating_bar)
+		val usernameEditText = newReviewBinding.newReviewUsername
+		val reviewTextEditText = newReviewBinding.newReviewText
+		val reviewRatingBar = newReviewBinding.newReviewRatingBar
 		
 		usernameEditText.text.clear()
 		reviewRatingBar.rating = resources.getInteger(R.integer.default_star_number).toFloat()
@@ -209,10 +218,10 @@ class PoiFragment : Fragment() {
 	 * Extracts a review from the input fields and returns a [Review] object if the inputs are valid
 	 * (not empty); otherwise, returns null.
 	 */
-	private fun takeReview(root: View, poiName: String): Review? {
-		val usernameEditText = root.findViewById<EditText>(R.id.new_review_username)
-		val reviewTextEditText = root.findViewById<EditText>(R.id.new_review_text)
-		val reviewRatingBar = root.findViewById<RatingBar>(R.id.new_review_rating_bar)
+	private fun takeReview(poiName: String): Review? {
+		val usernameEditText = newReviewBinding.newReviewUsername
+		val reviewTextEditText = newReviewBinding.newReviewText
+		val reviewRatingBar = newReviewBinding.newReviewRatingBar
 		
 		val username: String = usernameEditText.text.toString()
 		val text: String = reviewTextEditText.text.toString()
