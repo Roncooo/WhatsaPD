@@ -20,38 +20,32 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/poi_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:paddingStart="15dp"
                 android:text="Cappella degli Scrovegni"
                 android:textAlignment="center"
                 android:textSize="@dimen/poi_card_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/poi_distance"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:paddingEnd="15dp"
                 android:text="20000.000 km"
+                android:textAlignment="center"
                 android:textSize="@dimen/poi_card_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                tools:ignore="HardcodedText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
