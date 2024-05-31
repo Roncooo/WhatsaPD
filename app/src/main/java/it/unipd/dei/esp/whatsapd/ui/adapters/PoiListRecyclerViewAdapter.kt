@@ -93,9 +93,7 @@ class PoiListRecyclerViewAdapter(
 			poiTitle.text = poiWrapper.name
 			
 			val poiDistance: TextView = singlePoiWithDistanceBinding.poiDistance
-			val textDistance = String.format(
-				context.getString(R.string.distance_text_format), poiWrapper.distance
-			)
+			val textDistance = poiWrapper.distance.toString() + " m"
 			poiDistance.text = textDistance
 			
 			singlePoiWithDistanceBinding.root.setOnClickListener {

@@ -1,5 +1,6 @@
 package it.unipd.dei.esp.whatsapd.ui.nearme
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,9 +9,6 @@ import it.unipd.dei.esp.whatsapd.repository.PoiReviewRepository
 import it.unipd.dei.esp.whatsapd.repository.database.Poi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.math.acos
-import kotlin.math.cos
-import kotlin.math.sin
 
 /**
  * [ViewModel] for managing ordered list of [PoiWrapper]s ([Poi] with distance from a given position).
@@ -18,31 +16,20 @@ import kotlin.math.sin
 class NearMeViewModel(repository: PoiReviewRepository) : ViewModel() {
 	
 	private val allPois: Flow<List<Poi>> = repository.allPoi
-	fun getPoisByDistance(latitude: Double, longitude: Double): LiveData<List<PoiWrapper>> {
+	fun getPoisByDistance(otherLocation: Location): LiveData<List<PoiWrapper>> {
 		
 		val poiWrappers = allPois.map { poiList: List<Poi> ->
 			poiList.map { poi: Poi ->
-				PoiWrapper(poi, distance(latitude, longitude, poi.latitude, poi.longitude))
+				val thisLocation = Location("")
+				thisLocation.latitude = poi.latitude
+				thisLocation.longitude = poi.longitude
+				PoiWrapper(
+					poi,
+					otherLocation.distanceTo(thisLocation).toInt()
+				)
 			}.sortedBy { it.distance }
 		}
 		return poiWrappers.asLiveData()
-	}
-	
-	/**
-	 * Calculates the distance (in meters) between two given couples of coordinates.
-	 */
-	private fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-		val phi1 = lat1 * Math.PI / 180
-		val phi2 = lat2 * Math.PI / 180
-		val deltaG = (lon1 - lon2) * Math.PI / 180
-		val distanceInMeters = acos(
-			sin(phi1) * sin(phi2) + cos(phi1) * cos(phi2) * cos(deltaG)
-		) * EARTH_RADIUS_METERS
-		return distanceInMeters / 1000
-	}
-	
-	companion object {
-		private const val EARTH_RADIUS_METERS = 6371e3
 	}
 	
 }

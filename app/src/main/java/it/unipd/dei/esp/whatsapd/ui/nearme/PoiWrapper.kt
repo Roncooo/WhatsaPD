@@ -9,7 +9,7 @@ import it.unipd.dei.esp.whatsapd.repository.database.Poi
  */
 
 class PoiWrapper(
-	poi: Poi, val distance: Double
+	poi: Poi, val distance: Int
 ) : Poi(
 	poi.name,
 	poi.latitude,

@@ -16,6 +16,6 @@
     <string name="home_title">PADOVA</string>
     <string name="review_date_text">"Recensito il "</string>
     <string name="menu_poi">Punto di interesse</string>
-    <string name="text_near_me">Calcola la tua posizione</string>
-    <string name="distance_text_format">%1$.3f km</string>
+    <string name="location_not_available">La posizione non è disponibile</string>
+    <string name="distance_text_format">%1$d m</string>
 </resources>
