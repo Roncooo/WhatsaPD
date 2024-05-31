@@ -1,9 +1,7 @@
 package it.unipd.dei.esp.whatsapd.ui.nearme
 
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -31,15 +29,7 @@ class NearMeFragment : Fragment() {
 	// This properties are only valid between onCreateView and onDestroyView.
 	private val binding get() = _binding!!
 	
-	/*
-	private lateinit var fusedLocationClient: FusedLocationProviderClient
-	private lateinit var locationPermissionRequest: ActivityResultLauncher<Array<String>>
-	*/
 	private lateinit var locationService: LocationService
-	
-	init {
-	
-	}
 	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -76,13 +66,16 @@ class NearMeFragment : Fragment() {
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 		
 		
-		locationService = LocationService(this.requireContext())
+		locationService = LocationService(this)
 		val fragment = this
 		locationService.setOnLocationResultListener(object :
 			LocationService.OnLocationResultListener {
-			override fun onLocationResult(location: Location) {
-				Log.e("onlocationresult", "onlocationresult")
-				
+			override fun onLocationResult(location: Location?) {
+				val newLocation: Location = location ?: Location("")
+				if (location == null) {
+					newLocation.longitude = 0.0
+					newLocation.latitude = 0.0
+				}
 				binding.locationNotAvailable.visibility = GONE
 				
 				// Initialize RecyclerView and its adapter
@@ -91,38 +84,33 @@ class NearMeFragment : Fragment() {
 				recyclerView.adapter = adapter
 				recyclerView.layoutManager = LinearLayoutManager(activity)
 				
-				nearmeViewModel.getPoisByDistance(location).observe(viewLifecycleOwner) {
+				nearmeViewModel.getPoisByDistance(newLocation).observe(viewLifecycleOwner) {
 					adapter.submitList(it.toMutableList())
 				}
 			}
 			
 			override fun onPermissionDenied() {
-				Log.e("onpermissiondenied", "onpermissiondenied")
-				locationService.requestPermissions(activity)
+				locationService.requestPermissions()
 			}
+			
 		})
 		
-		Log.e("getcurrentlocation", "first")
 		locationService.getCurrentLocation()
 		
 	}
 	
-	
 	@Deprecated("Deprecated in Java")
 	override fun onRequestPermissionsResult(
-		requestCode: Int,
-		permissions: Array<out String>,
-		grantResults: IntArray
+		requestCode: Int, permissions: Array<out String>, grantResults: IntArray
 	) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		if (requestCode == LocationService.LOCATION_PERMISSION_REQUEST_CODE) {
-			if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				// Permission granted
-				locationService.handlePermissionsResult(requestCode, grantResults)
-			} else {
-				// Permission denied
-				Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
-			}
+		
+		if (locationService.checkPermissions()) {
+			// Permission granted
+			locationService.getCurrentLocation()
+		} else {
+			// Permission denied
+			Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
 		}
 	}
 }
