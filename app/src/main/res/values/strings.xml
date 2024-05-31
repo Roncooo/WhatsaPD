@@ -18,4 +18,8 @@
     <string name="menu_poi">Punto di interesse</string>
     <string name="location_not_available">La posizione non è disponibile</string>
     <string name="distance_text_format">%1$d m</string>
+    <string name="please_enable_location">Attiva la localizzazione per poter usare questa funzionalità.</string>
+    <string name="location_services_disabled">I servizi di localizzazione sono disattivati</string>
+    <string name="settings_button">Impostazioni</string>
+    <string name="cancel">Cancella</string>
 </resources>

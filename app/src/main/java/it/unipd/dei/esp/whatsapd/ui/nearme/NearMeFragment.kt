@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -50,13 +49,13 @@ class NearMeFragment : Fragment() {
 		_binding = null
 	}
 	
-	/**
-	 * Overriden to define a callback for the back button press that lets the user return to
-	 * previous [Fragment]
-	 */
+	
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		
+		/**
+		 * Define a callback for the back button press that lets the user return to
+		 * previous [Fragment]
+		 */
 		val callback = object : OnBackPressedCallback(true) {
 			override fun handleOnBackPressed() {
 				val navController = findNavController()
@@ -65,17 +64,14 @@ class NearMeFragment : Fragment() {
 		}
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 		
-		
+		/**
+		 * Set up location service
+		 */
 		locationService = LocationService(this)
 		val fragment = this
 		locationService.setOnLocationResultListener(object :
 			LocationService.OnLocationResultListener {
 			override fun onLocationResult(location: Location?) {
-				val newLocation: Location = location ?: Location("")
-				if (location == null) {
-					newLocation.longitude = 0.0
-					newLocation.latitude = 0.0
-				}
 				binding.locationNotAvailable.visibility = GONE
 				
 				// Initialize RecyclerView and its adapter
@@ -84,7 +80,7 @@ class NearMeFragment : Fragment() {
 				recyclerView.adapter = adapter
 				recyclerView.layoutManager = LinearLayoutManager(activity)
 				
-				nearmeViewModel.getPoisByDistance(newLocation).observe(viewLifecycleOwner) {
+				nearmeViewModel.getPoisByDistance(location!!).observe(viewLifecycleOwner) {
 					adapter.submitList(it.toMutableList())
 				}
 			}
@@ -94,23 +90,11 @@ class NearMeFragment : Fragment() {
 			}
 			
 		})
-		
-		locationService.getCurrentLocation()
-		
 	}
 	
-	@Deprecated("Deprecated in Java")
-	override fun onRequestPermissionsResult(
-		requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-	) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		
-		if (locationService.checkPermissions()) {
-			// Permission granted
-			locationService.getCurrentLocation()
-		} else {
-			// Permission denied
-			Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
-		}
+	override fun onResume() {
+		super.onResume()
+		locationService.getCurrentLocation()
 	}
+	
 }

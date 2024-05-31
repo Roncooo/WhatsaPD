@@ -8,16 +8,15 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.provider.Settings
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import it.unipd.dei.esp.whatsapd.R
 
 
 /**
@@ -26,10 +25,6 @@ import com.google.android.gms.location.Priority
  * 1. create an instance of [LocationService]
  * 2. set a location result listener using [setOnLocationResultListener]
  * 3. call [getCurrentLocation]
- * 4. override [Fragment.onRequestPermissionsResult] or [AppCompatActivity.onRequestPermissionsResult]
- * 	  to make something happen when the user interacts with system default Permission Request Dialog
- * 	  (e.g. calling [getCurrentLocation] is the permission is given or signal something to the user
- * 	  if permission is denied)
  */
 class LocationService(private val fragment: Fragment) {
 	
@@ -68,34 +63,29 @@ class LocationService(private val fragment: Fragment) {
 		}
 		
 		if (!isLocationEnabled()) {
-			AlertDialog.Builder(context).setTitle("Location Services Disabled")
-				.setMessage("Please enable location services to use this feature.")
-				.setPositiveButton("Settings") { _, _ ->
+			AlertDialog.Builder(context)
+				.setTitle(fragment.requireContext().getString(R.string.location_services_disabled))
+				.setMessage(fragment.requireContext().getString(R.string.please_enable_location))
+				.setPositiveButton(
+					fragment.requireContext().getString(R.string.settings_button)
+				) { _, _ ->
 					val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
 					context.startActivity(intent)
-				}.setNegativeButton("Cancel", null).show()
-			// return
+				}.setNegativeButton(fragment.requireContext().getString(R.string.cancel), null)
+				.show()
+			return
 		}
 		
-		
-		fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-			Log.e("", "on success listener with " + (location == null))
-			if (location != null) onLocationResultListener.onLocationResult(location)
-			else {
-				Toast.makeText(
-					fragment.requireContext(), "location is null", Toast.LENGTH_SHORT
-				).show()
-				
-				val currentLocationRequest =
-					CurrentLocationRequest.Builder().setDurationMillis(2000)
-						.setMaxUpdateAgeMillis(100).setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-						.build()
-				
-				fusedLocationClient.getCurrentLocation(currentLocationRequest, null)
+		val currentLocationRequest =
+			CurrentLocationRequest.Builder().setDurationMillis(10000).setMaxUpdateAgeMillis(10000)
+				.setPriority(Priority.PRIORITY_HIGH_ACCURACY).build()
+		val cancellationToken = CancellationTokenSource().token
+		fusedLocationClient.getCurrentLocation(currentLocationRequest, cancellationToken)
+			.addOnSuccessListener { location ->
+				if (location != null) onLocationResultListener.onLocationResult(location)
 			}
-		}
+		
 	}
-	
 	
 	private fun isLocationEnabled(): Boolean {
 		val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -118,4 +108,3 @@ class LocationService(private val fragment: Fragment) {
 	}
 	
 }
-
