@@ -16,7 +16,6 @@ import it.unipd.dei.esp.whatsapd.Application
 import it.unipd.dei.esp.whatsapd.databinding.FragmentNearMeBinding
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 
-
 class NearMeFragment : Fragment() {
 	
 	private val nearmeViewModel: NearMeViewModel by viewModels {
@@ -25,10 +24,11 @@ class NearMeFragment : Fragment() {
 	
 	private var _binding: FragmentNearMeBinding? = null
 	
-	// This properties are only valid between onCreateView and onDestroyView.
-	private val binding get() = _binding!!
-	
+	// Initialized in onViewCreated
 	private lateinit var locationService: LocationService
+	
+	// This property in only valid between onCreateView and onDestroyView.
+	private val binding get() = _binding!!
 	
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,13 +43,9 @@ class NearMeFragment : Fragment() {
 		return root
 	}
 	
-	override fun onDestroyView() {
-		super.onDestroyView()
-		// Nullify binding to avoid memory leaks
-		_binding = null
-	}
-	
-	
+	/**
+	 * Overriden to set up the back button function and to instantiate [locationService].
+	 */
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		/**
@@ -68,15 +64,16 @@ class NearMeFragment : Fragment() {
 		 * Set up location service
 		 */
 		locationService = LocationService(this)
-		val fragment = this
 		locationService.setOnLocationResultListener(object :
 			LocationService.OnLocationResultListener {
 			override fun onLocationResult(location: Location?) {
+				
+				// hide error message
 				binding.locationNotAvailable.visibility = GONE
 				
 				// Initialize RecyclerView and its adapter
 				val recyclerView: RecyclerView = binding.nearMeRecyclerView
-				val adapter = PoiListRecyclerViewAdapter(fragment)
+				val adapter = PoiListRecyclerViewAdapter(this@NearMeFragment)
 				recyclerView.adapter = adapter
 				recyclerView.layoutManager = LinearLayoutManager(activity)
 				
@@ -88,13 +85,20 @@ class NearMeFragment : Fragment() {
 			override fun onPermissionDenied() {
 				locationService.requestPermissions()
 			}
-			
 		})
 	}
 	
 	override fun onResume() {
 		super.onResume()
+		// getCurrentLocation is called inside onResume so that that it is called after
+		// onViewCreated (which initialize locationService) and every time the fragment becomes
+		// visible to the user (e.g. after the user goes in the settings to activate GPS)
 		locationService.getCurrentLocation()
 	}
 	
+	override fun onDestroyView() {
+		super.onDestroyView()
+		// Nullify binding to avoid memory leaks
+		_binding = null
+	}
 }
