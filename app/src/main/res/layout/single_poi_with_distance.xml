@@ -20,32 +20,39 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/poi_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:paddingStart="15dp"
                 android:text="Cappella degli Scrovegni"
                 android:textAlignment="center"
                 android:textSize="@dimen/poi_card_name"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,RtlSymmetry" />
 
             <TextView
                 android:id="@+id/poi_distance"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:paddingEnd="15dp"
                 android:text="20000.000 km"
-                android:textAlignment="center"
                 android:textSize="@dimen/poi_card_name"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,RtlSymmetry" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
