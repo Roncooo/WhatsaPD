@@ -11,9 +11,9 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/prova_logo"
+        android:icon="@drawable/whatsapd_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/prova_logo"
+        android:roundIcon="@drawable/whatsapd_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsaPD"
         tools:targetApi="31">
