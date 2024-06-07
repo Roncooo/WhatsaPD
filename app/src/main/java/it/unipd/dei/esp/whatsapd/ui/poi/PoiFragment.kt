@@ -90,6 +90,9 @@ class PoiFragment : Fragment() {
 			val adapter = ReviewListRecyclerViewAdapter()
 			reviewsRecyclerView.adapter = adapter
 			reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
+			binding.reviewsLayout.newReview.newReviewRatingBar.setOnRatingBarChangeListener { it, _, _ ->
+				ReviewListRecyclerViewAdapter.setRatingBarDescription(it, requireContext())
+			}
 			
 			// Observe changes in reviews LiveData and update RecyclerView accordingly
 			val reviewLiveData: LiveData<List<Review>> =

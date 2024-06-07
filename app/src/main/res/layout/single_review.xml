@@ -6,6 +6,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:accessibilityPaneTitle="@string/review_description"
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
@@ -13,6 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:importantForAccessibility="yes"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -20,6 +22,7 @@
             android:id="@+id/review_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:accessibilityTraversalBefore="@id/review_rating_bar"
             android:padding="10dp"
             android:text="@tools:sample/full_names"
             android:textSize="@dimen/review_username" />
@@ -27,16 +30,20 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="yes"
             android:orientation="horizontal">
 
             <RatingBar
                 android:id="@+id/review_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:accessibilityTraversalAfter="@id/review_username"
+                android:accessibilityTraversalBefore="@id/review_date"
                 android:background="@android:color/transparent"
-                android:isIndicator="true"
+                android:importantForAccessibility="yes"
+                android:isIndicator="false"
                 android:numStars="5"
-                android:stepSize="0.5"
+                android:stepSize="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +53,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:accessibilityTraversalAfter="@id/review_rating_bar"
+            android:accessibilityTraversalBefore="@id/review_text"
             android:orientation="horizontal">
 
             <TextView
@@ -68,6 +77,7 @@
             android:id="@+id/review_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:accessibilityTraversalAfter="@id/review_date"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:text="@tools:sample/lorem[30]"

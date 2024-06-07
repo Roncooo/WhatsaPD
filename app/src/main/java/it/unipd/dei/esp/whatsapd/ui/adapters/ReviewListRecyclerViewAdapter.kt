@@ -1,5 +1,6 @@
 package it.unipd.dei.esp.whatsapd.ui.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RatingBar
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.SingleReviewBinding
 import it.unipd.dei.esp.whatsapd.repository.database.Converters
 import it.unipd.dei.esp.whatsapd.repository.database.Review
@@ -14,14 +16,16 @@ import it.unipd.dei.esp.whatsapd.repository.database.Review
 /**
  * Adapter for displaying a list of [Review]s in a [RecyclerView].
  */
-class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR) :
-	ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
+class ReviewListRecyclerViewAdapter(
+	comparator: DiffUtil.ItemCallback<Review> = REVIEW_COMPARATOR
+) : ListAdapter<Review, ReviewListRecyclerViewAdapter.ReviewViewHolder>(comparator) {
 	
 	/**
 	 * [RecyclerView.ViewHolder] for holding the view of individual [Review] items.
 	 */
-	class ReviewViewHolder(private val singleReviewBinding: SingleReviewBinding) :
-		RecyclerView.ViewHolder(singleReviewBinding.root) {
+	class ReviewViewHolder(
+		private val context: Context, private val singleReviewBinding: SingleReviewBinding
+	) : RecyclerView.ViewHolder(singleReviewBinding.root) {
 		
 		fun bind(review: Review) {
 			val reviewUsername: TextView = singleReviewBinding.reviewUsername
@@ -29,6 +33,7 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 			
 			val reviewRatingbar: RatingBar = singleReviewBinding.reviewRatingBar
 			reviewRatingbar.rating = review.rating.toFloat()
+			setRatingBarDescription(reviewRatingbar, context)
 			
 			val reviewTextView: TextView = singleReviewBinding.reviewText
 			reviewTextView.text = review.text
@@ -42,9 +47,10 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 				val singleReviewBinding: SingleReviewBinding = SingleReviewBinding.inflate(
 					LayoutInflater.from(parent.context), parent, false
 				)
-				return ReviewViewHolder(singleReviewBinding)
+				return ReviewViewHolder(parent.context, singleReviewBinding)
 			}
 		}
+		
 	}
 	
 	/**
@@ -78,5 +84,21 @@ class ReviewListRecyclerViewAdapter(comparator: DiffUtil.ItemCallback<Review> = 
 				return oldItem.username == newItem.username && oldItem.poi == newItem.poi && oldItem.rating == newItem.rating && oldItem.text == newItem.text && oldItem.date == newItem.date
 			}
 		}
+		
+		fun setRatingBarDescription(ratingBar: RatingBar, context: Context) {
+			val pattern: String = "%d %s %s"
+			val oneStarString: String = context.getString(R.string.single_star_string)
+			val multipleStarsString: String = context.getString(R.string.multiple_star_string)
+			val totalStarsString: String = context.getString(R.string.total_star_string)
+			
+			ratingBar.contentDescription = if (ratingBar.progress == 1) String.format(
+				pattern, 1, oneStarString, totalStarsString
+			)
+			else String.format(
+				pattern, ratingBar.progress, multipleStarsString, totalStarsString
+			)
+		}
 	}
+	
+	
 }
