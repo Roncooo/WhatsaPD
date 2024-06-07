@@ -2,6 +2,7 @@ package it.unipd.dei.esp.whatsapd.ui.poi
 
 import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -150,6 +152,7 @@ class PoiFragment : Fragment() {
 	 * In the lifecycle of [Fragment], [onCreateOptionsMenu] comes after [onCreateView] so at this time
 	 * [currentPoiLiveData] is certainly already initialized.
 	 */
+	@RequiresApi(Build.VERSION_CODES.O)
 	@Deprecated("Deprecated in Java")
 	override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 		
@@ -158,10 +161,19 @@ class PoiFragment : Fragment() {
 		// Sets the icon of the favourite button based on the value of boolean var favourite
 		// Thanks to the observer, the icon will change each time the poi changes
 		currentPoiLiveData.observe(viewLifecycleOwner) { poi ->
-			favoriteMenuButton.setIcon(
-				if (poi.favourite) R.drawable.baseline_favorite_24
-				else R.drawable.baseline_favorite_border_24
-			)
+			if (poi.favourite) {
+				favoriteMenuButton.setIcon(R.drawable.baseline_favorite_24)
+				favoriteMenuButton.setChecked(true)
+				favoriteMenuButton.setContentDescription(
+					requireContext().getString(R.string.favourite_set_description)
+				)
+			} else {
+				favoriteMenuButton.setIcon(R.drawable.baseline_favorite_border_24)
+				favoriteMenuButton.setChecked(false)
+				favoriteMenuButton.setContentDescription(
+					requireContext().getString(R.string.favourite_unset_description)
+				)
+			}
 		}
 		
 		// When the favourite button is clicked, the value of poi.favourite is changed
@@ -172,6 +184,17 @@ class PoiFragment : Fragment() {
 				override fun onChanged(value: Poi) {
 					lifecycleScope.launch {
 						poiViewModel.setFavourite(poiName, !value.favourite)
+						
+						if (!value.favourite) {
+							view?.announceForAccessibility(
+								requireContext().getString(R.string.announce_favourite_set)
+							)
+						} else {
+							view?.announceForAccessibility(
+								requireContext().getString(R.string.announce_favourite_unset)
+							)
+						}
+						
 						// This is a one-time (per click) operation so the observer is removed
 						currentPoiLiveData.removeObserver(obs)
 					}

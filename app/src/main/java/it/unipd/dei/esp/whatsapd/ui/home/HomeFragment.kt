@@ -78,6 +78,7 @@ class HomeFragment : Fragment() {
 		
 		val search: MenuItem = menu.findItem(R.id.search)
 		val searchView: SearchView = search.actionView as SearchView
+		searchView.queryHint = requireContext().getString(R.string.search_query_hint)
 		searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 			
 			// Filter as you press Enter
