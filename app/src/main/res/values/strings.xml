@@ -23,14 +23,15 @@
     <string name="settings_button">Impostazioni</string>
     <string name="cancel">Cancella</string>
 
-    <string name="wheelchair_accessible">Monumento accessibile per utenti con disabilità motorie</string>
-    <string name="wheelchair_not_accessible">Monumento non accessibile per utenti con disabilità motorie</string>
+    <string name="wheelchair_accessible_icon_description">Monumento accessibile per utenti con disabilità motorie</string>
+    <string name="wheelchair_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità motorie</string>
 
-    <string name="blind_accessible">Monumento accessibile per utenti con disabilità visive</string>
-    <string name="blind_not_accessible">Monumento non accessibile per utenti con disabilità visive</string>
+    <string name="blind_accessible_icon_description">Monumento accessibile per utenti con
+        disabilità visive</string>
+    <string name="blind_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
 
-    <string name="deaf_accessible">Monumento accessibile per utenti con disabilità uditive</string>
-    <string name="deaf_not_accessible">Monumento non accessibile per utenti con disabilità visive</string>
+    <string name="deaf_accessible_icon_description">Monumento accessibile per utenti con disabilità uditive</string>
+    <string name="deaf_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
 
     <string name="search_icon_title">Cerca per nome</string>
     <string name="search_query_hint">Inserisci un monumento</string>
@@ -39,6 +40,7 @@
     <string name="announce_favourite_unset">Impostato come non preferito</string>
     <string name="favourite_set_description">Impostato come preferito</string>
     <string name="favourite_unset_description">Impostato come non preferito</string>
+
     <string name="label_for_new_review_text">La tua opinione</string>
     <string name="label_for_new_review_username">Nome utente</string>
     <string name="send_new_review_button_content_description">Invia</string>
@@ -48,4 +50,12 @@
     <string name="single_star_string">stella</string>
     <string name="total_star_string">su un massimo di 5 stelle</string>
     <string name="multiple_star_string">stelle</string>
+
+    <string name="alert_dialog_title">Accessibilità</string>
+    <string name="alert_dialog_wheelchair_accessible">Questo monumento è accessibile alle persone con disabilità motoria</string>
+    <string name="alert_dialog_wheelchair_not_accessible">Questo monumento non è accessibile per le persone con disabilità motorie</string>
+    <string name="alert_dialog_blind_not_accessible">Questo monumento non è accessibile per le persone con disabilità visive</string>
+    <string name="alert_dialog_blind_accessible">Questo monumento è accessibile per persone con disabilità visive</string>
+    <string name="alert_dialog_deaf_accessible">Questo monumento è accessibile per le persone con disabilità uditive</string>
+    <string name="alert_dialog_deaf_not_accessible">Questo monumento non è accessibile per le persone con disabilità uditive</string>
 </resources>

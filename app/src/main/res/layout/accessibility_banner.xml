@@ -1,90 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/accessibility_banner_background"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/light_gray">
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="yes"
         android:orientation="horizontal"
-        android:padding="3dp"
-        android:importantForAccessibility="yes">
+        android:padding="3dp">
 
         <ImageView
             android:id="@+id/wheelchair_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_accessible_24"
-            android:contentDescription="@string/wheelchair_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/wheelchair_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_wheelchair_accessible" />
 
         <ImageView
             android:id="@+id/wheelchair_not_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_not_accessible_24"
-            android:contentDescription="@string/wheelchair_not_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/wheelchair_not_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_wheelchair_not_accessible" />
 
         <ImageView
             android:id="@+id/blind_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_blind_24"
-            android:contentDescription="@string/blind_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/blind_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_blind_accessible" />
 
         <ImageView
             android:id="@+id/blind_not_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_blind_not_accessible_24"
-            android:visibility="visible"
-            android:contentDescription="@string/blind_not_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/blind_not_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_blind_not_accessible"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/deaf_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_hearing_24"
-            android:visibility="visible"
-            android:contentDescription="@string/deaf_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/deaf_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_hearing_accessible"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/deaf_not_accessible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/accessibility_icon_size"
             android:layout_weight="1"
-            android:src="@drawable/baseline_hearing_disabled_24"
-            android:contentDescription="@string/deaf_not_accessible"
-            android:importantForAccessibility="yes"
+            android:contentDescription="@string/deaf_not_accessible_icon_description"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:importantForAccessibility="yes"
+            android:src="@drawable/accessibility_icon_hearing_not_accessible" />
 
     </LinearLayout>
 

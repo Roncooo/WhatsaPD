@@ -14,4 +14,8 @@
     <color name="unipd_red_200">#CD5C5C</color>
     <color name="unipd_coral_200">#FF7F50</color>
     <color name="unipd_coral_500">#FF4500</color>
+
+    <color name="accessibility_icon">@android:color/black</color>
+    <color name="accessibility_banner_background">@color/unipd_red_200</color>
+
 </resources>

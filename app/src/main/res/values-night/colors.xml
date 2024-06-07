@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="accessibility_icon">@android:color/white</color>
+    <color name="accessibility_banner_background">@color/unipd_red_700</color>
+
+</resources>
