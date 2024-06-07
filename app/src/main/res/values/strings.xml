@@ -22,6 +22,16 @@
     <string name="location_services_disabled">I servizi di localizzazione sono disattivati</string>
     <string name="settings_button">Impostazioni</string>
     <string name="cancel">Cancella</string>
+
+    <string name="wheelchair_accessible">Monumento accessibile per utenti con disabilità motorie</string>
+    <string name="wheelchair_not_accessible">Monumento non accessibile per utenti con disabilità motorie</string>
+
+    <string name="blind_accessible">Monumento accessibile per utenti con disabilità visive</string>
+    <string name="blind_not_accessible">Monumento non accessibile per utenti con disabilità visive</string>
+
+    <string name="deaf_accessible">Monumento accessibile per utenti con disabilità uditive</string>
+    <string name="deaf_not_accessible">Monumento non accessibile per utenti con disabilità visive</string>
+
     <string name="search_icon_title">Cerca per nome</string>
     <string name="search_query_hint">Inserisci un monumento</string>
     <string name="favourite_icon_title">Impostazione preferito</string>
