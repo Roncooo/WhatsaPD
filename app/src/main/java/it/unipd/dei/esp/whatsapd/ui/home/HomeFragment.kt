@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,18 +35,30 @@ class HomeFragment : Fragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
-		
+
 		_binding = FragmentHomeBinding.inflate(inflater, container, false)
 		val root = binding.root
-		
+
 		// Invalidate the options menu to ensure it's recreated when the fragment is displayed
 		activity?.invalidateOptionsMenu()
-		
+
 		// Initialize RecyclerView and its adapter
 		val recyclerView: RecyclerView = binding.poiRecyclerView
 		adapter = PoiListRecyclerViewAdapter(this)
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
+
+		// Set the AccessibilityDelegate for the RecyclerView
+		recyclerView.setAccessibilityDelegate(object : View.AccessibilityDelegate() {
+			override fun onInitializeAccessibilityNodeInfo(
+				view: View,
+				info: AccessibilityNodeInfo
+			) {
+				super.onInitializeAccessibilityNodeInfo(view, info)
+				info.collectionInfo = null //removes the information about the number of elements
+			}
+		})
+
 		
 		homeViewModel.allPois.observe(viewLifecycleOwner) { poiList ->
 			adapter.submitList(poiList.toMutableList())
