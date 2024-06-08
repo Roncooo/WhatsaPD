@@ -48,24 +48,13 @@ class HomeFragment : Fragment() {
 		recyclerView.adapter = adapter
 		recyclerView.layoutManager = LinearLayoutManager(activity)
 
-		// Set the AccessibilityDelegate for the RecyclerView
-		recyclerView.setAccessibilityDelegate(object : View.AccessibilityDelegate() {
-			override fun onInitializeAccessibilityNodeInfo(
-				view: View,
-				info: AccessibilityNodeInfo
-			) {
-				super.onInitializeAccessibilityNodeInfo(view, info)
-				info.collectionInfo = null //removes the information about the number of elements
-			}
-		})
-
-		
 		homeViewModel.allPois.observe(viewLifecycleOwner) { poiList ->
 			adapter.submitList(poiList.toMutableList())
 		}
 		
 		return root
 	}
+	
 	
 	override fun onDestroyView() {
 		super.onDestroyView()

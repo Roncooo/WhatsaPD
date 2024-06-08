@@ -25,7 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/home_banner_photo"/>
+        app:layout_constraintBottom_toBottomOf="@id/home_banner_photo"
+        android:contentDescription="@string/photo_banner"/>
 
     <TextView
         android:id="@+id/home_banner_text"
