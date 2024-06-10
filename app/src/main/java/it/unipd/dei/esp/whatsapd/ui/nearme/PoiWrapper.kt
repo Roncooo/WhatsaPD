@@ -14,10 +14,11 @@ class PoiWrapper(
 	poi.name,
 	poi.latitude,
 	poi.longitude,
-	poi.description,
-	poi.photoId,
 	poi.favourite,
 	poi.wheelchairAccessible,
 	poi.deafAccessible,
-	poi.blindAccessible
+	poi.blindAccessible,
+	poi.photoId,
+	poi.photoAltText,
+	poi.description
 )

@@ -16,10 +16,29 @@ open class Poi(
 	@PrimaryKey @ColumnInfo(name = "name") val name: String,
 	@ColumnInfo(name = "latitude") val latitude: Double,
 	@ColumnInfo(name = "longitude") val longitude: Double,
-	@ColumnInfo(name = "description") val description: String,
-	@ColumnInfo(name = "photo_path") val photoId: Int,
 	@ColumnInfo(name = "favourite") var favourite: Boolean,
 	@ColumnInfo(name = "wheelchair_accessible") val wheelchairAccessible: Boolean,
 	@ColumnInfo(name = "deaf_accessible") val deafAccessible: Boolean,
-	@ColumnInfo(name = "blind_accessible") val blindAccessible: Boolean
-) : Serializable
+	@ColumnInfo(name = "blind_accessible") val blindAccessible: Boolean,
+	@ColumnInfo(name = "photo_path") val photoId: Int,
+	@ColumnInfo(name = "photo_alt_text") val photoAltText: String,
+	@ColumnInfo(name = "description") val description: String
+) : Serializable {
+	companion object {
+		fun dummy(): Poi {
+			return Poi(
+				name = "",
+				latitude = 0.0,
+				longitude = 0.0,
+				favourite = false,
+				wheelchairAccessible = false,
+				deafAccessible = false,
+				blindAccessible = false,
+				photoId = 0,
+				photoAltText = "",
+				description = ""
+			)
+		}
+	}
+	
+}

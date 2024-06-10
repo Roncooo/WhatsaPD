@@ -25,26 +25,28 @@ class CSVParser {
 					val name = line?.get(0).toString()
 					val latitude = line?.get(1)?.toDouble()!!
 					val longitude = line?.get(2)?.toDouble()!!
-					val description = line?.get(3).toString()
-					val photoPath = line?.get(4).toString()
+					val favourite = line?.get(3).toBoolean()
+					val wheelchairAccessible = line?.get(4).toBoolean()
+					val deafAccessible = line?.get(5).toBoolean()
+					val blindAccessible = line?.get(6).toBoolean()
+					val photoPath = line?.get(7).toString()
+					val photoAltText = line?.get(8).toString()
+					val description = line?.get(9).toString()
 					val photoId = context.resources.getIdentifier(
 						photoPath, "drawable", context.packageName
 					)
-					val favourite = line?.get(5).toBoolean()
-					val wheelchairAccessible = line?.get(6).toBoolean()
-					val deafAccessible = line?.get(7).toBoolean()
-					val blindAccessible = line?.get(8).toBoolean()
 					
 					val poi = Poi(
-						name,
-						latitude,
-						longitude,
-						description,
-						photoId,
-						favourite,
-						wheelchairAccessible,
-						deafAccessible,
-						blindAccessible
+						name = name,
+						latitude = latitude,
+						longitude = longitude,
+						favourite = favourite,
+						wheelchairAccessible = wheelchairAccessible,
+						deafAccessible = deafAccessible,
+						blindAccessible = blindAccessible,
+						photoId = photoId,
+						photoAltText = photoAltText,
+						description = description
 					)
 					poiList.add(poi)
 				}
@@ -71,11 +73,7 @@ class CSVParser {
 					val date = Converters.stringToDate(line?.get(4).toString())!!
 					
 					val review = Review(
-						username,
-						poi,
-						rating,
-						text,
-						date
+						username, poi, rating, text, date
 					)
 					reviewList.add(review)
 				}

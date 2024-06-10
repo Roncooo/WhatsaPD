@@ -57,6 +57,7 @@ class PoiListRecyclerViewAdapter(
 		fun bind(poi: Poi) {
 			val poiImageView: ImageView = singlePoiBinding.poiImage
 			poiImageView.setImageResource(poi.photoId)
+			poiImageView.contentDescription = poi.photoAltText
 			
 			val poiTitle: TextView = singlePoiBinding.poiName
 			poiTitle.text = poi.name
@@ -88,6 +89,7 @@ class PoiListRecyclerViewAdapter(
 		fun bind(poiWrapper: PoiWrapper) {
 			val poiImageView: ImageView = singlePoiWithDistanceBinding.poiImage
 			poiImageView.setImageResource(poiWrapper.photoId)
+			poiImageView.contentDescription = poiWrapper.photoAltText
 			
 			val poiTitle: TextView = singlePoiWithDistanceBinding.poiName
 			poiTitle.text = poiWrapper.name
@@ -134,9 +136,7 @@ class PoiListRecyclerViewAdapter(
 	 */
 	override fun submitList(list: MutableList<Poi>?) {
 		if (fragment is HomeFragment) {
-			val dummy = Poi(
-				"", 0.0, 0.0, "", 0, true, true, true, true
-			)
+			val dummy = Poi.dummy()
 			// Adds the dummy Poi at the beginning of the list (index 0)
 			list?.add(0, dummy)
 		}

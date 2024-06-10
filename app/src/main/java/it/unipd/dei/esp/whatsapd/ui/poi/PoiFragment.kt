@@ -80,6 +80,7 @@ class PoiFragment : Fragment() {
 			)
 			
 			binding.poiImage.setImageResource(poi.photoId)
+			binding.poiImage.contentDescription = poi.photoAltText
 			
 			// Bind accessibility features to UI elements
 			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBannerBinding)
