@@ -32,8 +32,10 @@ class ReviewListRecyclerViewAdapter(
 			reviewUsername.text = review.username
 			
 			val reviewRatingbar: RatingBar = singleReviewBinding.reviewRatingBar
+			val reviewRatingBarTextDescription: TextView =
+				singleReviewBinding.reviewRatingBarTextDescription
 			reviewRatingbar.rating = review.rating.toFloat()
-			setRatingBarDescription(reviewRatingbar, context)
+			setRatingBarDescription(reviewRatingbar, context, reviewRatingBarTextDescription)
 			
 			val reviewTextView: TextView = singleReviewBinding.reviewText
 			reviewTextView.text = review.text
@@ -85,11 +87,23 @@ class ReviewListRecyclerViewAdapter(
 			}
 		}
 		
-		fun setRatingBarDescription(ratingBar: RatingBar, context: Context) {
+		fun setRatingBarDescription(
+			ratingBar: RatingBar, context: Context, textView: TextView? = null
+		) {
 			val pattern: String = "%d %s %s"
 			val oneStarString: String = context.getString(R.string.single_star_string)
 			val multipleStarsString: String = context.getString(R.string.multiple_star_string)
 			val totalStarsString: String = context.getString(R.string.total_star_string)
+			
+			if (textView != null) {
+				textView.text = if (ratingBar.progress == 1) String.format(
+					pattern, 1, oneStarString, totalStarsString
+				)
+				else String.format(
+					pattern, ratingBar.progress, multipleStarsString, totalStarsString
+				)
+				return
+			}
 			
 			ratingBar.contentDescription = if (ratingBar.progress == 1) String.format(
 				pattern, 1, oneStarString, totalStarsString
