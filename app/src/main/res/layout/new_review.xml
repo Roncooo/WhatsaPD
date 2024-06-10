@@ -75,8 +75,7 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/new_review_text"
             android:padding="10dp"
-            android:text="@string/label_for_new_review_text"
-            android:textColor="@color/black"/>
+            android:text="@string/label_for_new_review_text"/>
 
         <EditText
             android:id="@+id/new_review_text"
@@ -88,8 +87,7 @@
             android:maxLines="7"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
-            android:textSize="@dimen/review_text"
-            android:textColor="@color/black"/>
+            android:textSize="@dimen/review_text"/>
 
     </LinearLayout>
 
