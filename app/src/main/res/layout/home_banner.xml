@@ -14,7 +14,8 @@
         android:src="@drawable/foto_pd_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/photo_banner"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,8 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/home_banner_photo"
-        android:contentDescription="@string/photo_banner"/>
+        app:layout_constraintBottom_toBottomOf="@id/home_banner_photo" />
 
     <TextView
         android:id="@+id/home_banner_text"
