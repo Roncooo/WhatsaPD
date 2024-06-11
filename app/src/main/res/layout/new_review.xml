@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/new_review_username"
             android:padding="10dp"
-            android:text="@string/label_for_new_review_username" />
+            android:text="@string/label_for_new_review_username"
+            android:textColor="@color/review"/>
 
         <EditText
             android:id="@+id/new_review_username"
@@ -32,7 +33,10 @@
             android:maxLines="1"
             android:padding="10dp"
             android:scrollbars="none"
-            android:textSize="@dimen/review_username" />
+            android:textSize="@dimen/review_username"
+            android:backgroundTint="@color/ratingbar_stars"
+            android:textCursorDrawable="@drawable/custom_cursor"
+            android:textColorHint="@color/color_hint"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -51,7 +55,9 @@
                 android:stepSize="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:progressTint="@color/ratingbar_stars"
+                android:secondaryProgressTint="@color/backgrund_stars"/>
 
             <ImageButton
                 android:id="@+id/new_review_submit"
@@ -75,7 +81,8 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/new_review_text"
             android:padding="10dp"
-            android:text="@string/label_for_new_review_text"/>
+            android:text="@string/label_for_new_review_text"
+            android:textColor="@color/review"/>
 
         <EditText
             android:id="@+id/new_review_text"
@@ -83,11 +90,14 @@
             android:layout_height="wrap_content"
             android:gravity="top|start"
             android:hint="@string/new_review_text_placeholder"
+            android:textColorHint="@color/color_hint"
             android:inputType="textMultiLine"
             android:maxLines="7"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
-            android:textSize="@dimen/review_text"/>
+            android:textSize="@dimen/review_text"
+            android:backgroundTint="@color/ratingbar_stars"
+            android:textCursorDrawable="@drawable/custom_cursor"/>
 
     </LinearLayout>
 

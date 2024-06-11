@@ -9,13 +9,24 @@
     <color name="gray">#FFaaaaaa</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="almost_black">#333339</color>
+    <color name="gray2">#54545d</color>
     <color name="unipd_red_700">#8B0000</color>
     <color name="unipd_red_500">#B22222</color>
     <color name="unipd_red_200">#CD5C5C</color>
     <color name="unipd_coral_200">#FF7F50</color>
     <color name="unipd_coral_500">#FF4500</color>
 
-    <color name="accessibility_icon">@android:color/black</color>
-    <color name="accessibility_banner_background">@color/unipd_red_200</color>
+    <color name="accessibility_icon">@color/white</color>
+    <color name="accessibility_banner_background">@color/unipd_red_500</color>
+    <color name="app_name_side_bar">@android:color/black</color>
+    <color name="poi_name">@color/almost_black</color>
+    <color name="review">@color/almost_black</color>
+    <color name="review_date">@color/gray2</color>
+    <color name="ratingbar_stars">@color/unipd_red_500</color>
+    <color name="backgrund_stars">@color/black</color>
+    <color name="position">@color/almost_black</color>
+    <color name="colorUnderlineFocus">@color/unipd_red_500</color>
+    <color name="color_hint">@color/gray2</color>
 
 </resources>

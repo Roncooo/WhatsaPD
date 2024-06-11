@@ -17,7 +17,8 @@
             android:text="Title"
             android:textAlignment="center"
             android:textSize="20sp"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:textColor="@color/poi_name"/>
 
         <include
             android:id="@+id/accessibility_banner"

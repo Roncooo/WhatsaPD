@@ -30,7 +30,8 @@
             android:text="Cappella degli Scrovegni"
             android:textAlignment="center"
             android:textSize="@dimen/poi_card_name_land"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:textColor="@color/poi_name"/>
 
     </LinearLayout>
 

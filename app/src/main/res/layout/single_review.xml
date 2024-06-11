@@ -25,7 +25,8 @@
             android:accessibilityTraversalBefore="@id/review_rating_bar"
             android:padding="10dp"
             android:text="@tools:sample/full_names"
-            android:textSize="@dimen/review_username" />
+            android:textSize="@dimen/review_username"
+            android:textColor="@color/review"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -39,9 +40,11 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:stepSize="1"
+                android:progressTint="@color/ratingbar_stars"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:secondaryProgressTint="@color/backgrund_stars"/>
 
             <TextView
                 android:id="@+id/review_rating_bar_text_description"
@@ -66,14 +69,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/review_date_text"
-                android:textColor="@color/gray" />
+                android:textColor="@color/review_date"/>
 
             <TextView
                 android:id="@+id/review_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@tools:sample/date/ddmmyy"
-                android:textColor="@color/gray" />
+                android:textColor="@color/review_date" />
 
         </LinearLayout>
 
@@ -84,7 +87,8 @@
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:text="@tools:sample/lorem[30]"
-            android:textSize="@dimen/review_text" />
+            android:textSize="@dimen/review_text"
+            android:textColor="@color/review"/>
 
     </LinearLayout>
 

@@ -2,6 +2,16 @@
 <resources>
 
     <color name="accessibility_icon">@android:color/white</color>
-    <color name="accessibility_banner_background">@color/unipd_red_700</color>
+    <color name="accessibility_banner_background">@color/unipd_red_500</color>
+    <color name="app_name_side_bar">@android:color/black</color>
+    <color name="poi_name">@android:color/white</color>
+    <color name="review">@android:color/white</color>
+    <color name="review_date">@color/light_gray</color>
+    <color name="ratingbar_stars">@color/unipd_red_500</color>
+    <color name="backgrund_stars">@color/white</color>
+    <color name="position">@android:color/white</color>
+    <color name="colorUnderlineFocus">@color/unipd_red_500</color>
+    <color name="color_hint">@color/light_gray</color>
+
 
 </resources>
