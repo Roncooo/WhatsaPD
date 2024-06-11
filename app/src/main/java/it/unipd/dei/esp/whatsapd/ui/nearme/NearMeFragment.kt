@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import it.unipd.dei.esp.whatsapd.Application
+import it.unipd.dei.esp.whatsapd.R
 import it.unipd.dei.esp.whatsapd.databinding.FragmentNearMeBinding
 import it.unipd.dei.esp.whatsapd.ui.adapters.PoiListRecyclerViewAdapter
 
@@ -63,6 +64,7 @@ class NearMeFragment : Fragment() {
 		/**
 		 * Set up location service
 		 */
+		var maxLocationPermissionRequests: Int = 2
 		locationService = LocationService(this)
 		locationService.setOnLocationResultListener(object :
 			LocationService.OnLocationResultListener {
@@ -82,8 +84,18 @@ class NearMeFragment : Fragment() {
 				}
 			}
 			
+			override fun onLocationWaiting() {
+				binding.locationNotAvailable.text =
+					requireContext().getString(R.string.location_waiting_message)
+			}
+			
 			override fun onPermissionDenied() {
-				locationService.requestPermissions()
+				maxLocationPermissionRequests -= 1
+				if (maxLocationPermissionRequests > 0)
+					locationService.requestPermissions()
+				else
+					binding.locationNotAvailable.text =
+						requireContext().getString(R.string.location_permission_denied_message)
 			}
 		})
 	}

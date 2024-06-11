@@ -88,6 +88,7 @@ class LocationService(private val fragment: Fragment) {
 		val currentLocationRequest =
 			CurrentLocationRequest.Builder().setDurationMillis(10000).setMaxUpdateAgeMillis(10000)
 				.setPriority(Priority.PRIORITY_HIGH_ACCURACY).build()
+		onLocationResultListener.onLocationWaiting()
 		fusedLocationClient.getCurrentLocation(
 			currentLocationRequest, CancellationTokenSource().token
 		).addOnSuccessListener { location ->
@@ -109,6 +110,7 @@ class LocationService(private val fragment: Fragment) {
 	interface OnLocationResultListener {
 		fun onLocationResult(location: Location?)
 		fun onPermissionDenied()
+		fun onLocationWaiting()
 	}
 	
 	companion object {
