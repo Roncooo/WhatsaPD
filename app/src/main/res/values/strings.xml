@@ -3,9 +3,6 @@
     <string name="navigation_drawer_open">Apri il pannello di navigazione</string>
     <string name="navigation_drawer_close">Chiudi il pannello di navigazione</string>
     <string name="nav_header_title">@string/app_name</string>
-    <string name="email_bellesso">beatrice.bellesso@studenti.unipd.it</string>
-    <string name="email_brocco">greta.brocco@studenti.unipd.it</string>
-    <string name="email_roncolato">francesco.roncolato@studenti.unipd.it</string>
     <string name="nav_header_desc">Logo dell applicazione</string>
     <string name="menu_home">Home</string>
     <string name="menu_favourites">Preferiti</string>
@@ -26,8 +23,7 @@
     <string name="wheelchair_accessible_icon_description">Monumento accessibile per utenti con disabilità motorie</string>
     <string name="wheelchair_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità motorie</string>
 
-    <string name="blind_accessible_icon_description">Monumento accessibile per utenti con
-        disabilità visive</string>
+    <string name="blind_accessible_icon_description">Monumento accessibile per utenti con disabilità visive</string>
     <string name="blind_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
 
     <string name="deaf_accessible_icon_description">Monumento accessibile per utenti con disabilità uditive</string>
