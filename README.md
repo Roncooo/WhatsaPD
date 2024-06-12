@@ -15,8 +15,7 @@ L'applicazione è una semplice versione di una guida turistica per la città di 
 + cercare i monumenti per nome o scegliendoli tra quelli preferiti
 + vedere quali sono i monumenti più vicini alla posizione corrente in linea d'aria
 
-I dati relativi ai punti di interesse sono tratti da [Wikipedia](https://it.wikipedia.org/) e  
-adattati con [ChatGPT](https://chatgpt.com/)
+I dati relativi ai punti di interesse sono tratti da [Wikipedia](https://it.wikipedia.org/) e adattati con [ChatGPT](https://chatgpt.com/)
 
 ### Note sul progetto
 
