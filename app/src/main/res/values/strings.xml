@@ -27,7 +27,8 @@
     <string name="blind_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
 
     <string name="deaf_accessible_icon_description">Monumento accessibile per utenti con disabilità uditive</string>
-    <string name="deaf_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
+    <string name="deaf_not_accessible_icon_description">Monumento non accessibile per utenti con
+        disabilità uditive</string>
 
     <string name="search_icon_title">Cerca per nome</string>
     <string name="search_query_hint">Inserisci un monumento</string>
