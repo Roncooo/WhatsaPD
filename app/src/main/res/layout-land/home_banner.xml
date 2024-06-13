@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/photo_banner"/>
+        android:contentDescription="@string/home_banner_content_description"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -22,6 +22,7 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:src="@drawable/gradient_home"
+        android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/home_banner_photo"/>

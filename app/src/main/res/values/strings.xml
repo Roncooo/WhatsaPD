@@ -55,7 +55,8 @@
     <string name="alert_dialog_blind_accessible">Questo monumento è accessibile per persone con disabilità visive</string>
     <string name="alert_dialog_deaf_accessible">Questo monumento è accessibile per le persone con disabilità uditive</string>
     <string name="alert_dialog_deaf_not_accessible">Questo monumento non è accessibile per le persone con disabilità uditive</string>
-    <string name="photo_banner">Immagine della città di Padova</string>
+    <string name="home_banner_content_description">Banner estetico, rappresenta una delle vedute
+        più caratteristiche della città di Padova: Prato della Valle e Santa Giustina sullo sfondo. Foto al tramonto</string>
     <string name="location_permission_denied_message">Permesso per la posizione negato</string>
     <string name="location_waiting_message">Calcolo della posizione in corso…</string>
 
