@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
-        <!-- ContentDescription is queried by the database and added via code -->
+        <!-- ContentDescription is queried by the database and added via code in PoiFragment -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="match_parent"

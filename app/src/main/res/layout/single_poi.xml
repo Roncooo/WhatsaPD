@@ -13,10 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Set as not important for accessibility so that the user can scroll the items more
+        easily. To hear the description the user must open the poi window (clicking this item) -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 

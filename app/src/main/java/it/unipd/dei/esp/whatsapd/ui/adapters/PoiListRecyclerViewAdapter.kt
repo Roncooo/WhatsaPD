@@ -38,10 +38,10 @@ import it.unipd.dei.esp.whatsapd.ui.nearme.PoiWrapper
  *   given position (ordered by distance, as given by [NearMeViewModel] to [NearMeFragment])
  *
  * The class has three nested classes that extend [RecyclerView.ViewHolder]: [PoiViewHolder],
- * [PoiDistanceViewHolder], [BannerViewHolder]. The first two classes implement a ```bind```
+ * [PoiDistanceViewHolder], [BannerViewHolder]. The first two classes implement a bind
  * method to map the data of a [Poi] into the graphical container. All three classes have a
- * create function in a companion object: this is needed to let them extend [RecyclerView.ViewHolder]
- * with ```itemView``` while still be bound to the parent ```ViewGroup```.
+ * `create` function in a companion object: this is needed to let them extend [RecyclerView.ViewHolder]
+ * with `itemView` while still be bound to the parent [ViewGroup].
  */
 
 class PoiListRecyclerViewAdapter(
@@ -57,7 +57,9 @@ class PoiListRecyclerViewAdapter(
 		fun bind(poi: Poi) {
 			val poiImageView: ImageView = singlePoiBinding.poiImage
 			poiImageView.setImageResource(poi.photoId)
-			poiImageView.contentDescription = poi.photoAltText
+			
+			// removed to let the user can scroll the items more easily
+			// poiImageView.contentDescription = poi.photoAltText
 			
 			val poiTitle: TextView = singlePoiBinding.poiName
 			poiTitle.text = poi.name
@@ -89,7 +91,9 @@ class PoiListRecyclerViewAdapter(
 		fun bind(poiWrapper: PoiWrapper) {
 			val poiImageView: ImageView = singlePoiWithDistanceBinding.poiImage
 			poiImageView.setImageResource(poiWrapper.photoId)
-			poiImageView.contentDescription = poiWrapper.photoAltText
+			
+			// removed to let the user can scroll the items more easily
+			// poiImageView.contentDescription = poiWrapper.photoAltText
 			
 			val poiTitle: TextView = singlePoiWithDistanceBinding.poiName
 			poiTitle.text = poiWrapper.name
@@ -100,13 +104,12 @@ class PoiListRecyclerViewAdapter(
 			val poiDistanceTextView: TextView = singlePoiWithDistanceBinding.poiDistance
 			val poiDistance = poiWrapper.distance
 			val pattern: String
-			if(poiDistance<=context.resources.getInteger(R.integer.max_distance_in_meters)){
+			if (poiDistance <= context.resources.getInteger(R.integer.max_distance_in_meters)) {
 				pattern = context.resources.getString(R.string.small_distance_text_format)
 				poiDistanceTextView.text = String.format(pattern, poiDistance)
-			}
-			else{
+			} else {
 				pattern = context.resources.getString(R.string.long_distance_text_format)
-				poiDistanceTextView.text = String.format(pattern, poiDistance.toFloat()/1000)
+				poiDistanceTextView.text = String.format(pattern, poiDistance.toFloat() / 1000)
 			}
 			
 			singlePoiWithDistanceBinding.root.setOnClickListener {

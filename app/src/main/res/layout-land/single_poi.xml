@@ -12,11 +12,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- Set as not important for accessibility so that the user can scroll the items more
+        easily. To hear the description the user must open the poi window (clicking this item) -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="0dp"
             android:layout_height="130dp"
             android:layout_weight="1"
+            android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
@@ -29,9 +32,9 @@
             android:padding="5dp"
             android:text="Cappella degli Scrovegni"
             android:textAlignment="center"
+            android:textColor="@color/poi_name"
             android:textSize="@dimen/poi_card_name_land"
-            tools:ignore="HardcodedText"
-            android:textColor="@color/poi_name"/>
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

@@ -37,12 +37,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <!-- ContentDescription is queried by the database and added via code in PoiFragment -->
                 <ImageView
                     android:id="@+id/poi_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:adjustViewBounds="true" />
+                    android:adjustViewBounds="true"
+                    tools:ignore="ContentDescription" />
 
                 <include
                     android:id="@+id/reviews_layout"

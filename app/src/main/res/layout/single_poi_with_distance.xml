@@ -13,14 +13,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- ContentDescription is queried by the database and added via code -->
+        <!-- Set as not important for accessibility so that the user can scroll the items more
+        easily. To hear the description the user must open the poi window (clicking this item) -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:importantForAccessibility="no"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/cappella_degli_scrovegni"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/cappella_degli_scrovegni" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:text="Cappella degli Scrovegni"
                 android:textAlignment="center"
+                android:textColor="@color/poi_name"
                 android:textSize="@dimen/poi_card_name"
-                tools:ignore="HardcodedText"
-                android:textColor="@color/poi_name"/>
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/poi_distance"
@@ -45,9 +46,9 @@
                 android:layout_height="wrap_content"
                 android:text="20000.000 km"
                 android:textAlignment="center"
+                android:textColor="@color/poi_name"
                 android:textSize="@dimen/poi_card_name"
-                tools:ignore="HardcodedText"
-                android:textColor="@color/poi_name"/>
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
