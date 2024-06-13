@@ -31,7 +31,6 @@ class NearMeViewModel(repository: PoiReviewRepository) : ViewModel() {
 		}
 		return poiWrappers.asLiveData()
 	}
-	
 }
 
 /**

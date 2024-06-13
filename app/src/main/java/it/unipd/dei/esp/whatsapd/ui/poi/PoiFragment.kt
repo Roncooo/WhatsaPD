@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
@@ -30,6 +31,15 @@ import it.unipd.dei.esp.whatsapd.ui.adapters.AccessibilityBannerAdapter
 import it.unipd.dei.esp.whatsapd.ui.adapters.ReviewListRecyclerViewAdapter
 import kotlinx.coroutines.launch
 
+/**
+ * [Fragment] for each individual point of interest.
+ * This class manages:
+ * - the filling of the view with data of a given [Poi] ([Poi] attributes and reviews bound to
+ * that specific [Poi])
+ * - the newReview widget ([R.layout.new_review]) to insert new reviews in the database associated
+ * to the current [Poi]
+ * - the behaviour of menu bar favourite icon to show and choose if the current [Poi] is favourite or not
+ */
 class PoiFragment : Fragment() {
 	
 	private val poiViewModel: PoiViewModel by viewModels {
@@ -53,6 +63,11 @@ class PoiFragment : Fragment() {
 	private val reviewsLayoutBinding get() = binding.reviewsLayout
 	private val newReviewBinding get() = reviewsLayoutBinding.newReview
 	
+	/**
+	 * Uses [PoiFragmentArgs.fromBundle] to retrieve the name of the [Poi] from the previous fragment
+	 * and then uses that name to query the database (through [PoiViewModel]) and obtain the [Poi].
+	 * Proceeds to fill the view (using [binding] and sub-bindings) with the data from the [Poi].
+	 */
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View {
@@ -82,7 +97,7 @@ class PoiFragment : Fragment() {
 			binding.poiImage.setImageResource(poi.photoId)
 			binding.poiImage.contentDescription = poi.photoAltText
 			
-			// Bind accessibility features to UI elements
+			// Bind accessibility features to specific UI element
 			AccessibilityBannerAdapter.AccessibilityBannerViewHolder(accessibilityBannerBinding)
 				.bind(poi)
 			
@@ -91,10 +106,6 @@ class PoiFragment : Fragment() {
 			val adapter = ReviewListRecyclerViewAdapter()
 			reviewsRecyclerView.adapter = adapter
 			reviewsRecyclerView.layoutManager = LinearLayoutManager(activity)
-			binding.reviewsLayout.newReview.newReviewRatingBar.setOnRatingBarChangeListener { it, _, _ ->
-				ReviewListRecyclerViewAdapter.setRatingBarDescription(it, requireContext())
-			}
-			
 			// Observe changes in reviews LiveData and update RecyclerView accordingly
 			val reviewLiveData: LiveData<List<Review>> =
 				reviewViewModel.getAllReviewsOfPoiByRating(poiName)
@@ -102,6 +113,10 @@ class PoiFragment : Fragment() {
 				reviews.let { adapter.submitList(reviews) }
 			}
 			
+			// This allows TalkBack to read the status of the ratingBar as it changes
+			binding.reviewsLayout.newReview.newReviewRatingBar.setOnRatingBarChangeListener { it, _, _ ->
+				ReviewListRecyclerViewAdapter.setRatingBarDescription(it, requireContext())
+			}
 		}
 		
 		// Submission of new review
@@ -110,7 +125,7 @@ class PoiFragment : Fragment() {
 			val newReview = takeReview(poiName)
 			if (newReview != null) {
 				reviewViewModel.insert(newReview)
-				clearNewReview(root)
+				clearNewReview()
 			}
 		}
 		
@@ -211,6 +226,8 @@ class PoiFragment : Fragment() {
 	
 	/**
 	 * Adds CSS styling to the given HTML string [innerHtml].
+	 * This is used to style the content in the [WebView]: here you could choose to style (size,
+	 * color etc) different parts of the Poi description for example using bigger or colored headings.
 	 */
 	private fun addStyle(innerHtml: String): String {
 		val styleStart = "<style>"
@@ -231,7 +248,7 @@ class PoiFragment : Fragment() {
 	/**
 	 * Clears the input fields after the submission of a new review.
 	 */
-	private fun clearNewReview(root: View) {
+	private fun clearNewReview() {
 		val usernameEditText = newReviewBinding.newReviewUsername
 		val reviewTextEditText = newReviewBinding.newReviewText
 		val reviewRatingBar = newReviewBinding.newReviewRatingBar

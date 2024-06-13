@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- ContentDescription is queried by the database and added via code -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/cappella_degli_scrovegni" />
+            app:srcCompat="@drawable/cappella_degli_scrovegni"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="match_parent"

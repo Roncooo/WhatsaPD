@@ -8,10 +8,13 @@
     android:padding="10dp"
     tools:context=".ui.poi.PoiFragment">
 
+    <!-- layout_height is set to match_parent and not wrap_content because wrap_content could
+     create problems with the WebView. For this reason ignore="ScrollViewSize" is added. -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
 
         <TextView
             android:id="@+id/poi_title"
@@ -26,13 +29,15 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
+        <!-- ContentDescription is queried by the database and added via code -->
         <ImageView
             android:id="@+id/poi_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            tools:ignore="ContentDescription" />
 
         <include
             android:id="@+id/accessibility_banner"

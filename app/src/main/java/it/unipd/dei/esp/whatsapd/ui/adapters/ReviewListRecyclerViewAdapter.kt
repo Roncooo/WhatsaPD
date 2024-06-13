@@ -32,6 +32,11 @@ class ReviewListRecyclerViewAdapter(
 			reviewUsername.text = review.username
 			
 			val reviewRatingbar: RatingBar = singleReviewBinding.reviewRatingBar
+			/*
+			Since ratingBar does not behave correctly with TalkBack and accessibility tree traversal
+			order, we use this trick: reviewBar is set as importantForAccessibility="no" and the
+			text we want to be played by screen readers is contained in an hidden textView
+			*/
 			val reviewRatingBarTextDescription: TextView =
 				singleReviewBinding.reviewRatingBarTextDescription
 			reviewRatingbar.rating = review.rating.toFloat()
@@ -90,7 +95,7 @@ class ReviewListRecyclerViewAdapter(
 		fun setRatingBarDescription(
 			ratingBar: RatingBar, context: Context, textView: TextView? = null
 		) {
-			val pattern: String = "%d %s %s"
+			val pattern = "%d %s %s"
 			val oneStarString: String = context.getString(R.string.single_star_string)
 			val multipleStarsString: String = context.getString(R.string.multiple_star_string)
 			val totalStarsString: String = context.getString(R.string.total_star_string)

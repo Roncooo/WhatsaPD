@@ -64,7 +64,7 @@ class NearMeFragment : Fragment() {
 		/**
 		 * Set up location service
 		 */
-		var maxLocationPermissionRequests: Int = 2
+		var maxLocationPermissionRequests = 2
 		locationService = LocationService(this)
 		locationService.setOnLocationResultListener(object :
 			LocationService.OnLocationResultListener {

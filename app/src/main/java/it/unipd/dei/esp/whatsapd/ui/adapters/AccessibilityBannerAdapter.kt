@@ -13,8 +13,8 @@ import it.unipd.dei.esp.whatsapd.ui.poi.PoiFragment
  */
 class AccessibilityBannerAdapter {
 	class AccessibilityBannerViewHolder(private val binding: AccessibilityBannerBinding) {
+		// Manages the visibility of the wheelchair accessibility icon
 		fun bind(poi: Poi) {
-			// Manages the visibility of the wheelchair accessibility icon
 			if (poi.wheelchairAccessible) {
 				binding.wheelchairAccessible.apply {
 					visibility = View.VISIBLE
@@ -38,7 +38,6 @@ class AccessibilityBannerAdapter {
 				}
 				binding.wheelchairAccessible.visibility = View.GONE
 			}
-			
 			
 			// Manages the visibility of the blind accessibility icon
 			if (poi.deafAccessible) {
@@ -64,7 +63,6 @@ class AccessibilityBannerAdapter {
 				}
 				binding.deafAccessible.visibility = View.GONE
 			}
-			
 			
 			// Manages the visibility of the deaf accessibility icon
 			if (poi.blindAccessible) {

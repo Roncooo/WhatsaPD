@@ -57,5 +57,6 @@
     <string name="alert_dialog_deaf_not_accessible">Questo monumento non è accessibile per le persone con disabilità uditive</string>
     <string name="photo_banner">Immagine della città di Padova</string>
     <string name="location_permission_denied_message">Permesso per la posizione negato</string>
-    <string name="location_waiting_message">Calcolo della posizione in corso...</string>
+    <string name="location_waiting_message">Calcolo della posizione in corso…</string>
+
 </resources>
