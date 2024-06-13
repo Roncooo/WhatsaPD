@@ -1,54 +1,43 @@
 <resources>
+    <!-- Navigation, menu, icons -->
     <string name="app_name">WhatsaPD</string>
     <string name="navigation_drawer_open">Apri il pannello di navigazione</string>
     <string name="navigation_drawer_close">Chiudi il pannello di navigazione</string>
     <string name="nav_header_title">@string/app_name</string>
-    <string name="nav_header_desc">Logo dell applicazione</string>
+    <string name="nav_header_desc">Logo dell applicazione. Un omino stilizzato in sedia a
+        rotelle dove le ruote sono il Prato della Valle</string>
     <string name="menu_home">Home</string>
     <string name="menu_favourites">Preferiti</string>
     <string name="menu_near_me">Vicini a me</string>
-    <string name="reviews_header">Recensioni</string>
-    <string name="new_review_text_placeholder">Inserisci la tua opinione</string>
-    <string name="new_review_username_placeholder">Inserisci il tuo nome</string>
-    <string name="home_title">PADOVA</string>
-    <string name="review_date_text">"Recensito il "</string>
     <string name="menu_poi">Punto di interesse</string>
-    <string name="location_not_available">La posizione non è disponibile</string>
-    <string name="small_distance_text_format">%d m</string>
-    <string name="long_distance_text_format">%.1f km</string>
-    <string name="please_enable_location">Attiva la localizzazione per poter usare questa funzionalità.</string>
-    <string name="location_services_disabled">I servizi di localizzazione sono disattivati</string>
-    <string name="settings_button">Impostazioni</string>
-    <string name="cancel">Cancella</string>
 
-    <string name="wheelchair_accessible_icon_description">Monumento accessibile per utenti con disabilità motorie</string>
-    <string name="wheelchair_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità motorie</string>
-
-    <string name="blind_accessible_icon_description">Monumento accessibile per utenti con disabilità visive</string>
-    <string name="blind_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
-
-    <string name="deaf_accessible_icon_description">Monumento accessibile per utenti con disabilità uditive</string>
-    <string name="deaf_not_accessible_icon_description">Monumento non accessibile per utenti con
-        disabilità uditive</string>
-
+    <!-- Home fragment -->
     <string name="search_icon_title">Cerca per nome</string>
     <string name="search_query_hint">Inserisci un monumento</string>
+    <string name="home_banner_text">PADOVA</string>
+    <string name="home_banner_content_description">Banner estetico, rappresenta una delle vedute
+        più caratteristiche della città di Padova: Prato della Valle e Santa Giustina sullo sfondo. Foto al tramonto</string>
+
+    <!-- Poi fragment -->
     <string name="favourite_icon_title">Impostazione preferito</string>
     <string name="announce_favourite_set">Impostato come preferito</string>
     <string name="announce_favourite_unset">Impostato come non preferito</string>
     <string name="favourite_set_description">Impostato come preferito</string>
     <string name="favourite_unset_description">Impostato come non preferito</string>
-
-    <string name="label_for_new_review_text">Recensione</string>
+    <!-- Reviews -->
+    <string name="reviews_header">Recensioni</string>
     <string name="label_for_new_review_username">Nome utente</string>
+    <string name="new_review_username_placeholder">Inserisci il tuo nome</string>
+    <string name="label_for_new_review_text">Recensione</string>
+    <string name="new_review_text_placeholder">Inserisci la tua opinione</string>
     <string name="send_new_review_button_content_description">Invia</string>
     <string name="new_review_card_description">Inserisci una nuova recensione</string>
     <string name="rating_bar_description">Dai una votazione da 1 a 5</string>
-    <string name="review_description">Recensione</string>
     <string name="single_star_string">stella</string>
     <string name="total_star_string">su un massimo di 5 stelle</string>
     <string name="multiple_star_string">stelle</string>
-
+    <string name="review_date_text">"Recensito il "</string>
+    <!-- Accessibility banner -->
     <string name="alert_dialog_title">Accessibilità</string>
     <string name="alert_dialog_wheelchair_accessible">Questo monumento è accessibile alle persone con disabilità motoria</string>
     <string name="alert_dialog_wheelchair_not_accessible">Questo monumento non è accessibile per le persone con disabilità motorie</string>
@@ -56,9 +45,22 @@
     <string name="alert_dialog_blind_accessible">Questo monumento è accessibile per persone con disabilità visive</string>
     <string name="alert_dialog_deaf_accessible">Questo monumento è accessibile per le persone con disabilità uditive</string>
     <string name="alert_dialog_deaf_not_accessible">Questo monumento non è accessibile per le persone con disabilità uditive</string>
-    <string name="home_banner_content_description">Banner estetico, rappresenta una delle vedute
-        più caratteristiche della città di Padova: Prato della Valle e Santa Giustina sullo sfondo. Foto al tramonto</string>
+    <string name="wheelchair_accessible_icon_description">Monumento accessibile per utenti con disabilità motorie</string>
+    <string name="wheelchair_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità motorie</string>
+    <string name="blind_accessible_icon_description">Monumento accessibile per utenti con disabilità visive</string>
+    <string name="blind_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità visive</string>
+    <string name="deaf_accessible_icon_description">Monumento accessibile per utenti con disabilità uditive</string>
+    <string name="deaf_not_accessible_icon_description">Monumento non accessibile per utenti con disabilità uditive</string>
+
+    <!-- NearMe fragment -->
     <string name="location_permission_denied_message">Permesso per la posizione negato</string>
     <string name="location_waiting_message">Calcolo della posizione in corso…</string>
+    <string name="location_not_available">La posizione non è disponibile</string>
+    <string name="please_enable_location">Attiva la localizzazione per poter usare questa funzionalità.</string>
+    <string name="location_services_disabled">I servizi di localizzazione sono disattivati</string>
+    <string name="settings_button">Impostazioni</string>
+    <string name="cancel">Cancella</string>
+    <string name="small_distance_text_format">%d m</string>
+    <string name="long_distance_text_format">%.1f km</string>
 
 </resources>

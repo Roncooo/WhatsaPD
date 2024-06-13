@@ -6,7 +6,6 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:accessibilityPaneTitle="@string/review_description"
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
@@ -46,6 +45,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Used to let the screen readers correctly describe RatingBar.
+             If set to visibility="invisible" (instead of color transparent) it
+             would be ignored by the screen reader -->
             <TextView
                 android:id="@+id/review_rating_bar_text_description"
                 android:layout_width="0dp"

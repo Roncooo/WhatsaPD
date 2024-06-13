@@ -94,6 +94,9 @@ class PoiListRecyclerViewAdapter(
 			val poiTitle: TextView = singlePoiWithDistanceBinding.poiName
 			poiTitle.text = poiWrapper.name
 			
+			// If the distance is <= 5000 meters, it will be displayed as an integer followed by " m".
+			// If the distance is > 5000 meters, it will be converted to kilometers, formatted to
+			// one decimal place and formatted with " km".
 			val poiDistanceTextView: TextView = singlePoiWithDistanceBinding.poiDistance
 			val poiDistance = poiWrapper.distance
 			val pattern: String
