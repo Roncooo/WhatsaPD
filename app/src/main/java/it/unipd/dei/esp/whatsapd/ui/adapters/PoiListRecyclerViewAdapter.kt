@@ -94,9 +94,17 @@ class PoiListRecyclerViewAdapter(
 			val poiTitle: TextView = singlePoiWithDistanceBinding.poiName
 			poiTitle.text = poiWrapper.name
 			
-			val poiDistance: TextView = singlePoiWithDistanceBinding.poiDistance
-			val textDistance = poiWrapper.distance.toString() + " m"
-			poiDistance.text = textDistance
+			val poiDistanceTextView: TextView = singlePoiWithDistanceBinding.poiDistance
+			val poiDistance = poiWrapper.distance
+			val pattern: String
+			if(poiDistance<=context.resources.getInteger(R.integer.max_distance_in_meters)){
+				pattern = context.resources.getString(R.string.small_distance_text_format)
+				poiDistanceTextView.text = String.format(pattern, poiDistance)
+			}
+			else{
+				pattern = context.resources.getString(R.string.long_distance_text_format)
+				poiDistanceTextView.text = String.format(pattern, poiDistance.toFloat()/1000)
+			}
 			
 			singlePoiWithDistanceBinding.root.setOnClickListener {
 				val action = HomeFragmentDirections.actionToPoiFragment(poiWrapper.name)
