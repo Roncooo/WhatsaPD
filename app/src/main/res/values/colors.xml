@@ -29,5 +29,6 @@
     <color name="colorUnderlineFocus">@color/unipd_red_500</color>
     <color name="color_hint">@color/gray2</color>
     <color name="send_button">@color/black</color>
+    <color name="menu_items">@color/black</color>
 
 </resources>
