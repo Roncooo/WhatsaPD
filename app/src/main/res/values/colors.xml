@@ -24,9 +24,10 @@
     <color name="review">@color/almost_black</color>
     <color name="review_date">@color/gray2</color>
     <color name="ratingbar_stars">@color/unipd_red_500</color>
-    <color name="backgrund_stars">@color/black</color>
+    <color name="background_stars">@color/unipd_red_700</color>
     <color name="position">@color/almost_black</color>
     <color name="colorUnderlineFocus">@color/unipd_red_500</color>
     <color name="color_hint">@color/gray2</color>
+    <color name="send_button">@color/black</color>
 
 </resources>

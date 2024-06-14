@@ -39,7 +39,7 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressTint="@color/ratingbar_stars"
-                android:secondaryProgressTint="@color/backgrund_stars"
+                android:secondaryProgressTint="@color/background_stars"
                 android:stepSize="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
