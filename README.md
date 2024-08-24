@@ -58,6 +58,6 @@ Per il contesto dell'applicazione, abbiamo ritenuto soddisfacente questo comport
 
 # Autori
 
-- [Beatrice Bellesso](https://github.com/isgreta)
-- [Greta Brocco](https://github.com/SleepyGutierrez)
+- [Beatrice Bellesso](https://github.com/SleepyGutierrez)
+- [Greta Brocco](https://github.com/isgreta)
 - [Francesco Roncolato](https://github.com/Roncooo)
